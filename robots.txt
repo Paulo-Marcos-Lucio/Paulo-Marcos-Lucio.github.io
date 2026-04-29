@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://paulo-marcos-lucio.github.io/sitemap.xml
