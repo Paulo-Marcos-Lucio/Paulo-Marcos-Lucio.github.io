@@ -6,7 +6,9 @@
 
   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var revealTargets = document.querySelectorAll('.suite-card, .work-card, .hero-stats li, .section-header, .cta-inner');
+  var revealTargets = document.querySelectorAll(
+    '.svc-card, .step, .work-card, .hero-stats li, .section-header, .cta-inner, .project, .cred-item, .cred-note'
+  );
   revealTargets.forEach(function (el) { el.classList.add('reveal'); });
 
   if (prefersReduced || !('IntersectionObserver' in window)) {
