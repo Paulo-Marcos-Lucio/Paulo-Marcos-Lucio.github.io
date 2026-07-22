@@ -30,6 +30,17 @@
     revealTargets.forEach(function (el) { io.observe(el); });
   }
 
+  /* ---------- spotlight interativo nos cards de pacote ---------- */
+  if (!prefersReduced && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.work-card').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+      });
+    });
+  }
+
   /* ---------- chuva de binários (estilo Matrix) ---------- */
   var canvas = document.getElementById('matrix');
   if (!canvas || prefersReduced) return;

@@ -438,3 +438,52 @@ body > * { position: relative; z-index: 1; }
 .suite-link .arw { transition: transform var(--t-fast) var(--ease); }
 .suite-card:hover .suite-link .arw { transform: translateX(4px); }
 .suite-card-all { background: linear-gradient(180deg, rgba(56, 189, 248, 0.06), var(--bg-2)); border-style: dashed; }
+
+/* ----- pacotes: cards reluzentes e interativos ----- */
+.work-card { position: relative; isolation: isolate; --glow: #2dd4bf; --glow2: #5eead4; }
+.work-card.acc-teal { --glow: #2dd4bf; --glow2: #5eead4; }
+.work-card.acc-grad { --glow: #38bdf8; --glow2: #818cf8; }
+.work-card.acc-sky  { --glow: #38bdf8; --glow2: #7dd3fc; }
+
+/* borda em gradiente reluzente */
+.work-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: 1; pointer-events: none;
+  background: linear-gradient(135deg, var(--glow), transparent 46%, var(--glow2) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0.5; transition: opacity var(--t-med) var(--ease);
+}
+/* spotlight que segue o cursor */
+.work-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: 0; pointer-events: none;
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 0%), var(--glow), transparent 55%);
+  opacity: 0; transition: opacity var(--t-med) var(--ease);
+}
+.work-card > * { position: relative; z-index: 2; }
+.work-card:hover {
+  transform: translateY(-6px); border-color: transparent;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.55), 0 0 48px -12px var(--glow);
+}
+.work-card:hover::before { opacity: 1; }
+.work-card:hover::after { opacity: 0.2; }
+
+/* card recomendado: borda viva animada */
+.work-card-featured { box-shadow: 0 0 42px -16px rgba(56, 189, 248, 0.55); }
+.work-card-featured::before {
+  padding: 1.5px; opacity: 0.9;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8, #818cf8, #38bdf8, #2dd4bf);
+  background-size: 280% 280%; animation: pkg-shimmer 7s linear infinite;
+}
+.work-card-featured:hover::before { opacity: 1; }
+@keyframes pkg-shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 280% 50%; } }
+@media (prefers-reduced-motion: reduce) { .work-card-featured::before { animation: none; } }
+
+/* selo "Mais procurado" como elemento (libera o ::after pro spotlight) */
+.work-badge {
+  position: absolute; top: -11px; right: 20px; z-index: 3;
+  background: var(--grad); color: #04110f; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(45, 212, 191, 0.4);
+}
+.work-card:hover .work-title { color: var(--fg-1); }
