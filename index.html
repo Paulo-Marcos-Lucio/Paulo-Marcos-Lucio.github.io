@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark" />
 
   <title>Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec) · BR</title>
-  <meta name="description" content="Consultoria em segurança de aplicações web no Brasil: diagnóstico e correção de vulnerabilidades, hardening, análise de cabeçalhos, TLS, CORS e exposição — mapeado ao OWASP Top 10 e à LGPD. Para PMEs e fintechs." />
+  <meta name="description" content="Consultoria em segurança de aplicações web no Brasil: diagnóstico e correção de vulnerabilidades, hardening, análise de cabeçalhos, TLS, CORS e exposição — mapeado ao OWASP Top 10 e à LGPD. Suíte de ferramentas open source. Para PMEs e fintechs." />
   <meta name="author" content="Paulo Marcos Lucio" />
   <meta name="keywords" content="segurança de aplicações web, AppSec, diagnóstico de vulnerabilidades, pentest web, hardening, OWASP Top 10, LGPD, cabeçalhos de segurança, TLS, consultoria cybersecurity Brasil" />
 
@@ -17,7 +17,7 @@
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Paulo Marcos Lucio" />
   <meta property="og:title" content="Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec)" />
-  <meta property="og:description" content="Diagnóstico e correção de vulnerabilidades em sistemas web para PMEs e fintechs. OWASP Top 10 · TLS · LGPD art. 46." />
+  <meta property="og:description" content="Diagnóstico e correção de vulnerabilidades em sistemas web para PMEs e fintechs. OWASP Top 10 · TLS · LGPD art. 46. Suíte de ferramentas open source." />
   <meta property="og:url" content="https://paulo-marcos-lucio.github.io/" />
   <meta property="og:image" content="https://paulo-marcos-lucio.github.io/og-image.svg" />
   <meta property="og:locale" content="pt_BR" />
@@ -47,19 +47,15 @@
       "https://www.linkedin.com/in/paulo-marcos-a07379174/"
     ],
     "knowsAbout": [
-      "Segurança de Aplicações Web",
-      "OWASP Top 10",
-      "Diagnóstico de Vulnerabilidades",
-      "TLS",
-      "Cabeçalhos de Segurança HTTP",
-      "LGPD",
-      "Hardening de Servidores",
-      "Linux"
+      "Segurança de Aplicações Web", "OWASP Top 10", "Diagnóstico de Vulnerabilidades",
+      "TLS", "Cabeçalhos de Segurança HTTP", "LGPD", "Hardening de Servidores", "Linux"
     ]
   }
   </script>
 </head>
 <body>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
 
   <header class="site-header" role="banner">
@@ -70,8 +66,8 @@
       </a>
       <nav class="nav" aria-label="Principal">
         <a href="#servicos">Serviços</a>
-        <a href="#metodo">Método</a>
-        <a href="#sentinela">Sentinela</a>
+        <a href="#ferramentas">Ferramentas</a>
+        <a href="#pacotes">Pacotes</a>
         <a href="#contato">Contato</a>
         <a class="nav-cta" href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
@@ -79,31 +75,32 @@
   </header>
 
   <main id="main">
+    <!-- ===================== HERO ===================== -->
     <section id="top" class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
-            Disponível para diagnósticos · 2026
+            Disponível para diagnósticos · resposta em 48h úteis
           </p>
           <h1 class="hero-title">
             Segurança de aplicações web,<br />
             <span class="gradient-text">do diagnóstico à correção.</span>
           </h1>
           <p class="hero-subtitle">
-            Encontro o que está <strong>mal configurado e exposto</strong> no seu sistema web — cabeçalhos, TLS, cookies, CORS, arquivos sensíveis, DNS — <strong>antes que vire incidente</strong>, e te entrego um plano de correção claro e auditável. Para <strong>PMEs e fintechs</strong> que levam a sério a proteção de dados.
+            Encontro o que está <strong>mal configurado e exposto</strong> no seu sistema web — cabeçalhos, TLS, cookies, CORS, arquivos sensíveis, DNS — <strong>antes que vire incidente</strong>, e entrego um plano de correção claro e auditável. Feito por quem construiu <strong>sistemas financeiros regulados</strong>, onde errar em segurança não é opção.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#contato">
-              Solicitar um diagnóstico
-              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+              <svg class="wa-ico" viewBox="0 0 32 32" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
+              Falar no WhatsApp
             </a>
-            <a class="btn btn-ghost" href="#sentinela">Ver a ferramenta Sentinela</a>
+            <a class="btn btn-ghost" href="#ferramentas">Ver minhas ferramentas</a>
           </div>
           <ul class="hero-stats" aria-label="Referências de atuação">
             <li><strong>OWASP Top 10</strong><span>edição 2025 + CWE</span></li>
             <li><strong>LGPD art. 46</strong><span>medidas técnicas</span></li>
-            <li><strong>Fintech</strong><span>background regulado</span></li>
+            <li><strong>5 ferramentas</strong><span>open source, testadas</span></li>
           </ul>
         </div>
 
@@ -117,12 +114,8 @@
             </div>
           </div>
           <div class="hero-card-tags">
-            <span class="tag">OWASP</span>
-            <span class="tag">TLS</span>
-            <span class="tag">Linux</span>
-            <span class="tag">Redes</span>
-            <span class="tag">Python</span>
-            <span class="tag">LGPD</span>
+            <span class="tag">OWASP</span><span class="tag">TLS</span><span class="tag">Linux</span>
+            <span class="tag">Redes</span><span class="tag">Python</span><span class="tag">LGPD</span>
           </div>
           <div class="hero-card-scan" aria-hidden="true">
             <div class="scan-line"><span class="lbl">🔒 TLS / Certificado</span> <span class="scan-badge b-ok">OK</span></div>
@@ -134,7 +127,36 @@
       </div>
     </section>
 
-    <section id="servicos" class="section">
+    <!-- ===================== PROVOCAÇÃO ===================== -->
+    <section class="section provoke-section">
+      <div class="container">
+        <header class="section-header provoke-head">
+          <p class="section-eyebrow">Três perguntas</p>
+          <h2 class="section-title">Responda com sinceridade — em silêncio</h2>
+          <p class="section-lead">Se você hesitou em qualquer uma delas, o diagnóstico responde as três. Com evidência, não com achismo.</p>
+        </header>
+        <div class="provoke-grid">
+          <article class="provoke-card">
+            <span class="provoke-num">01</span>
+            <p>Se eu abrir o seu site <strong>agora</strong>, quantos cabeçalhos de segurança vou encontrar <strong>faltando</strong>?</p>
+          </article>
+          <article class="provoke-card">
+            <span class="provoke-num">02</span>
+            <p>Existe algum <code>.env</code>, <code>.git</code> ou backup <strong>exposto</strong> na raiz do seu domínio? Você tem <strong>certeza</strong>?</p>
+          </article>
+          <article class="provoke-card">
+            <span class="provoke-num">03</span>
+            <p>Qual foi a última vez que alguém <strong>provou</strong> — com data e evidência — que a sua aplicação está protegida?</p>
+          </article>
+        </div>
+        <div class="provoke-cta">
+          <a class="btn btn-primary" href="#pacotes">Quero saber onde estou exposto</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVIÇOS ===================== -->
+    <section id="servicos" class="section section-alt">
       <div class="container">
         <header class="section-header">
           <p class="section-eyebrow">Serviços</p>
@@ -143,40 +165,37 @@
             Foco na camada onde mora a maior parte dos problemas de baixo custo e alto impacto: <strong>configuração e higiene de segurança</strong> de sistemas web expostos na internet.
           </p>
         </header>
-
         <div class="svc-grid">
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">🔍</span>
             <h3>Diagnóstico de vulnerabilidades web</h3>
-            <p>Análise da superfície exposta do seu sistema: cabeçalhos de segurança, TLS/certificado, cookies, CORS, métodos HTTP, exposição de arquivos e segurança de DNS/e-mail. Você recebe um relatório com severidade, evidência e recomendação de correção.</p>
+            <p>Análise da superfície exposta: cabeçalhos, TLS/certificado, cookies, CORS, métodos HTTP, exposição de arquivos e segurança de DNS/e-mail. Relatório com severidade, evidência e recomendação de correção.</p>
             <div class="svc-tags"><span>OWASP Top 10</span><span>CWE</span><span>relatório executivo</span></div>
           </article>
-
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">🛠️</span>
             <h3>Correção e hardening</h3>
-            <p>Da recomendação à execução: implanto (ou oriento seu time a implantar) CSP, HSTS, TLS moderno, cookies seguros, política de CORS restritiva e remoção de rotas e arquivos sensíveis expostos.</p>
+            <p>Da recomendação à execução: implanto (ou oriento seu time) CSP, HSTS, TLS moderno, cookies seguros, CORS restritivo e remoção de rotas e arquivos sensíveis expostos.</p>
             <div class="svc-tags"><span>CSP</span><span>HSTS</span><span>TLS 1.2/1.3</span></div>
           </article>
-
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">🔁</span>
             <h3>Reteste e acompanhamento</h3>
             <p>Depois da correção, uma nova varredura comprova a redução de risco. Varredura programada vira evidência contínua de gestão de vulnerabilidades — exatamente o que a LGPD espera.</p>
             <div class="svc-tags"><span>reteste incluso</span><span>recorrência</span></div>
           </article>
-
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">⚖️</span>
             <h3>Adequação à LGPD (art. 46)</h3>
-            <p>Diagnóstico e documentação datada que ajudam sua empresa a demonstrar as medidas técnicas de segurança exigidas pela LGPD — um fator que a ANPD considera na dosimetria de eventuais sanções.</p>
+            <p>Diagnóstico e documentação datada que ajudam sua empresa a demonstrar as medidas técnicas de segurança exigidas pela LGPD — fator que a ANPD pondera na dosimetria de eventuais sanções.</p>
             <div class="svc-tags"><span>evidência datada</span><span>medidas técnicas</span></div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="metodo" class="section section-alt">
+    <!-- ===================== MÉTODO ===================== -->
+    <section id="metodo" class="section">
       <div class="container">
         <header class="section-header">
           <p class="section-eyebrow">Método</p>
@@ -195,14 +214,62 @@
       </div>
     </section>
 
-    <section id="sentinela" class="section">
+    <!-- ===================== FERRAMENTAS / SUÍTE ===================== -->
+    <section id="ferramentas" class="section section-alt">
       <div class="container">
-        <div class="project">
-          <div>
-            <span class="project-badge">Open source · MIT</span>
+        <header class="section-header">
+          <p class="section-eyebrow">Ferramentas · Open source</p>
+          <h2 class="section-title">A suíte que eu uso — e que deixo pública pra você auditar</h2>
+          <p class="section-lead">
+            Você não contrata uma caixa-preta. Cada engajamento é apoiado por <strong>ferramenta própria, testada e aberta</strong> — cinco frentes do OWASP Top 10, do perímetro à autenticação, dos segredos à cadeia de suprimentos.
+          </p>
+        </header>
+
+        <div class="suite-grid">
+          <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico">🛡️</span><span class="suite-frente">Perímetro</span></div>
             <h3>Sentinela</h3>
+            <p>Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS — com relatório mapeado ao OWASP Top 10:2025.</p>
+            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+          </a>
+          <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/guardiao" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico">🔑</span><span class="suite-frente">Segredos</span></div>
+            <h3>Guardião</h3>
+            <p>Scanner de segredos vazados no código <strong>e no histórico Git</strong> — entropia de Shannon, baseline, SARIF e hook de pre-commit.</p>
+            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+          </a>
+          <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/chaveiro" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico">🗝️</span><span class="suite-frente">Autenticação</span></div>
+            <h3>Chaveiro</h3>
+            <p>Auditor de tokens JWT/JWS — <code>alg:none</code>, confusão de algoritmo, brute de segredo HMAC, <code>jku</code>/<code>kid</code> SSRF + validação de referência.</p>
+            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+          </a>
+          <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/esteira" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico">⚙️</span><span class="suite-frente">Cadeia de suprimentos</span></div>
+            <h3>Esteira</h3>
+            <p>Auditor de segurança de CI/CD (GitHub Actions) — script injection, actions não-fixadas por SHA, <code>pull_request_target</code>, permissões.</p>
+            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+          </a>
+          <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/laboratorio-owasp" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico">🧪</span><span class="suite-frente">Correção</span></div>
+            <h3>Laboratório OWASP</h3>
+            <p>OWASP Top 10 <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando cada correção. Em Spring Boot.</p>
+            <span class="suite-link">Java · MIT <span class="arw">→</span></span>
+          </a>
+          <a class="suite-card suite-card-all" href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico">📦</span></div>
+            <h3>Todos os repositórios</h3>
+            <p>Inclui minha suíte de referência de sistemas financeiros regulados (Pix, Open Finance, mTLS ICP-Brasil) — o rigor de engenharia por trás do olhar de AppSec.</p>
+            <span class="suite-link">Ver no GitHub <span class="arw">→</span></span>
+          </a>
+        </div>
+
+        <div class="project" style="margin-top:36px">
+          <div>
+            <span class="project-badge">Em ação · Sentinela</span>
+            <h3>É assim que o seu diagnóstico começa</h3>
             <p>
-              A ferramenta que uso no primeiro passo de cada diagnóstico — e que deixo pública para você auditar o meu critério técnico. Ela audita, de forma <strong>não-intrusiva</strong>, a higiene de segurança de uma aplicação web e gera um relatório profissional.
+              A Sentinela é o primeiro passo de cada engajamento: audita, de forma <strong>não-intrusiva</strong>, a higiene de segurança da sua aplicação e gera um relatório profissional — o mesmo que chega até você.
             </p>
             <ul class="project-feats">
               <li>Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail</li>
@@ -232,7 +299,8 @@
       </div>
     </section>
 
-    <section class="section section-alt">
+    <!-- ===================== BAGAGEM ===================== -->
+    <section class="section">
       <div class="container">
         <header class="section-header">
           <p class="section-eyebrow">Bagagem</p>
@@ -249,7 +317,7 @@
             </div>
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🧰</span>
-              <div><h4>Ferramental próprio, aberto</h4><p>Construo minhas próprias ferramentas de análise (como a Sentinela) — código público que documenta o meu critério técnico.</p></div>
+              <div><h4>Ferramental próprio, aberto</h4><p>Construo minhas próprias ferramentas de análise — código público e testado que documenta o meu critério técnico.</p></div>
             </div>
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🐧</span>
@@ -266,33 +334,39 @@
       </div>
     </section>
 
-    <section class="section">
+    <!-- ===================== PACOTES ===================== -->
+    <section id="pacotes" class="section section-alt">
       <div class="container">
         <header class="section-header">
           <p class="section-eyebrow">Pacotes</p>
-          <h2 class="section-title">Como contratar</h2>
+          <h2 class="section-title">Escolha por onde começar</h2>
           <p class="section-lead">
-            Sempre pacote fechado, escopo definido e <strong>reteste incluso</strong>. O investimento é apresentado sob proposta, após entender o tamanho e o contexto da sua aplicação.
+            Sempre pacote fechado, escopo definido e <strong>reteste incluso</strong>. O investimento é apresentado sob proposta, depois de entender o tamanho e o contexto da sua aplicação — sem letra miúda.
           </p>
         </header>
         <div class="work-grid">
           <article class="work-card">
             <p class="work-tier">Entrada</p>
             <h3 class="work-title">Diagnóstico</h3>
-            <p class="work-desc">Varredura da superfície exposta e relatório executivo + técnico com achados priorizados.</p>
+            <p class="work-desc">Você descobre exatamente onde está exposto — e sai com um plano de ação priorizado.</p>
             <ul class="work-list">
+              <li>Varredura completa da superfície exposta</li>
               <li>Relatório executivo (para a diretoria)</li>
               <li>Relatório técnico com severidade e evidência</li>
               <li>Recomendações de correção priorizadas</li>
               <li>Reunião de apresentação dos resultados</li>
             </ul>
             <p class="work-price">Investimento sob proposta</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico." target="_blank" rel="noopener">
+              <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
+              Quero este pacote
+            </a>
           </article>
 
           <article class="work-card work-card-featured">
             <p class="work-tier">Recomendado</p>
             <h3 class="work-title">Diagnóstico + Correção</h3>
-            <p class="work-desc">O diagnóstico completo mais a execução (ou orientação) das correções e a comprovação por reteste.</p>
+            <p class="work-desc">Não basta saber do problema — este pacote resolve, e comprova que resolveu.</p>
             <ul class="work-list">
               <li>Tudo do Diagnóstico</li>
               <li>Correção/hardening dos achados priorizados</li>
@@ -300,12 +374,16 @@
               <li>Carta de atestação com data e escopo (LGPD)</li>
             </ul>
             <p class="work-price">Investimento sob proposta · reteste incluso</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico%20%2B%20Corre%C3%A7%C3%A3o%20(o%20recomendado)." target="_blank" rel="noopener">
+              <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
+              Quero este pacote
+            </a>
           </article>
 
           <article class="work-card">
             <p class="work-tier">Contínuo</p>
             <h3 class="work-title">Acompanhamento</h3>
-            <p class="work-desc">Para quem faz releases frequentes: varredura recorrente e apoio de segurança sob demanda.</p>
+            <p class="work-desc">Para quem faz releases frequentes: segurança que não expira depois de um PDF.</p>
             <ul class="work-list">
               <li>Varredura programada (mensal/por release)</li>
               <li>Relatório de evolução do risco</li>
@@ -313,25 +391,30 @@
               <li>Evidência contínua para compliance</li>
             </ul>
             <p class="work-price">Retainer mensal sob proposta</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20de%20Acompanhamento%20recorrente." target="_blank" rel="noopener">
+              <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
+              Quero este pacote
+            </a>
           </article>
         </div>
         <p class="work-foot">Sem promessa de "100% seguro". Segurança é redução de risco mensurável — e eu comprovo com reteste.</p>
       </div>
     </section>
 
+    <!-- ===================== CONTATO / CTA ===================== -->
     <section id="contato" class="section section-cta">
       <div class="container cta-inner">
         <h2 class="cta-title">Seu sistema web já foi olhado por um par técnico?</h2>
         <p class="cta-lead">
-          Conta rapidamente qual é a aplicação e o contexto — respondo com escopo e proposta em até 48h úteis.
+          Me conta em uma linha qual é a aplicação e o contexto. Chamada rápida, sem compromisso — e você já sai sabendo o próximo passo.
         </p>
         <div class="cta-actions">
-          <a class="btn btn-primary" href="mailto:pmlsp23@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20diagn%C3%B3stico%20de%20seguran%C3%A7a">
-            pmlsp23@gmail.com
+          <a class="btn btn-wa btn-lg" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20conversar%20sobre%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a." target="_blank" rel="noopener">
+            <svg class="wa-ico" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
+            Chamar no WhatsApp · (12) 99147-8991
           </a>
-          <a class="btn btn-ghost" href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">
-            LinkedIn ↗
-          </a>
+          <a class="btn btn-ghost" href="mailto:pmlsp23@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20diagn%C3%B3stico%20de%20seguran%C3%A7a">pmlsp23@gmail.com</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">LinkedIn ↗</a>
         </div>
       </div>
     </section>
@@ -347,16 +430,23 @@
         </div>
       </div>
       <nav class="footer-nav" aria-label="Rodapé">
+        <a href="https://wa.me/5512991478991" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub</a>
         <a href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="mailto:pmlsp23@gmail.com">Email</a>
-        <a href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Sentinela</a>
       </nav>
       <p class="footer-meta">
         © <span id="year">2026</span> Paulo Marcos Lucio · São Paulo, BR · Diagnóstico conduzido sob autorização e escopo definido
       </p>
     </div>
   </footer>
+
+  <!-- Botão flutuante do WhatsApp -->
+  <a class="wa-fab" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <span class="wa-fab-ring" aria-hidden="true"></span>
+    <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
+    <span class="wa-fab-label">Fale comigo</span>
+  </a>
 
   <script src="script.js" defer></script>
 </body>

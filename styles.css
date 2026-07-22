@@ -349,3 +349,92 @@ body > * { position: relative; z-index: 1; }
 .reveal.is-visible { opacity: 1; transform: none; }
 
 ::selection { background: rgba(45, 212, 191, 0.32); color: var(--fg-1); }
+
+/* ============================================================================
+   Vivacidade cybersec — matrix, suíte, provocações e WhatsApp
+   ============================================================================ */
+
+:root { --wa: #25d366; --wa-strong: #29e56f; --wa-dark: #128c4b; }
+
+/* ----- chuva de binários (canvas) ----- */
+#matrix {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none; opacity: 0.6;
+  -webkit-mask-image: radial-gradient(130% 100% at 50% -5%, #000 34%, rgba(0,0,0,0.35) 78%, transparent 100%);
+  mask-image: radial-gradient(130% 100% at 50% -5%, #000 34%, rgba(0,0,0,0.35) 78%, transparent 100%);
+}
+
+/* ----- botão WhatsApp ----- */
+.btn-wa {
+  color: #04120a; background: var(--wa-strong);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  animation: wa-glow 2.6s ease-in-out infinite;
+}
+.btn-wa:hover { transform: translateY(-1px); background: #34ed7c; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.45); color: #04120a; }
+.btn-wa .wa-ico { color: #04120a; }
+.btn-lg { padding: 15px 26px; font-size: 15.5px; }
+.btn-block { width: 100%; margin-top: 18px; }
+@keyframes wa-glow {
+  0%, 100% { box-shadow: 0 6px 20px rgba(37, 211, 102, 0.28), inset 0 1px 0 rgba(255,255,255,0.22); }
+  50% { box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5), inset 0 1px 0 rgba(255,255,255,0.22); }
+}
+
+/* ----- FAB flutuante do WhatsApp ----- */
+.wa-fab {
+  position: fixed; right: clamp(16px, 4vw, 28px); bottom: clamp(16px, 4vw, 28px); z-index: 60;
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 60px; padding: 0 18px 0 14px; border-radius: 999px;
+  background: var(--wa); color: #fff; font-weight: 700; font-size: 14.5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease), background var(--t-med) var(--ease);
+}
+.wa-fab:hover { transform: translateY(-2px) scale(1.02); background: var(--wa-strong); color: #fff; box-shadow: 0 14px 38px rgba(37, 211, 102, 0.4); }
+.wa-fab svg { position: relative; z-index: 2; flex-shrink: 0; }
+.wa-fab-label { position: relative; z-index: 2; white-space: nowrap; }
+@media (max-width: 560px) { .wa-fab { height: 58px; padding: 0; width: 58px; justify-content: center; } .wa-fab-label { display: none; } }
+.wa-fab-ring {
+  position: absolute; inset: 0; border-radius: 999px; z-index: 1;
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55); animation: wa-ring 2.2s ease-out infinite;
+}
+@keyframes wa-ring {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  70% { box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .btn-wa, .wa-fab-ring { animation: none !important; } }
+
+/* ----- provocações ----- */
+.provoke-head { text-align: center; margin-left: auto; margin-right: auto; }
+.provoke-head .section-lead { margin-left: auto; margin-right: auto; }
+.provoke-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.provoke-card {
+  position: relative; padding: 28px 24px 26px; border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(129, 140, 248, 0.06), var(--bg-2));
+  border: 1px solid var(--border-strong); overflow: hidden;
+  transition: transform var(--t-med) var(--ease), border-color var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+.provoke-card:hover { transform: translateY(-3px); border-color: rgba(45, 212, 191, 0.4); box-shadow: var(--shadow-lg); }
+.provoke-num { display: block; font-family: var(--font-mono); font-size: 34px; font-weight: 700; line-height: 1; margin-bottom: 14px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.provoke-card p { color: var(--fg-2); font-size: 16px; line-height: 1.55; }
+.provoke-card strong { color: var(--fg-1); }
+.provoke-card code, .suite-card code { font-family: var(--font-mono); font-size: 0.86em; color: var(--accent-strong); background: var(--accent-soft); padding: 1px 6px; border-radius: 5px; }
+.provoke-cta { text-align: center; margin-top: 30px; }
+
+/* ----- suíte de ferramentas ----- */
+.suite-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(288px, 1fr)); gap: 18px; }
+.suite-card {
+  display: flex; flex-direction: column; padding: 22px 22px 20px; border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2)); border: 1px solid var(--border);
+  color: var(--fg-2); transition: transform var(--t-med) var(--ease), border-color var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+.suite-card:hover { transform: translateY(-4px); border-color: rgba(45, 212, 191, 0.45); box-shadow: var(--shadow-lg); color: var(--fg-2); }
+.suite-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.suite-ico { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 11px; background: var(--bg-1); border: 1px solid var(--border); font-size: 20px; }
+.suite-frente { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border: 1px solid rgba(45, 212, 191, 0.28); padding: 3px 9px; border-radius: 999px; }
+.suite-card h3 { font-size: 18px; margin-bottom: 7px; color: var(--fg-1); }
+.suite-card p { font-size: 13.5px; color: var(--fg-3); line-height: 1.55; flex-grow: 1; }
+.suite-card p strong { color: var(--fg-2); }
+.suite-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 16px; font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--accent-strong); }
+.suite-link .arw { transition: transform var(--t-fast) var(--ease); }
+.suite-card:hover .suite-link .arw { transform: translateX(4px); }
+.suite-card-all { background: linear-gradient(180deg, rgba(56, 189, 248, 0.06), var(--bg-2)); border-style: dashed; }
