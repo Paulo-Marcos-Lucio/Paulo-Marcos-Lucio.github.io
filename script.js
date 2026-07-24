@@ -74,10 +74,11 @@
   var last = 0;
   var FRAME_GAP = 1000 / 30; // ~30fps
   var running = true;
+  var rafId = 0;
 
   function draw(t) {
     if (!running) return;
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
     if (t - last < FRAME_GAP) return;
     last = t;
 
@@ -109,7 +110,7 @@
       }
     }
   }
-  requestAnimationFrame(draw);
+  rafId = requestAnimationFrame(draw);
 
   var resizeTimer;
   window.addEventListener('resize', function () {
@@ -118,6 +119,6 @@
   });
   document.addEventListener('visibilitychange', function () {
     running = !document.hidden;
-    if (running) { last = 0; requestAnimationFrame(draw); }
+    if (running) { last = 0; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(draw); }
   });
 })();

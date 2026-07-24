@@ -136,7 +136,8 @@ body > * { position: relative; z-index: 1; }
 .nav a:hover { color: var(--fg-1); background: var(--bg-3); }
 .nav-cta { color: var(--fg-1) !important; background: var(--bg-3); border: 1px solid var(--border-strong); }
 .nav-cta:hover { background: var(--bg-4) !important; }
-@media (max-width: 700px) { .nav a:not(.nav-cta) { display: none; } }
+@media (max-width: 700px) { .nav a[href="#servicos"], .nav a[href="#ferramentas"] { display: none; } }
+@media (max-width: 400px) { .nav { gap: 2px; } .nav a { padding: 8px 9px; } }
 
 /* ----- hero ----- */
 .hero { padding: clamp(48px, 9vw, 96px) 0 clamp(56px, 10vw, 112px); }
@@ -211,7 +212,6 @@ body > * { position: relative; z-index: 1; }
 .hero-card-scan { border-top: 1px dashed var(--border); padding-top: 14px; }
 .scan-line { display: flex; align-items: center; justify-content: space-between; font-size: 13px; padding: 5px 0; }
 .scan-line .lbl { color: var(--fg-3); display: inline-flex; align-items: center; gap: 8px; }
-.scan-line .chk { color: var(--accent); font-family: var(--font-mono); }
 .scan-badge { font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
 .b-ok { color: var(--accent); background: var(--accent-soft); border: 1px solid rgba(45, 212, 191, 0.3); }
 .b-warn { color: var(--warn); background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); }
@@ -284,7 +284,6 @@ body > * { position: relative; z-index: 1; }
 .terminal-body .muted { color: var(--fg-4); }
 .terminal-body .ok { color: var(--accent-strong); }
 .terminal-body .warn { color: var(--warn); }
-.terminal-body .crit { color: var(--crit); }
 .terminal-body .grade { color: var(--link); }
 
 /* ----- background / credibilidade ----- */
@@ -303,11 +302,6 @@ body > * { position: relative; z-index: 1; }
 .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
 .work-card { padding: 28px; border-radius: var(--radius-lg); background: var(--bg-3); border: 1px solid var(--border); display: flex; flex-direction: column; }
 .work-card-featured { background: linear-gradient(180deg, rgba(45, 212, 191, 0.05), var(--bg-3)); border-color: rgba(45, 212, 191, 0.35); position: relative; }
-.work-card-featured::after {
-  content: "Mais procurado"; position: absolute; top: -10px; right: 20px;
-  background: var(--accent-strong); color: #04110f; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 4px 10px; border-radius: 999px;
-}
 .work-tier { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .work-card:not(.work-card-featured) .work-tier { color: var(--fg-3); }
 .work-title { font-size: 21px; font-weight: 700; color: var(--fg-1); margin-bottom: 6px; }
@@ -315,8 +309,8 @@ body > * { position: relative; z-index: 1; }
 .work-list { display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
 .work-list li { position: relative; font-size: 13.5px; color: var(--fg-2); padding-left: 24px; }
 .work-list li::before { content: ""; position: absolute; left: 0; top: 7px; width: 14px; height: 8px; border-left: 2px solid var(--accent-strong); border-bottom: 2px solid var(--accent-strong); transform: rotate(-45deg); }
-.work-price { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 13px; color: var(--fg-4); font-family: var(--font-mono); }
-.work-foot { margin-top: 26px; text-align: center; font-size: 13px; color: var(--fg-4); font-family: var(--font-mono); }
+.work-price { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 13px; color: var(--fg-3); font-family: var(--font-mono); }
+.work-foot { margin-top: 26px; text-align: center; font-size: 13px; color: var(--fg-3); font-family: var(--font-mono); }
 
 /* ----- CTA ----- */
 .section-cta { padding: clamp(64px, 10vw, 128px) 0; }
@@ -342,7 +336,7 @@ body > * { position: relative; z-index: 1; }
 .footer-nav { display: flex; gap: 18px; flex-wrap: wrap; }
 .footer-nav a { font-size: 14px; font-weight: 500; color: var(--fg-3); }
 .footer-nav a:hover { color: var(--fg-1); }
-.footer-meta { grid-column: 1 / -1; font-size: 12.5px; color: var(--fg-4); border-top: 1px dashed var(--border); padding-top: 18px; margin-top: 8px; }
+.footer-meta { grid-column: 1 / -1; font-size: 12.5px; color: var(--fg-3); border-top: 1px dashed var(--border); padding-top: 18px; margin-top: 8px; }
 
 /* ----- reveal ----- */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
@@ -354,7 +348,7 @@ body > * { position: relative; z-index: 1; }
    Vivacidade cybersec — matrix, suíte, provocações e WhatsApp
    ============================================================================ */
 
-:root { --wa: #25d366; --wa-strong: #29e56f; --wa-dark: #128c4b; }
+:root { --wa: #25d366; --wa-strong: #29e56f; }
 
 /* ----- chuva de binários (canvas) ----- */
 #matrix {
@@ -374,6 +368,7 @@ body > * { position: relative; z-index: 1; }
 .btn-wa .wa-ico { color: #04120a; }
 .btn-lg { padding: 15px 26px; font-size: 15.5px; }
 .btn-block { width: 100%; margin-top: 18px; }
+@media (max-width: 560px) { .cta-num { display: none; } }
 @keyframes wa-glow {
   0%, 100% { box-shadow: 0 6px 20px rgba(37, 211, 102, 0.28), inset 0 1px 0 rgba(255,255,255,0.22); }
   50% { box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5), inset 0 1px 0 rgba(255,255,255,0.22); }
@@ -384,11 +379,11 @@ body > * { position: relative; z-index: 1; }
   position: fixed; right: clamp(16px, 4vw, 28px); bottom: clamp(16px, 4vw, 28px); z-index: 60;
   display: inline-flex; align-items: center; gap: 10px;
   height: 60px; padding: 0 18px 0 14px; border-radius: 999px;
-  background: var(--wa); color: #fff; font-weight: 700; font-size: 14.5px;
+  background: var(--wa); color: #04120a; font-weight: 700; font-size: 14.5px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
   transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease), background var(--t-med) var(--ease);
 }
-.wa-fab:hover { transform: translateY(-2px) scale(1.02); background: var(--wa-strong); color: #fff; box-shadow: 0 14px 38px rgba(37, 211, 102, 0.4); }
+.wa-fab:hover { transform: translateY(-2px) scale(1.02); background: var(--wa-strong); color: #04120a; box-shadow: 0 14px 38px rgba(37, 211, 102, 0.4); }
 .wa-fab svg { position: relative; z-index: 2; flex-shrink: 0; }
 .wa-fab-label { position: relative; z-index: 2; white-space: nowrap; }
 @media (max-width: 560px) { .wa-fab { height: 58px; padding: 0; width: 58px; justify-content: center; } .wa-fab-label { display: none; } }
