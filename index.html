@@ -2,6 +2,19 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
+
+  <!-- ─────────────────────────────────────────────────────────────────────────
+       Cabeçalhos de segurança possíveis no GitHub Pages (que não permite
+       headers de resposta). Via <meta http-equiv> só CSP e Referrer-Policy
+       valem — X-Content-Type-Options e X-Frame-Options são IGNORADOS em meta,
+       e dentro da CSP as diretivas frame-ancestors, sandbox e report-uri
+       também são ignoradas: por isso NÃO estão declaradas aqui, para não dar
+       falsa sensação de proteção. Clickjacking e MIME-sniffing só se resolvem
+       com um servidor/CDN que emita headers.
+       ───────────────────────────────────────────────────────────────────────── -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0f14" />
   <meta name="color-scheme" content="dark" />
@@ -32,9 +45,12 @@
   <meta name="twitter:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  <!-- Fontes auto-hospedadas: zero requisições a terceiros (LGPD art. 5º I / 33)
+       e nada de render-blocking de origem cruzada. Licenças em fonts/. -->
+  <link rel="preload" href="fonts/inter-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/jetbrains-mono-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="styles.css" />
 
@@ -45,7 +61,7 @@
     "name": "Paulo Marcos Lucio",
     "jobTitle": "Consultor em Segurança de Aplicações Web (AppSec)",
     "url": "https://paulo-marcos-lucio.github.io/",
-    "image": "https://avatars.githubusercontent.com/u/96093111?v=4",
+    "image": "https://paulo-marcos-lucio.github.io/avatar.jpg",
     "sameAs": [
       "https://github.com/Paulo-Marcos-Lucio",
       "https://www.linkedin.com/in/paulo-marcos-a07379174/"
@@ -82,7 +98,7 @@
     <!-- ===================== HERO ===================== -->
     <section id="top" class="hero">
       <div class="container hero-grid">
-        <div class="hero-copy">
+        <div>
           <p class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
             Disponível para diagnósticos · resposta em 48h úteis
@@ -111,7 +127,7 @@
         <aside class="hero-card" aria-label="Amostra de diagnóstico">
           <div class="hero-card-glow" aria-hidden="true"></div>
           <div class="hero-card-head">
-            <img class="avatar" src="https://avatars.githubusercontent.com/u/96093111?v=4&s=200" alt="Avatar de Paulo Marcos Lucio" width="64" height="64" loading="eager" />
+            <img class="avatar" src="avatar.jpg" alt="Avatar de Paulo Marcos Lucio" width="64" height="64" loading="eager" />
             <div>
               <p class="hero-card-name">Paulo Marcos Lucio</p>
               <p class="hero-card-role">AppSec · Web Security</p>
@@ -132,7 +148,7 @@
     </section>
 
     <!-- ===================== PROVOCAÇÃO ===================== -->
-    <section class="section provoke-section">
+    <section class="section">
       <div class="container">
         <header class="section-header provoke-head">
           <p class="section-eyebrow">Três perguntas</p>
@@ -141,15 +157,15 @@
         </header>
         <div class="provoke-grid">
           <article class="provoke-card">
-            <span class="provoke-num">01</span>
+            <span class="provoke-num" aria-hidden="true">01</span>
             <p>Se eu abrir o seu site <strong>agora</strong>, quantos cabeçalhos de segurança vou encontrar <strong>faltando</strong>?</p>
           </article>
           <article class="provoke-card">
-            <span class="provoke-num">02</span>
+            <span class="provoke-num" aria-hidden="true">02</span>
             <p>Existe algum <code>.env</code>, <code>.git</code> ou backup <strong>exposto</strong> na raiz do seu domínio? Você tem <strong>certeza</strong>?</p>
           </article>
           <article class="provoke-card">
-            <span class="provoke-num">03</span>
+            <span class="provoke-num" aria-hidden="true">03</span>
             <p>Qual foi a última vez que alguém <strong>provou</strong> — com data e evidência — que a sua aplicação está protegida?</p>
           </article>
         </div>
@@ -231,44 +247,44 @@
 
         <div class="suite-grid">
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico">🛡️</span><span class="suite-frente">Perímetro</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🛡️</span><span class="suite-frente">Perímetro</span></div>
             <h3>Sentinela</h3>
             <p>Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS — com relatório mapeado ao OWASP Top 10:2025.</p>
-            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+            <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/guardiao" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico">🔑</span><span class="suite-frente">Segredos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente">Segredos</span></div>
             <h3>Guardião</h3>
             <p>Scanner de segredos vazados no código <strong>e no histórico Git</strong> — entropia de Shannon, baseline, SARIF e hook de pre-commit.</p>
-            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+            <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/chaveiro" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico">🗝️</span><span class="suite-frente">Autenticação</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🗝️</span><span class="suite-frente">Autenticação</span></div>
             <h3>Chaveiro</h3>
             <p>Auditor de tokens JWT/JWS — <code>alg:none</code>, confusão de algoritmo, brute de segredo HMAC, <code>jku</code>/<code>kid</code> SSRF + validação de referência.</p>
-            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+            <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/esteira" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico">⚙️</span><span class="suite-frente">Cadeia de suprimentos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">⚙️</span><span class="suite-frente">Cadeia de suprimentos</span></div>
             <h3>Esteira</h3>
             <p>Auditor de segurança de CI/CD (GitHub Actions) — script injection, actions não-fixadas por SHA, <code>pull_request_target</code>, permissões.</p>
-            <span class="suite-link">Python · MIT <span class="arw">→</span></span>
+            <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/laboratorio-owasp" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico">🧪</span><span class="suite-frente">Correção</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente">Correção</span></div>
             <h3>Laboratório OWASP</h3>
-            <p>OWASP Top 10 <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando cada correção. Em Spring Boot.</p>
-            <span class="suite-link">Java · MIT <span class="arw">→</span></span>
+            <p><strong>8 vulnerabilidades</strong> em 4 categorias do OWASP Top 10 (A01, A02, A03, A10), cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando cada correção. Em Spring Boot.</p>
+            <span class="suite-link">Java · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card suite-card-all" href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico">📦</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">📦</span></div>
             <h3>Todos os repositórios</h3>
             <p>Inclui minha suíte de referência de sistemas financeiros regulados (Pix, Open Finance, mTLS ICP-Brasil) — o rigor de engenharia por trás do olhar de AppSec.</p>
-            <span class="suite-link">Ver no GitHub <span class="arw">→</span></span>
+            <span class="suite-link">Ver no GitHub <span class="arw">↗</span></span>
           </a>
         </div>
 
-        <div class="project" style="margin-top:36px">
+        <div class="project project-destacado">
           <div>
             <span class="project-badge">Em ação · Sentinela</span>
             <h3>É assim que o seu diagnóstico começa</h3>
@@ -278,7 +294,7 @@
             <ul class="project-feats">
               <li>Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail</li>
               <li>Achados mapeados ao OWASP Top 10:2025 + CWE</li>
-              <li>Relatório em HTML, Markdown e JSON</li>
+              <li>Relatório em HTML, Markdown, JSON e SARIF 2.1.0 (ingestável pela aba Security do GitHub)</li>
               <li>Não-intrusiva por padrão · checagens ativas só com autorização</li>
             </ul>
             <a class="btn btn-primary" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Ver no GitHub ↗</a>
@@ -317,22 +333,22 @@
           <div class="cred-list">
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🔐</span>
-              <div><h4>Desenvolvimento seguro na prática</h4><p>Background em backend Java para o mercado financeiro brasileiro: autenticação, mTLS ICP-Brasil, FAPI e integrações reguladas (Pix, Open Finance).</p></div>
+              <div><h3>Desenvolvimento seguro na prática</h3><p>Background em backend Java para o mercado financeiro brasileiro: autenticação, mTLS ICP-Brasil, FAPI e integrações reguladas (Pix, Open Finance).</p></div>
             </div>
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🧰</span>
-              <div><h4>Ferramental próprio, aberto</h4><p>Construo minhas próprias ferramentas de análise — código público e testado que documenta o meu critério técnico.</p></div>
+              <div><h3>Ferramental próprio, aberto</h3><p>Construo minhas próprias ferramentas de análise — código público e testado que documenta o meu critério técnico.</p></div>
             </div>
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🐧</span>
-              <div><h4>Redes e Linux</h4><p>Base sólida em redes, servidores e Linux — o terreno onde as aplicações web de fato rodam e se expõem.</p></div>
+              <div><h3>Redes e Linux</h3><p>Base sólida em redes, servidores e Linux — o terreno onde as aplicações web de fato rodam e se expõem.</p></div>
             </div>
           </div>
           <div class="cred-note">
             <p>
               Quer conferir o rigor de engenharia? Minha <strong>suíte pública de implementações de referência</strong> do mercado financeiro regulado (Spring Boot, arquitetura hexagonal, observabilidade, CI) está toda no GitHub.
             </p>
-            <p style="margin-top:12px"><a href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">Ver meus repositórios de engenharia →</a></p>
+            <p class="cred-note-cta"><a href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">Ver meus repositórios de engenharia ↗</a></p>
           </div>
         </div>
       </div>
@@ -361,14 +377,13 @@
               <li>Reunião de apresentação dos resultados</li>
             </ul>
             <p class="work-price">Investimento sob proposta</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico." target="_blank" rel="noopener">
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico." target="_blank" rel="noopener" aria-label="Quero este pacote: Diagnóstico — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
               Quero este pacote
             </a>
           </article>
 
           <article class="work-card work-card-featured acc-grad">
-            <span class="work-badge">Mais procurado</span>
             <p class="work-tier">Recomendado</p>
             <h3 class="work-title">Diagnóstico + Correção</h3>
             <p class="work-desc">Do problema à <strong>prova de que foi resolvido</strong>: eu encontro, eu corrijo — e comprovo com reteste. Você sai com a evidência na mão.</p>
@@ -379,7 +394,7 @@
               <li>Carta de atestação com data e escopo (LGPD)</li>
             </ul>
             <p class="work-price">Investimento sob proposta · reteste incluso</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico%20%2B%20Corre%C3%A7%C3%A3o%20(o%20recomendado)." target="_blank" rel="noopener">
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico%20%2B%20Corre%C3%A7%C3%A3o%20(o%20recomendado)." target="_blank" rel="noopener" aria-label="Quero este pacote: Diagnóstico + Correção — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
               Quero este pacote
             </a>
@@ -396,7 +411,7 @@
               <li>Evidência contínua para compliance</li>
             </ul>
             <p class="work-price">Retainer mensal sob proposta</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20de%20Acompanhamento%20recorrente." target="_blank" rel="noopener">
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20de%20Acompanhamento%20recorrente." target="_blank" rel="noopener" aria-label="Quero este pacote: Acompanhamento — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
               Quero este pacote
             </a>
@@ -447,7 +462,7 @@
   </footer>
 
   <!-- Botão flutuante do WhatsApp -->
-  <a class="wa-fab" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <a class="wa-fab" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Fale comigo no WhatsApp">
     <span class="wa-fab-ring" aria-hidden="true"></span>
     <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
     <span class="wa-fab-label">Fale comigo</span>

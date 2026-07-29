@@ -30,13 +30,31 @@
     revealTargets.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------- spotlight interativo nos cards de pacote ---------- */
+  /* ---------- spotlight interativo nos cards de pacote ----------
+     pointermove dispara na taxa do dispositivo (pode passar de 1000 Hz em
+     mouses gamer e em telas de alta taxa). Escrever custom properties a cada
+     evento força um recálculo de estilo por evento. Aqui o evento só guarda a
+     última posição e um requestAnimationFrame — coalescido por uma flag —
+     escreve no máximo uma vez por quadro. */
   if (!prefersReduced && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
     document.querySelectorAll('.work-card').forEach(function (card) {
-      card.addEventListener('pointermove', function (e) {
+      var pendente = false;
+      var ultimoX = 0, ultimoY = 0;
+
+      function aplicar() {
+        pendente = false;
         var r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
-        card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+        if (!r.width || !r.height) return;
+        card.style.setProperty('--mx', ((ultimoX - r.left) / r.width) * 100 + '%');
+        card.style.setProperty('--my', ((ultimoY - r.top) / r.height) * 100 + '%');
+      }
+
+      card.addEventListener('pointermove', function (e) {
+        ultimoX = e.clientX;
+        ultimoY = e.clientY;
+        if (pendente) return;      // já há um quadro agendado: coalesce
+        pendente = true;
+        requestAnimationFrame(aplicar);
       });
     });
   }
@@ -92,14 +110,19 @@
       var y = drops[i] * fontSize;
       var ch = GLYPHS.charAt((Math.random() * GLYPHS.length) | 0);
 
+      // Alfas contidos por CONTRASTE (WCAG 1.4.3): a chuva passa por trás de
+      // texto em --fg-3, e no alfa antigo (líder 0.95 / glifos até 0.85) o pior
+      // pixel derrubava esse texto a 1,08:1. Com estes valores o pior caso
+      // analítico sobe para 3,19:1. Chegar a 4,5:1 exigiria opacidade 0.14 no
+      // #matrix — ou seja, apagar o efeito; ver relatório.
       if (Math.random() < 0.03) {
-        ctx.fillStyle = 'rgba(233, 240, 245, 0.95)'; // líder "piscando" claro
+        ctx.fillStyle = 'rgba(226, 236, 245, 0.45)'; // líder "piscando" claro
       } else if (Math.random() < 0.07) {
         ctx.fillStyle =
           (Math.random() < 0.5 ? 'rgba(56, 189, 248, ' : 'rgba(129, 140, 248, ') +
-          (0.35 + Math.random() * 0.45) + ')'; // respingos sky/indigo
+          (0.26 + Math.random() * 0.24) + ')'; // respingos sky/indigo
       } else {
-        ctx.fillStyle = 'rgba(45, 212, 191, ' + (0.35 + Math.random() * 0.5) + ')'; // teal
+        ctx.fillStyle = 'rgba(45, 212, 191, ' + (0.26 + Math.random() * 0.26) + ')'; // teal
       }
       ctx.fillText(ch, x, y);
 
