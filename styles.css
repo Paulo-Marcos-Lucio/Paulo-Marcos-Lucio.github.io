@@ -255,6 +255,7 @@ body > * { position: relative; z-index: 1; }
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
 }
 .section-header { max-width: 720px; margin-bottom: 44px; }
+.section-header .hero-stats { margin-top: 22px; }
 .section-eyebrow {
   display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; margin-bottom: 16px;

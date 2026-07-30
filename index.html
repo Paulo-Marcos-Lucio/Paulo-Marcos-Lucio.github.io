@@ -108,7 +108,7 @@
             <span class="gradient-text">do diagnóstico à correção.</span>
           </h1>
           <p class="hero-subtitle">
-            Encontro o que está <strong>mal configurado e exposto</strong> no seu sistema web — cabeçalhos, TLS, cookies, CORS, arquivos sensíveis, DNS — <strong>antes que vire incidente</strong>, e entrego um plano de correção claro e auditável. Feito por quem construiu <strong>sistemas financeiros regulados</strong>, onde errar em segurança não é opção.
+            Encontro o que está <strong>mal configurado e exposto</strong> no seu sistema web — cabeçalhos, TLS, cookies, CORS, DNS, <strong>formulários e injeção (SQLi/XSS)</strong> — <strong>antes que vire incidente</strong>, e entrego um plano de correção claro e auditável. Feito por quem construiu <strong>sistemas financeiros regulados</strong>, onde errar em segurança não é opção.
           </p>
           <div class="hero-actions">
             <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
@@ -243,13 +243,18 @@
           <p class="section-lead">
             Você não contrata uma caixa-preta. Cada engajamento é apoiado por <strong>ferramenta própria, testada e aberta</strong> — cinco frentes do OWASP Top 10, do perímetro à autenticação, dos segredos à cadeia de suprimentos.
           </p>
+          <ul class="hero-stats" aria-label="Resultados medidos em campo">
+            <li><strong>100%</strong><span>recall em segredos e ataques JWT (medido)</span></li>
+            <li><strong>2,16 / 1000</strong><span>falsos-positivos por mil arquivos reais</span></li>
+            <li><strong>~92 s → &lt;0,01 s</strong><span>DoS de CI eliminado, comprovado</span></li>
+          </ul>
         </header>
 
         <div class="suite-grid">
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">
             <div class="suite-top"><span class="suite-ico" aria-hidden="true">🛡️</span><span class="suite-frente">Perímetro</span></div>
             <h3>Sentinela</h3>
-            <p>Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS — com relatório mapeado ao OWASP Top 10:2025.</p>
+            <p>Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS <strong>e superfície de injeção</strong> (formulários, CSRF, reflexão de parâmetro) — mapeado ao OWASP Top 10:2025. A edição <strong>Pro</strong> vai além e <strong>confirma</strong> SQLi/XSS com prova segura.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/guardiao" target="_blank" rel="noopener">
@@ -273,7 +278,7 @@
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/laboratorio-owasp" target="_blank" rel="noopener">
             <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente">Correção</span></div>
             <h3>Laboratório OWASP</h3>
-            <p><strong>8 vulnerabilidades</strong> em 4 categorias do OWASP Top 10 (A01, A02, A03, A10), cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando cada correção. Em Spring Boot.</p>
+            <p>Vulnerabilidades em várias categorias do OWASP Top 10 — <strong>incluindo injeção (A05: SQLi, XSS, command)</strong> — cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando que o lado corrigido <strong>corrige de verdade</strong>. Em Spring Boot.</p>
             <span class="suite-link">Java · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card suite-card-all" href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">
@@ -293,9 +298,10 @@
             </p>
             <ul class="project-feats">
               <li>Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail</li>
+              <li>Superfície de injeção: formulários, CSRF, credencial em GET, reflexão de parâmetro (XSS)</li>
               <li>Achados mapeados ao OWASP Top 10:2025 + CWE</li>
               <li>Relatório em HTML, Markdown, JSON e SARIF 2.1.0 (ingestável pela aba Security do GitHub)</li>
-              <li>Não-intrusiva por padrão · checagens ativas só com autorização</li>
+              <li>Não-intrusiva por padrão · confirmação ativa de SQLi/XSS na edição Pro, só com autorização</li>
             </ul>
             <a class="btn btn-primary" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Ver no GitHub ↗</a>
           </div>
