@@ -319,6 +319,8 @@ body > * { position: relative; z-index: 1; }
 .terminal-body .ok { color: var(--accent-strong); }
 .terminal-body .warn { color: var(--warn); }
 .terminal-body .grade { color: var(--link); }
+.terminal-body .crit { color: #ff5c6c; font-weight: 600; }
+#pro .hero-stats { margin-top: 32px; max-width: none; }
 
 /* ----- background / credibilidade ----- */
 .cred { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: center; }
