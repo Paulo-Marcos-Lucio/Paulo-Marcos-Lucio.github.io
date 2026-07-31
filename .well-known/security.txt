@@ -1,0 +1,16 @@
+# Canal de contato para divulgação responsável de vulnerabilidades.
+# RFC 9116 — https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: mailto:pmlsp23@gmail.com
+Contact: https://www.linkedin.com/in/paulo-marcos-a07379174/
+Expires: 2027-07-31T23:59:59.000Z
+Preferred-Languages: pt-BR, en
+Canonical: https://paulo-marcos-lucio.github.io/.well-known/security.txt
+
+# Escopo: este site (paulo-marcos-lucio.github.io) e os repositórios públicos
+# em https://github.com/Paulo-Marcos-Lucio
+#
+# Se encontrou algo, me diga o que observou e como reproduzir. Eu respondo,
+# corrijo e credito quem reportou, se a pessoa quiser ser creditada.
+#
+# Não há programa de recompensa financeira.

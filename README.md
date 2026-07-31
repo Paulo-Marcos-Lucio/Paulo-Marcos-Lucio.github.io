@@ -21,6 +21,9 @@ dinâmico). Deploy via GitHub Pages, branch `main`, raiz do repo.
 - `favicon.svg` / `apple-touch-icon.png` / `og-image.svg` / `og-image.png` — identidade visual (escudo)
 - `avatar.jpg` — foto de perfil, também auto-hospedada
 - `robots.txt` + `sitemap.xml` — SEO básico
+- `.well-known/security.txt` — canal de divulgação responsável (RFC 9116)
+- `.nojekyll` — desliga o Jekyll, sem o qual `/.well-known/` não seria servido
+- `_headers` — cabeçalhos prontos, **inertes no GitHub Pages** (ver abaixo)
 
 ## Postura de segurança e privacidade
 
@@ -32,12 +35,31 @@ Um site que vende adequação à LGPD não pode vazar o visitante para terceiros
 - **CSP restritiva** via `<meta http-equiv>`: `default-src 'none'` com allowlist
   mínima; sem `'unsafe-inline'` (nenhum `style=` ou `<script>` inline no HTML).
 - **`Referrer-Policy: strict-origin-when-cross-origin`** via `<meta name="referrer">`.
+- **Canal de reporte publicado** em `/.well-known/security.txt` (RFC 9116).
 
-O GitHub Pages **não permite cabeçalhos de resposta**, então `X-Frame-Options`,
-`X-Content-Type-Options` e a diretiva `frame-ancestors` não têm como ser
-aplicados aqui — `<meta http-equiv>` os ignora. Estão conscientemente ausentes
-em vez de declarados de forma inócua. Proteção contra clickjacking e
-MIME-sniffing exigiria mover a hospedagem para um servidor/CDN próprio.
+### O teto da plataforma, dito na cara
+
+O GitHub Pages **não permite cabeçalhos de resposta**. E `<meta http-equiv>` só
+vale para CSP e Referrer-Policy: o navegador **ignora** `X-Frame-Options`,
+`X-Content-Type-Options` e a diretiva `frame-ancestors` quando vêm de metatag.
+Eles estão conscientemente ausentes, em vez de declarados de forma inócua para
+enganar scanner.
+
+O efeito disso é mensurável. A [Sentinela](https://github.com/Paulo-Marcos-Lucio/sentinela)
+avalia cabeçalho de resposta, como qualquer scanner externo, e o placar máximo
+possível desta página **enquanto ela viver no GitHub Pages** é:
+
+| Achado remanescente | Severidade | Custo na nota |
+| --- | --- | --- |
+| Sem proteção contra clickjacking | Média | −8 |
+| `X-Content-Type-Options` ausente | Baixa | −3 |
+| **Teto** | | **89 / B** |
+
+Não existe truque de HTML que feche esses dois. Fechá-los exige um host que
+emita cabeçalho — Cloudflare Pages ou Netlify leem o `_headers` deste repositório
+como está, e o placar vai a 100 sem tocar em uma linha do site. É uma decisão de
+hospedagem, não de código, e está registrada aqui para que ninguém precise
+descobrir sozinho.
 
 ## Desenvolvimento local
 

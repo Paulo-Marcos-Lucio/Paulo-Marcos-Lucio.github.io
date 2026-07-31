@@ -1,0 +1,22 @@
+# Cabeçalhos de resposta do site.
+#
+# ATENÇÃO: este arquivo NÃO tem efeito no GitHub Pages, que não permite
+# definir cabeçalho de resposta nenhum. Ele está aqui pronto para o dia em que
+# o site for servido por um host que lê este formato (Cloudflare Pages,
+# Netlify) ou for colocado atrás de um CDN com regra de transformação.
+#
+# Enquanto o site roda no GitHub Pages, a proteção real vem das metatags no
+# <head> do index.html — e elas cobrem só CSP e Referrer-Policy. Clickjacking
+# (frame-ancestors / X-Frame-Options) e MIME sniffing (X-Content-Type-Options)
+# são ignorados em metatag pelos navegadores e ficam descobertos. Isso está
+# documentado no README, e não é maquiado.
+
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload

@@ -1,0 +1,5 @@
+Desliga o pipeline Jekyll do GitHub Pages.
+
+Sem este arquivo o Jekyll ignora tudo que começa com ponto ou sublinhado, e
+`/.well-known/security.txt` (RFC 9116) nunca chegaria ao visitante. O site é
+HTML/CSS/JS estático e não usa nada do Jekyll, então desligar não custa nada.
