@@ -102,14 +102,14 @@
         <div>
           <p class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
-            Disponível para novos diagnósticos
+            Auto-scan do meu próprio site: nota C, 70/100 — publicado, sem maquiar
           </p>
           <h1 class="hero-title">
-            Segurança de aplicações web,<br />
-            <span class="gradient-text">do diagnóstico à correção.</span>
+            Escrevi as implementações de referência do Pix e do Open Finance.<br />
+            <span class="gradient-text">Agora eu acho o que está exposto no seu sistema.</span>
           </h1>
           <p class="hero-subtitle">
-            Encontro o que está <strong>mal configurado e exposto</strong> no seu sistema web — cabeçalhos, TLS, cookies, CORS, DNS, <strong>formulários e injeção (SQLi/XSS)</strong> — <strong>antes que vire incidente</strong>, e entrego um plano de correção claro e auditável. Feito por quem <strong>escreveu as implementações de referência</strong> dos sistemas financeiros regulados brasileiros — Pix, Open Finance, DICT —, onde errar em segurança não é opção. <strong>Código público, com teste: confira.</strong>
+            Cabeçalhos, TLS, cookies, CORS, DNS, formulários e injeção (SQLi/XSS): eu mapeio a superfície que um atacante enxerga e te devolvo um plano de correção que cabe no sprint do time — <strong>porque eu já fui o time de dev</strong>. Código aberto, com teste: <a href="#ferramentas">veja a suíte que eu uso</a>.
           </p>
           <div class="hero-actions">
             <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
@@ -118,10 +118,10 @@
             </a>
             <a class="btn btn-ghost" href="#ferramentas">Ver minhas ferramentas</a>
           </div>
-          <ul class="hero-stats" aria-label="Referências de atuação">
-            <li><strong>OWASP Top 10</strong><span>edição 2025 + CWE</span></li>
-            <li><strong>LGPD art. 46</strong><span>medidas técnicas</span></li>
-            <li><strong>5 ferramentas</strong><span>open source, testadas</span></li>
+          <ul class="hero-stats" aria-label="Provas medidas, reproduzíveis">
+            <li><strong>C · 70/100</strong><span>auto-scan do meu site, publicado</span></li>
+            <li><strong>13/14</strong><span>segredos achados no corpus · 0 falso-positivo</span></li>
+            <li><strong>5 ferramentas</strong><span>abertas, com teste e CI verde</span></li>
           </ul>
         </div>
 
@@ -171,7 +171,7 @@
           </article>
         </div>
         <div class="provoke-cta">
-          <a class="btn btn-primary" href="#pacotes">Quero saber onde estou exposto</a>
+          <a class="btn btn-primary" href="#ferramentas">Ver a resposta num relatório real</a>
         </div>
       </div>
     </section>
@@ -222,7 +222,7 @@
           <p class="section-eyebrow">Método</p>
           <h2 class="section-title">Como um engajamento funciona</h2>
           <p class="section-lead">
-            Escopo claro, entrega auditável. Do primeiro diagnóstico ao acompanhamento recorrente — sem promessa de "segurança absoluta", porque segurança é <strong>redução contínua de risco</strong>.
+            Escopo claro, entrega auditável. Do primeiro diagnóstico ao acompanhamento recorrente — segurança é <strong>redução contínua de risco</strong>, medida e comprovada a cada reteste.
           </p>
         </header>
         <div class="steps">
@@ -240,13 +240,16 @@
       <div class="container">
         <header class="section-header">
           <p class="section-eyebrow">Ferramentas · Open source</p>
-          <h2 class="section-title">A suíte que eu uso — e que deixo pública pra você auditar</h2>
+          <h2 class="section-title">A suíte que eu uso — e que deixo aberta pra você auditar</h2>
           <p class="section-lead">
-            Você não contrata uma caixa-preta. Cada engajamento é apoiado por <strong>ferramenta própria, testada e aberta</strong> — cinco frentes do OWASP Top 10, do perímetro à autenticação, dos segredos à cadeia de suprimentos.
+            Você não contrata uma caixa-preta. Cada engajamento é apoiado por <strong>ferramenta própria, testada e aberta</strong> — cinco frentes do OWASP Top 10, do perímetro à autenticação, dos segredos à cadeia de suprimentos. Nenhum scanner sozinho vence: eu rodo a minha suíte ao lado do gitleaks, do trufflehog e do zizmor — e o que você contrata é a <strong>triagem e o laudo</strong>, não o scanner.
           </p>
-          <ul class="hero-stats" aria-label="Números medidos em corpus público, reproduzíveis">
-            <li><strong>13/14</strong><span>segredos achados no corpus público do repositório</span></li>
-            <li><strong>0</strong><span>falsos-positivos nas 14 armadilhas do mesmo corpus</span></li>
+          <p class="section-lead">
+            Não acredite na minha palavra: publiquei o <a href="https://github.com/Paulo-Marcos-Lucio/guardiao/blob/main/BENCHMARK.md" target="_blank" rel="noopener"><strong>benchmark honesto</strong></a> contra esses três incumbentes — versões e commits fixados, reproduzível, e <strong>diz onde eles são mais enxutos que eu</strong>. Quem só mostra onde ganha está te escondendo alguma coisa.
+          </p>
+          <ul class="hero-stats" aria-label="Números medidos em corpus público, reproduzíveis em dois comandos">
+            <li><strong>17/17 · 20/20</strong><span>regras e recall no corpus da Esteira · 0 falso-positivo</span></li>
+            <li><strong>22/22</strong><span>vetores JWT no corpus do Chaveiro · 0 falso-positivo</span></li>
             <li><strong>7,1 s → &lt;0,01 s</strong><span>travamento de CI por ReDoS, medido e corrigido</span></li>
           </ul>
         </header>
@@ -255,13 +258,13 @@
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">
             <div class="suite-top"><span class="suite-ico" aria-hidden="true">🛡️</span><span class="suite-frente">Perímetro</span></div>
             <h3>Sentinela</h3>
-            <p>Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS <strong>e superfície de injeção</strong> (formulários, CSRF, reflexão de parâmetro) — mapeado ao OWASP Top 10:2025. A edição <strong>Pro</strong> vai além e <strong>confirma</strong> SQLi/XSS com prova segura.</p>
+            <p>Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS <strong>e superfície de injeção</strong> (formulários, CSRF, reflexão de parâmetro) — mapeado ao OWASP Top 10:2025. A edição <strong>Pro</strong> acrescenta código: <strong>confirma</strong> SQLi/XSS com prova segura, só sob autorização.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/guardiao" target="_blank" rel="noopener">
             <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente">Segredos</span></div>
             <h3>Guardião</h3>
-            <p>Scanner de segredos vazados no código <strong>e no histórico Git</strong> — entropia de Shannon, baseline, SARIF e hook de pre-commit.</p>
+            <p>Scanner de segredos vazados no código <strong>e no histórico Git</strong> — entropia normalizada, baseline, SARIF e hook de pre-commit. Recall <strong>13/14</strong> no corpus, 0 falso-positivo.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/chaveiro" target="_blank" rel="noopener">
@@ -279,7 +282,7 @@
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/laboratorio-owasp" target="_blank" rel="noopener">
             <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente">Correção</span></div>
             <h3>Laboratório OWASP</h3>
-            <p>Vulnerabilidades em várias categorias do OWASP Top 10 — <strong>incluindo injeção (A05: SQLi, XSS, command)</strong> — cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando que o lado corrigido <strong>corrige de verdade</strong>. Em Spring Boot.</p>
+            <p><strong>8 vulnerabilidades em 3 categorias</strong> do OWASP Top 10:2025 (A01, A04 e A05) — com destaque para <strong>injeção (A05: SQLi, XSS, command)</strong> — cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando que o lado corrigido <strong>corrige de verdade</strong>. Em Spring Boot.</p>
             <span class="suite-link">Java · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card suite-card-all" href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">
@@ -292,24 +295,24 @@
 
         <div class="project project-destacado">
           <div>
-            <span class="project-badge">Em ação · Sentinela</span>
-            <h3>É assim que o seu diagnóstico começa</h3>
+            <span class="project-badge">Prova real · Sentinela</span>
+            <h3>Comecei pelo meu próprio site — e publiquei a nota</h3>
             <p>
-              A Sentinela é o primeiro passo de cada engajamento: audita, de forma <strong>não-intrusiva</strong>, a higiene de segurança da sua aplicação e gera um relatório profissional — o mesmo que chega até você.
+              Este relatório é do <strong>meu domínio</strong>, rodado de forma <strong>não-intrusiva</strong> em 21/07/2026. Deu <strong>C · 70/100</strong>, com CSP e DMARC ausentes — e está publicado assim, sem maquiar. É exatamente o formato que chega até você. Quem esconde a própria nota é quem tem medo dela.
             </p>
             <ul class="project-feats">
               <li>Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail</li>
               <li>Superfície de injeção: formulários, CSRF, credencial em GET, reflexão de parâmetro (XSS)</li>
               <li>Achados mapeados ao OWASP Top 10:2025 + CWE</li>
               <li>Relatório em HTML, Markdown, JSON e SARIF 2.1.0 (ingestável pela aba Security do GitHub)</li>
-              <li>Não-intrusiva por padrão · confirmação ativa de SQLi/XSS na edição Pro, só com autorização</li>
+              <li>Reproduzível em dois comandos — não é maquete, é o meu alvo</li>
             </ul>
             <a class="btn btn-primary" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Ver no GitHub ↗</a>
           </div>
           <div class="terminal" aria-hidden="true">
             <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title">sentinela — diagnóstico</span></div>
             <div class="terminal-body">
-              <div><span class="prompt">$</span> sentinela scan <span class="ok">exemplo.com.br</span></div>
+              <div><span class="prompt">$</span> sentinela scan <span class="ok">paulo-marcos-lucio.github.io</span></div>
               <div class="muted">─────────────────────────────</div>
               <div>Nota de higiene: <span class="grade">C · 70/100</span></div>
               <div class="muted">Cabeçalhos de Segurança</div>
@@ -330,48 +333,48 @@
     <section id="pro" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Edição Pro · privada</p>
-          <h2 class="section-title">A vitrine mostra a fachada. A <span class="gradient-text">Pro enxerga o que há atrás</span>.</h2>
+          <p class="section-eyebrow">Edição Pro</p>
+          <h2 class="section-title">O que <span class="gradient-text">está aberto continua aberto</span>. A Pro só acrescenta.</h2>
           <p class="section-lead">
-            Tudo que está aberto aqui é <strong>passivo e defensivo</strong> — de propósito. A leitura profunda, a que <strong>confirma</strong> a falha em vez de só apontá-la, é <strong>privada por responsabilidade</strong>: uma capacidade dessas na mão de qualquer um é risco, não recurso. É a diferença entre <em>ler a fachada</em> e <em>enxergar por dentro da superfície</em> — sempre sob autorização e escopo.
+            Nada sai do público — o que é gratuito hoje é seu, de graça, para sempre. A Pro nunca tira: ela <strong>acrescenta</strong>, e sempre diz por quê. No <strong>Sentinela</strong>, acrescenta código — o motor ativo que <strong>confirma</strong> a falha (emite requisição contra o alvo; por isso só roda com autorização por escrito, não num binário que qualquer um baixa). Nas outras ferramentas o motor é idêntico ao que você baixa: o que a Pro acrescenta é o <strong>serviço</strong> — triagem, correção e laudo datado. Detectar é de graça; <strong>corrigir é trabalho, e trabalho é o que eu vendo</strong>.
           </p>
         </header>
         <div class="project project-destacado">
           <div>
             <span class="project-badge">Sentinela · edição Pro</span>
-            <h3>Da superfície à prova</h3>
+            <h3>O que você vê / o que eu vejo</h3>
             <p>
-              O diagnóstico público diz <em>“isto é uma superfície de injeção”</em>. A Pro dá o passo que falta e diz <em>“isto <strong>confirma</strong>”</em> — com payload seguro e marcador inerte, <strong>sem explorar</strong>, sem extrair um dado, sem persistir nada. A fachada parece impecável até alguém provar o que existe atrás dela.
+              Mesmo alvo, mesmo dia. O diagnóstico público diz <em>“isto é uma superfície de injeção”</em>. A Pro dá o passo que falta e diz <em>“isto <strong>confirma</strong>”</em> — com payload seguro e marcador inerte, <strong>sem explorar</strong>, sem extrair um dado, sem persistir nada. A distância entre <em>talvez</em> e <em>confirmado</em> é a distância entre dormir e não dormir.
             </p>
             <ul class="project-feats">
               <li>Confirma <strong>SQLi, XSS</strong> e mais cinco classes de injeção — não infere, prova</li>
-              <li>Mapeia a <strong>aplicação inteira</strong>, página a página — não a URL que você digitou</li>
+              <li>Mapeia a <strong>aplicação inteira</strong>, página a página — não só a URL que você digitou</li>
               <li>Confirma <strong>no ar</strong> se um endpoint da API exige autenticação de fato</li>
               <li>Read-only, só sob <strong>autorização por escrito</strong> — a linha vermelha é código, não promessa</li>
             </ul>
             <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20a%20leitura%20profunda%20%28edi%C3%A7%C3%A3o%20Pro%29%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp sobre a edição Pro">
               <svg class="wa-ico" viewBox="0 0 32 32" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero a leitura profunda
+              Quero a confirmação ativa (Pro)
             </a>
           </div>
           <div class="terminal" aria-hidden="true">
             <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title">sentinela — edição Pro</span></div>
             <div class="terminal-body">
-              <div><span class="prompt">$</span> sentinela scan <span class="ok">app.exemplo</span> --autorizado --profundo</div>
-              <div class="muted">─────────────────────────────</div>
-              <div>superfície mapeada: <span class="grade">14 páginas</span></div>
+              <div><span class="prompt">$</span> sentinela scan <span class="ok">laboratorio-owasp</span> --autorizado --profundo</div>
+              <div class="muted">── alvo meu, vulnerável de propósito ──</div>
+              <div>superfície mapeada: <span class="grade">aplicação inteira</span></div>
               <div class="muted">A05 · Injeção (confirmada)</div>
               <div><span class="crit">CRÍTICA</span> SQLI_CONFIRMADO · /busca?q <span class="muted">(boolean+tempo)</span></div>
               <div><span class="warn">ALTA</span> XSS_REFLETIDO_CONFIRMADO · /perfil?nome</div>
-              <div class="muted">precisão <span class="ok">1,00</span> · recall <span class="ok">1,00</span> · 0 falso-positivo</div>
+              <div class="muted">1,00 / 1,00 em lab controlado · 0 falso-positivo</div>
               <div class="muted">→ read-only · sob autorização · marcador inerte</div>
             </div>
           </div>
         </div>
-        <ul class="hero-stats" aria-label="A edição Pro em números">
-          <li><strong>1,00 / 1,00</strong><span>precisão e recall nas 7 classes de injeção (lab controlado)</span></li>
+        <ul class="hero-stats" aria-label="A fronteira da edição Pro">
+          <li><strong>Nada sai do público</strong><span>o que é aberto continua aberto, para sempre</span></li>
           <li><strong>Confirma, não explora</strong><span>payload seguro, marcador inerte, read-only</span></li>
-          <li><strong>Só sob autorização</strong><span>no seu sistema, com escopo por escrito</span></li>
+          <li><strong>Linha vermelha em código</strong><span>só sob autorização por escrito — é uma flag, não promessa</span></li>
         </ul>
       </div>
     </section>
@@ -380,10 +383,10 @@
     <section class="section">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Bagagem</p>
-          <h2 class="section-title">De sistemas financeiros regulados à segurança</h2>
+          <p class="section-eyebrow">Autoridade</p>
+          <h2 class="section-title">Eu escrevi o código que o seu time vai ter que mudar</h2>
           <p class="section-lead">
-            Não venho "de fora" da engenharia. Venho de <strong>construir sistemas onde errar em segurança não é uma opção</strong> — e trago essa régua para o seu diagnóstico.
+            Venho de <strong>construir sistemas onde errar em segurança não é uma opção</strong> — as implementações de referência do Pix, do Open Finance e do DICT. Trago essa régua para o seu diagnóstico, e as correções que eu recomendo cabem no sprint do seu time.
           </p>
         </header>
         <div class="cred">
@@ -418,7 +421,7 @@
           <p class="section-eyebrow">Pacotes</p>
           <h2 class="section-title">Escolha por onde começar</h2>
           <p class="section-lead">
-            Sempre pacote fechado, escopo definido e <strong>reteste incluso</strong>. O investimento é apresentado sob proposta, depois de entender o tamanho e o contexto da sua aplicação — sem letra miúda.
+            Sempre <strong>pacote fechado</strong>, escopo definido e <strong>reteste incluso</strong>. Sem retainer obrigatório e sem call de vendas para descobrir o preço: você recebe uma proposta com valor fechado logo na primeira conversa. Se não couber no seu momento, eu digo na hora.
           </p>
         </header>
         <div class="work-grid">
@@ -433,10 +436,10 @@
               <li>Recomendações de correção priorizadas</li>
               <li>Reunião de apresentação dos resultados</li>
             </ul>
-            <p class="work-price">Investimento sob proposta</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico." target="_blank" rel="noopener" aria-label="Quero este pacote: Diagnóstico — falar no WhatsApp">
+            <p class="work-price">Valor fechado na proposta · reunião de resultados inclusa</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico." target="_blank" rel="noopener" aria-label="Quero começar pelo diagnóstico — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero este pacote
+              Quero começar pelo diagnóstico
             </a>
           </article>
 
@@ -450,10 +453,10 @@
               <li>Reteste comprovando a redução de risco</li>
               <li>Carta de atestação com data e escopo (LGPD)</li>
             </ul>
-            <p class="work-price">Investimento sob proposta · reteste incluso</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico%20%2B%20Corre%C3%A7%C3%A3o%20(o%20recomendado)." target="_blank" rel="noopener" aria-label="Quero este pacote: Diagnóstico + Correção — falar no WhatsApp">
+            <p class="work-price">Valor fechado na proposta · reteste e atestação inclusos</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico%20%2B%20Corre%C3%A7%C3%A3o%20(o%20recomendado)." target="_blank" rel="noopener" aria-label="Quero o pacote recomendado: Diagnóstico + Correção — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero este pacote
+              Quero o recomendado
             </a>
           </article>
 
@@ -467,14 +470,14 @@
               <li>Canal direto para dúvidas de segurança</li>
               <li>Evidência contínua para compliance</li>
             </ul>
-            <p class="work-price">Retainer mensal sob proposta</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20de%20Acompanhamento%20recorrente." target="_blank" rel="noopener" aria-label="Quero este pacote: Acompanhamento — falar no WhatsApp">
+            <p class="work-price">Mensalidade fechada na proposta · sem fidelidade</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20de%20Acompanhamento%20recorrente." target="_blank" rel="noopener" aria-label="Quero acompanhamento contínuo — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero este pacote
+              Quero acompanhamento contínuo
             </a>
           </article>
         </div>
-        <p class="work-foot">Sem promessa de "100% seguro". Segurança é redução de risco mensurável — e eu comprovo com reteste.</p>
+        <p class="work-foot">Segurança é redução de risco mensurável — comprovada com reteste datado, não com PDF de promessa.</p>
       </div>
     </section>
 
@@ -483,7 +486,7 @@
       <div class="container cta-inner">
         <h2 class="cta-title">Seu sistema web já foi olhado por um par técnico?</h2>
         <p class="cta-lead">
-          Me conta em uma linha qual é a aplicação e o contexto. Chamada rápida, sem compromisso — e você já sai sabendo o próximo passo.
+          Me conta em uma linha qual é a aplicação e o contexto — você já sai sabendo o próximo passo. Ainda medindo? Rode o Sentinela no seu domínio; se a nota vier abaixo de B, me manda o relatório e a conversa começa no seu achado, não no meu discurso.
         </p>
         <div class="cta-actions">
           <a class="btn btn-wa btn-lg" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20conversar%20sobre%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a." target="_blank" rel="noopener">
