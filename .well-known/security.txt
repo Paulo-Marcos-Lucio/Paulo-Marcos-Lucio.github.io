@@ -1,7 +1,7 @@
 # Canal de contato para divulgação responsável de vulnerabilidades.
 # RFC 9116 — https://www.rfc-editor.org/rfc/rfc9116
 
-Contact: mailto:pmlsp23@gmail.com
+Contact: mailto:contatopml26@gmail.com
 Contact: https://www.linkedin.com/in/paulo-marcos-a07379174/
 Expires: 2027-07-31T23:59:59.000Z
 Preferred-Languages: pt-BR, en
