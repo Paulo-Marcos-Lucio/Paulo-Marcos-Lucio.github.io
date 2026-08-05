@@ -483,6 +483,13 @@ body > * { position: relative; z-index: 1; }
 .suite-card:hover .suite-link .arw { transform: translateX(4px); }
 .suite-card-all { background: linear-gradient(180deg, rgba(56, 189, 248, 0.06), var(--bg-2)); border-style: dashed; }
 
+/* ----- sub-cabeçalho e cards da suíte inteira na Edição Pro ----- */
+.suite-sub-header { max-width: 760px; margin: 40px auto 22px; text-align: center; }
+.suite-sub-header h3 { font-size: 22px; color: var(--fg-1); margin-bottom: 10px; }
+.suite-sub-header p { font-size: 15px; color: var(--fg-3); line-height: 1.6; }
+.suite-card-pro { background: linear-gradient(180deg, rgba(45, 212, 191, 0.05), var(--bg-2)); }
+.suite-card-pro .suite-link { color: var(--accent-strong); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; align-self: flex-start; }
+
 /* ----- pacotes: cards reluzentes e interativos ----- */
 .work-card { position: relative; isolation: isolate; --glow: #2dd4bf; --glow2: #5eead4; }
 .work-card.acc-teal { --glow: #2dd4bf; --glow2: #5eead4; }

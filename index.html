@@ -102,7 +102,7 @@
         <div>
           <p class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
-            Auto-scan do meu próprio site: nota C, 70/100 — publicado, sem maquiar
+            Auto-scan do meu próprio site: começou em C·70, hoje é B·89 — a subida publicada, sem maquiar
           </p>
           <h1 class="hero-title">
             Escrevi as implementações de referência do Pix e do Open Finance.<br />
@@ -119,7 +119,7 @@
             <a class="btn btn-ghost" href="#ferramentas">Ver minhas ferramentas</a>
           </div>
           <ul class="hero-stats" aria-label="Provas medidas, reproduzíveis">
-            <li><strong>C · 70/100</strong><span>auto-scan do meu site, publicado</span></li>
+            <li><strong>C·70 → B·89</strong><span>auto-scan do meu site: achei, corrigi, retestei</span></li>
             <li><strong>13/14</strong><span>segredos achados no corpus · 0 falso-positivo</span></li>
             <li><strong>5 ferramentas</strong><span>abertas, com teste e CI verde</span></li>
           </ul>
@@ -140,9 +140,9 @@
           </div>
           <div class="hero-card-scan" aria-hidden="true">
             <div class="scan-line"><span class="lbl">🔒 TLS / Certificado</span> <span class="scan-badge b-ok">OK</span></div>
-            <div class="scan-line"><span class="lbl">📋 Cabeçalhos de segurança</span> <span class="scan-badge b-warn">3 achados</span></div>
+            <div class="scan-line"><span class="lbl">📋 CSP (via &lt;meta&gt;)</span> <span class="scan-badge b-ok">OK</span></div>
             <div class="scan-line"><span class="lbl">🍪 Cookies &amp; CORS</span> <span class="scan-badge b-ok">OK</span></div>
-            <div class="scan-line"><span class="lbl">📡 DNS / e-mail (SPF/DMARC)</span> <span class="scan-badge b-warn">2 achados</span></div>
+            <div class="scan-line"><span class="lbl">🖼️ Clickjacking</span> <span class="scan-badge b-warn">limite do host</span></div>
           </div>
         </aside>
       </div>
@@ -296,32 +296,32 @@
         <div class="project project-destacado">
           <div>
             <span class="project-badge">Prova real · Sentinela</span>
-            <h3>Comecei pelo meu próprio site — e publiquei a nota</h3>
+            <h3>Comecei pelo meu próprio site — achei, corrigi, retestei</h3>
             <p>
-              Este relatório é do <strong>meu domínio</strong>, rodado de forma <strong>não-intrusiva</strong> em 21/07/2026. Deu <strong>C · 70/100</strong>, com CSP e DMARC ausentes — e está publicado assim, sem maquiar. É exatamente o formato que chega até você. Quem esconde a própria nota é quem tem medo dela.
+              Rodei a minha ferramenta no <strong>meu domínio</strong>, não-intrusiva. Deu <strong>C · 70/100</strong> e listou o quê: CSP ausente, clickjacking, DMARC. Corrigi o que a plataforma permite (CSP via <code>&lt;meta&gt;</code>) e o reteste subiu para <strong>B · 89/100</strong> — publicado assim, sem maquiar. <strong>Por que não é A?</strong> Os pontos que faltam (X-Frame-Options, X-Content-Type-Options, HSTS com subdomínios) são <strong>cabeçalhos que o GitHub Pages não deixa nenhum site definir</strong> — é limite da hospedagem, não do site, e a própria ferramenta me diz isso com a linha exata e a saída (domínio próprio + CDN). <strong>Um scanner te dá um número; um diagnóstico te diz por que o número é esse e o que fazer.</strong>
             </p>
             <ul class="project-feats">
-              <li>Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail</li>
-              <li>Superfície de injeção: formulários, CSRF, credencial em GET, reflexão de parâmetro (XSS)</li>
-              <li>Achados mapeados ao OWASP Top 10:2025 + CWE</li>
+              <li><strong>Achei → corrigi → retestei:</strong> a subida C·70 → B·89 é o reteste que eu vendo, feito no meu próprio alvo</li>
+              <li>Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail — mapeados ao OWASP Top 10:2025 + CWE</li>
+              <li>Reconhece hospedagem gerenciada e <strong>não te penaliza por DNS que você não controla</strong> (o DMARC do github.io saiu, honestamente)</li>
               <li>Relatório em HTML, Markdown, JSON e SARIF 2.1.0 (ingestável pela aba Security do GitHub)</li>
               <li>Reproduzível em dois comandos — não é maquete, é o meu alvo</li>
             </ul>
             <a class="btn btn-primary" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Ver no GitHub ↗</a>
           </div>
           <div class="terminal" aria-hidden="true">
-            <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title">sentinela — diagnóstico</span></div>
+            <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title">sentinela — reteste</span></div>
             <div class="terminal-body">
               <div><span class="prompt">$</span> sentinela scan <span class="ok">paulo-marcos-lucio.github.io</span></div>
               <div class="muted">─────────────────────────────</div>
-              <div>Nota de higiene: <span class="grade">C · 70/100</span></div>
+              <div>Nota de higiene: <span class="grade">B · 89/100</span> <span class="muted">(era C · 70)</span></div>
               <div class="muted">Cabeçalhos de Segurança</div>
-              <div><span class="warn">MÉDIA</span> Content-Security-Policy ausente</div>
-              <div><span class="warn">MÉDIA</span> Sem proteção contra clickjacking</div>
+              <div><span class="ok">OK</span> CSP presente (via &lt;meta&gt;)</div>
+              <div><span class="warn">MÉDIA</span> Clickjacking — limite do GitHub Pages</div>
               <div class="muted">TLS / Certificado</div>
               <div><span class="ok">OK</span> TLS 1.3 · certificado válido</div>
               <div class="muted">DNS / E-mail</div>
-              <div><span class="warn">MÉDIA</span> Registro DMARC ausente</div>
+              <div><span class="ok">INFO</span> Hospedagem gerenciada — não penaliza</div>
               <div class="muted">→ relatório salvo em relatorio.html</div>
             </div>
           </div>
@@ -369,6 +369,36 @@
               <div class="muted">1,00 / 1,00 em lab controlado · 0 falso-positivo</div>
               <div class="muted">→ read-only · sob autorização · marcador inerte</div>
             </div>
+          </div>
+        </div>
+        <div class="suite-sub-header">
+          <h3>A suíte inteira tem edição Pro</h3>
+          <p>O Sentinela é o único caso em que a Pro é <strong>código a mais</strong> (o motor ativo acima). Nas outras quatro, o motor é <strong>idêntico ao que você baixa</strong> — a Pro acrescenta <strong>escopo e serviço</strong>: a organização inteira em vez de um alvo, a triagem que separa o real do ruído, a correção que eu executo e o reteste que prova. É a mesma honestidade: nada sai do público, e cada acréscimo diz por que existe.</p>
+        </div>
+        <div class="suite-grid">
+          <div class="suite-card suite-card-pro">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente">Segredos</span></div>
+            <h3>Guardião · Pro</h3>
+            <p><strong>Você roda:</strong> a busca de segredos no repositório que aponta. <strong>A Pro acrescenta:</strong> a <strong>organização inteira</strong> e <strong>todo o histórico Git</strong> (não só o HEAD), a triagem que adjudica cada achado como real ou falso-positivo, e o <strong>plano de rotação por provedor com reteste</strong> que prova que a credencial saiu de circulação — mais o laudo de evidência LGPD.</p>
+            <span class="suite-link">Pro = escopo + serviço</span>
+          </div>
+          <div class="suite-card suite-card-pro">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🎫</span><span class="suite-frente">Autenticação</span></div>
+            <h3>Chaveiro · Pro</h3>
+            <p><strong>Você roda:</strong> a auditoria de um token JWT, 100% offline. <strong>A Pro acrescenta:</strong> a auditoria do <strong>emissor e do verificador do sistema inteiro</strong>, a análise do JWKS que você me entrega, o enquadramento de <strong>conformidade FAPI / Open Finance Brasil</strong> e o laudo datado — de quem escreveu emissor e verificador em finanças reguladas.</p>
+            <span class="suite-link">Pro = escopo + serviço</span>
+          </div>
+          <div class="suite-card suite-card-pro">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔗</span><span class="suite-frente">Cadeia de suprimentos</span></div>
+            <h3>Esteira · Pro</h3>
+            <p><strong>Você roda:</strong> a auditoria dos seus workflows do GitHub Actions. <strong>A Pro acrescenta:</strong> a varredura da <strong>organização inteira</strong> numa tacada, a <strong>remediação verificada</strong> (eu corrijo o workflow e o reteste prova que o buraco fechou), a auditoria de trust policy OIDC e o relatório executivo que o regulador arquiva.</p>
+            <span class="suite-link">Pro = escopo + serviço</span>
+          </div>
+          <div class="suite-card suite-card-pro">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente">Correção</span></div>
+            <h3>Laboratório · Pro</h3>
+            <p><strong>Você roda:</strong> o laboratório aberto — 8 vulnerabilidades vulnerável→corrigido, com teste. <strong>A Pro acrescenta:</strong> o <strong>workshop ao vivo</strong> com o seu time, mapeando cada falha do lab para o <strong>código real do cliente</strong>, e a transferência de método — o time entende o porquê de cada correção, não só o patch.</p>
+            <span class="suite-link">Pro = serviço</span>
           </div>
         </div>
         <ul class="hero-stats" aria-label="A fronteira da edição Pro">
