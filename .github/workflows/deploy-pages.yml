@@ -1,0 +1,41 @@
+name: Deploy static content to Pages
+
+# Deploy via Actions em vez do mecanismo interno "legacy" do GitHub Pages.
+# Motivo: em 2026-08-06 o deploy legacy travou 4 vezes seguidas na fase de
+# publicação (ficava em "deployment_in_progress" até estourar timeout de
+# 10min, sem log de causa) — problema do lado do serviço, não do conteúdo
+# (o build sempre passava rápido). Este workflow roda no nosso próprio
+# runner do Actions, então dá pra ver exatamente onde algo falha.
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
