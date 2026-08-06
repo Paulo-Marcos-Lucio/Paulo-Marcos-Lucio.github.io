@@ -366,6 +366,25 @@
       btn.setAttribute('aria-pressed', String(active));
     });
 
+    // Botão flutuante: sempre convida a trocar, então mostra a bandeira/texto
+    // do idioma OPOSTO ao que está ativo agora (não do idioma atual).
+    var fab = document.querySelector('[data-lang-fab]');
+    if (fab) {
+      var flagEl = fab.querySelector('[data-lang-fab-flag]');
+      var textEl = fab.querySelector('[data-lang-fab-text]');
+      if (isEn) {
+        if (flagEl) flagEl.textContent = '🇧🇷';
+        if (textEl) textEl.innerHTML = 'Ler em<br/>Português';
+        fab.setAttribute('aria-label', 'Ler esta página em Português');
+        fab.setAttribute('data-lang-fab-target', 'pt');
+      } else {
+        if (flagEl) flagEl.textContent = '🇺🇸';
+        if (textEl) textEl.innerHTML = 'Read in<br/>English';
+        fab.setAttribute('aria-label', 'Read this page in English');
+        fab.setAttribute('data-lang-fab-target', 'en');
+      }
+    }
+
     document.documentElement.setAttribute('data-lang', lang);
 
     try { localStorage.setItem('site-lang', lang); } catch (e) { /* modo privado etc. — segue sem persistir */ }
@@ -385,6 +404,12 @@
         applyLang(btn.getAttribute('data-lang-btn'));
       });
     });
+    var fab = document.querySelector('[data-lang-fab]');
+    if (fab) {
+      fab.addEventListener('click', function () {
+        applyLang(fab.getAttribute('data-lang-fab-target') || 'en');
+      });
+    }
     applyLang(initialLang());
   });
 })();
