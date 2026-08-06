@@ -19,6 +19,10 @@
   <meta name="theme-color" content="#0b0f14" />
   <meta name="color-scheme" content="dark" />
 
+  <!-- Título/description/OG/Twitter/JSON-LD abaixo estão em PT-BR "de fábrica";
+       i18n.js troca o conteúdo deles dinamicamente (client-side) quando o
+       visitante clica no botão EN — ver site/i18n.js. Um crawler que não roda
+       JS sempre vê a versão PT-BR, que é o idioma nativo do site. -->
   <title>Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec) · BR</title>
   <meta name="description" content="Consultoria em segurança de aplicações web no Brasil: diagnóstico e correção de vulnerabilidades, hardening, análise de cabeçalhos, TLS, CORS e exposição — mapeado ao OWASP Top 10 e à LGPD. Suíte de ferramentas open source. Para PMEs e fintechs." />
   <meta name="author" content="Paulo Marcos Lucio" />
@@ -76,7 +80,7 @@
 <body>
   <canvas id="matrix" aria-hidden="true"></canvas>
 
-  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
 
   <header class="site-header" role="banner">
     <div class="container header-inner">
@@ -85,13 +89,17 @@
         <span class="brand-name">Paulo Marcos Lucio</span>
       </a>
       <nav class="nav" aria-label="Principal">
-        <a href="#servicos">Serviços</a>
-        <a href="#ferramentas">Ferramentas</a>
-        <a href="#pro">Edição Pro</a>
-        <a href="#pacotes">Pacotes</a>
-        <a href="#contato">Contato</a>
+        <a href="#servicos" data-i18n="nav.servicos">Serviços</a>
+        <a href="#ferramentas" data-i18n="nav.ferramentas">Ferramentas</a>
+        <a href="#pro" data-i18n="nav.pro">Edição Pro</a>
+        <a href="#pacotes" data-i18n="nav.pacotes">Pacotes</a>
+        <a href="#contato" data-i18n="nav.contato">Contato</a>
         <a class="nav-cta" href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
+      <div class="lang-switch" role="group" aria-label="Idioma do site / Site language">
+        <button type="button" class="lang-btn is-active" data-lang-btn="pt" aria-pressed="true">PT</button>
+        <button type="button" class="lang-btn" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
     </div>
   </header>
 
@@ -102,30 +110,30 @@
         <div>
           <p class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
-            Auto-scan do meu próprio site: começou em C·70, hoje é B·89 — a subida publicada, sem maquiar
+            <span data-i18n="hero.eyebrow">Auto-scan do meu próprio site: começou em C·70, hoje é B·89 — a subida publicada, sem maquiar</span>
           </p>
-          <h1 class="hero-title">
+          <h1 class="hero-title" data-i18n-html="hero.title">
             Escrevi as implementações de referência do Pix e do Open Finance.<br />
             <span class="gradient-text">Agora eu acho o que está exposto no seu sistema.</span>
           </h1>
-          <p class="hero-subtitle">
+          <p class="hero-subtitle" data-i18n-html="hero.subtitle">
             Cabeçalhos, TLS, cookies, CORS, DNS, formulários e injeção (SQLi/XSS): eu mapeio a superfície que um atacante enxerga e te devolvo um plano de correção que cabe no sprint do time — <strong>porque eu já fui o time de dev</strong>. Código aberto, com teste: <a href="#ferramentas">veja a suíte que eu uso</a>.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+            <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" data-i18n-href="hero.wa" data-i18n-attrs="aria-label:hero.ctaWhatsappAria" aria-label="Falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Falar no WhatsApp
+              <span data-i18n="hero.ctaWhatsapp">Falar no WhatsApp</span>
             </a>
-            <a class="btn btn-ghost" href="#ferramentas">Ver minhas ferramentas</a>
+            <a class="btn btn-ghost" href="#ferramentas" data-i18n="hero.ctaGhost">Ver minhas ferramentas</a>
           </div>
-          <ul class="hero-stats" aria-label="Provas medidas, reproduzíveis">
-            <li><strong>C·70 → B·89</strong><span>auto-scan do meu site: achei, corrigi, retestei</span></li>
-            <li><strong>13/14</strong><span>segredos achados no corpus · 0 falso-positivo</span></li>
-            <li><strong>5 ferramentas</strong><span>abertas, com teste e CI verde</span></li>
+          <ul class="hero-stats" aria-label="Provas medidas, reproduzíveis" data-i18n-attrs="aria-label:hero.statsAriaLabel">
+            <li><strong>C·70 → B·89</strong><span data-i18n="hero.stat1Label">auto-scan do meu site: achei, corrigi, retestei</span></li>
+            <li><strong>13/14</strong><span data-i18n="hero.stat2Label">segredos achados no corpus · 0 falso-positivo</span></li>
+            <li><strong data-i18n="hero.stat3Num">5 ferramentas</strong><span data-i18n="hero.stat3Label">abertas, com teste e CI verde</span></li>
           </ul>
         </div>
 
-        <aside class="hero-card" aria-label="Amostra de diagnóstico">
+        <aside class="hero-card" aria-label="Amostra de diagnóstico" data-i18n-attrs="aria-label:hero.cardAriaLabel">
           <div class="hero-card-glow" aria-hidden="true"></div>
           <div class="hero-card-head">
             <img class="avatar" src="avatar.jpg" alt="Avatar de Paulo Marcos Lucio" width="64" height="64" loading="eager" />
@@ -136,13 +144,13 @@
           </div>
           <div class="hero-card-tags">
             <span class="tag">OWASP</span><span class="tag">TLS</span><span class="tag">Linux</span>
-            <span class="tag">Redes</span><span class="tag">Python</span><span class="tag">LGPD</span>
+            <span class="tag" data-i18n="hero.tagNetworking">Redes</span><span class="tag">Python</span><span class="tag">LGPD</span>
           </div>
           <div class="hero-card-scan" aria-hidden="true">
-            <div class="scan-line"><span class="lbl">🔒 TLS / Certificado</span> <span class="scan-badge b-ok">OK</span></div>
+            <div class="scan-line"><span class="lbl" data-i18n="hero.scanTls">🔒 TLS / Certificado</span> <span class="scan-badge b-ok">OK</span></div>
             <div class="scan-line"><span class="lbl">📋 CSP (via &lt;meta&gt;)</span> <span class="scan-badge b-ok">OK</span></div>
             <div class="scan-line"><span class="lbl">🍪 Cookies &amp; CORS</span> <span class="scan-badge b-ok">OK</span></div>
-            <div class="scan-line"><span class="lbl">🖼️ Clickjacking</span> <span class="scan-badge b-warn">limite do host</span></div>
+            <div class="scan-line"><span class="lbl">🖼️ Clickjacking</span> <span class="scan-badge b-warn" data-i18n="hero.badgeWarn">limite do host</span></div>
           </div>
         </aside>
       </div>
@@ -152,26 +160,26 @@
     <section class="section">
       <div class="container">
         <header class="section-header provoke-head">
-          <p class="section-eyebrow">Três perguntas</p>
-          <h2 class="section-title">Responda com sinceridade — em silêncio</h2>
-          <p class="section-lead">Se você hesitou em qualquer uma delas, o diagnóstico responde as três. Com evidência, não com achismo.</p>
+          <p class="section-eyebrow" data-i18n="provoke.eyebrow">Três perguntas</p>
+          <h2 class="section-title" data-i18n="provoke.title">Responda com sinceridade — em silêncio</h2>
+          <p class="section-lead" data-i18n="provoke.lead">Se você hesitou em qualquer uma delas, o diagnóstico responde as três. Com evidência, não com achismo.</p>
         </header>
         <div class="provoke-grid">
           <article class="provoke-card">
             <span class="provoke-num" aria-hidden="true">01</span>
-            <p>Se eu abrir o seu site <strong>agora</strong>, quantos cabeçalhos de segurança vou encontrar <strong>faltando</strong>?</p>
+            <p data-i18n-html="provoke.card1">Se eu abrir o seu site <strong>agora</strong>, quantos cabeçalhos de segurança vou encontrar <strong>faltando</strong>?</p>
           </article>
           <article class="provoke-card">
             <span class="provoke-num" aria-hidden="true">02</span>
-            <p>Existe algum <code>.env</code>, <code>.git</code> ou backup <strong>exposto</strong> na raiz do seu domínio? Você tem <strong>certeza</strong>?</p>
+            <p data-i18n-html="provoke.card2">Existe algum <code>.env</code>, <code>.git</code> ou backup <strong>exposto</strong> na raiz do seu domínio? Você tem <strong>certeza</strong>?</p>
           </article>
           <article class="provoke-card">
             <span class="provoke-num" aria-hidden="true">03</span>
-            <p>Qual foi a última vez que alguém <strong>provou</strong> — com data e evidência — que a sua aplicação está protegida?</p>
+            <p data-i18n-html="provoke.card3">Qual foi a última vez que alguém <strong>provou</strong> — com data e evidência — que a sua aplicação está protegida?</p>
           </article>
         </div>
         <div class="provoke-cta">
-          <a class="btn btn-primary" href="#ferramentas">Ver a resposta num relatório real</a>
+          <a class="btn btn-primary" href="#ferramentas" data-i18n="provoke.cta">Ver a resposta num relatório real</a>
         </div>
       </div>
     </section>
@@ -180,36 +188,36 @@
     <section id="servicos" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Serviços</p>
-          <h2 class="section-title">O que eu faço pela sua aplicação</h2>
-          <p class="section-lead">
+          <p class="section-eyebrow" data-i18n="services.eyebrow">Serviços</p>
+          <h2 class="section-title" data-i18n="services.title">O que eu faço pela sua aplicação</h2>
+          <p class="section-lead" data-i18n-html="services.lead">
             Foco na camada onde mora a maior parte dos problemas de baixo custo e alto impacto: <strong>configuração e higiene de segurança</strong> de sistemas web expostos na internet.
           </p>
         </header>
         <div class="svc-grid">
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">🔍</span>
-            <h3>Diagnóstico de vulnerabilidades web</h3>
-            <p>Análise da superfície exposta: cabeçalhos, TLS/certificado, cookies, CORS, métodos HTTP, exposição de arquivos e segurança de DNS/e-mail. Relatório com severidade, evidência e recomendação de correção.</p>
-            <div class="svc-tags"><span>OWASP Top 10</span><span>CWE</span><span>relatório executivo</span></div>
+            <h3 data-i18n="svc1.title">Diagnóstico de vulnerabilidades web</h3>
+            <p data-i18n="svc1.desc">Análise da superfície exposta: cabeçalhos, TLS/certificado, cookies, CORS, métodos HTTP, exposição de arquivos e segurança de DNS/e-mail. Relatório com severidade, evidência e recomendação de correção.</p>
+            <div class="svc-tags"><span>OWASP Top 10</span><span>CWE</span><span data-i18n="svc1.tag3">relatório executivo</span></div>
           </article>
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">🛠️</span>
-            <h3>Correção e hardening</h3>
-            <p>Da recomendação à execução: implanto (ou oriento seu time) CSP, HSTS, TLS moderno, cookies seguros, CORS restritivo e remoção de rotas e arquivos sensíveis expostos.</p>
+            <h3 data-i18n="svc2.title">Correção e hardening</h3>
+            <p data-i18n="svc2.desc">Da recomendação à execução: implanto (ou oriento seu time) CSP, HSTS, TLS moderno, cookies seguros, CORS restritivo e remoção de rotas e arquivos sensíveis expostos.</p>
             <div class="svc-tags"><span>CSP</span><span>HSTS</span><span>TLS 1.2/1.3</span></div>
           </article>
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">🔁</span>
-            <h3>Reteste e acompanhamento</h3>
-            <p>Depois da correção, uma nova varredura comprova a redução de risco. Varredura programada vira evidência contínua de gestão de vulnerabilidades — exatamente o que a LGPD espera.</p>
-            <div class="svc-tags"><span>reteste incluso</span><span>recorrência</span></div>
+            <h3 data-i18n="svc3.title">Reteste e acompanhamento</h3>
+            <p data-i18n="svc3.desc">Depois da correção, uma nova varredura comprova a redução de risco. Varredura programada vira evidência contínua de gestão de vulnerabilidades — exatamente o que a LGPD espera.</p>
+            <div class="svc-tags"><span data-i18n="svc3.tag1">reteste incluso</span><span data-i18n="svc3.tag2">recorrência</span></div>
           </article>
           <article class="svc-card">
             <span class="svc-icon" aria-hidden="true">⚖️</span>
-            <h3>Adequação à LGPD (art. 46)</h3>
-            <p>Diagnóstico e documentação datada que ajudam sua empresa a demonstrar as medidas técnicas de segurança exigidas pela LGPD — fator que a ANPD pondera na dosimetria de eventuais sanções.</p>
-            <div class="svc-tags"><span>evidência datada</span><span>medidas técnicas</span></div>
+            <h3 data-i18n="svc4.title">Adequação à LGPD (art. 46)</h3>
+            <p data-i18n="svc4.desc">Diagnóstico e documentação datada que ajudam sua empresa a demonstrar as medidas técnicas de segurança exigidas pela LGPD — fator que a ANPD pondera na dosimetria de eventuais sanções.</p>
+            <div class="svc-tags"><span data-i18n="svc4.tag1">evidência datada</span><span data-i18n="svc4.tag2">medidas técnicas</span></div>
           </article>
         </div>
       </div>
@@ -219,18 +227,18 @@
     <section id="metodo" class="section">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Método</p>
-          <h2 class="section-title">Como um engajamento funciona</h2>
-          <p class="section-lead">
+          <p class="section-eyebrow" data-i18n="metodo.eyebrow">Método</p>
+          <h2 class="section-title" data-i18n="metodo.title">Como um engajamento funciona</h2>
+          <p class="section-lead" data-i18n-html="metodo.lead">
             Escopo claro, entrega auditável. Do primeiro diagnóstico ao acompanhamento recorrente — segurança é <strong>redução contínua de risco</strong>, medida e comprovada a cada reteste.
           </p>
         </header>
         <div class="steps">
-          <div class="step"><h3>Diagnóstico</h3><p>Varredura não-intrusiva da superfície exposta e coleta de evidências.</p></div>
-          <div class="step"><h3>Priorização</h3><p>Achados ordenados por severidade (CVSS) e risco de negócio.</p></div>
-          <div class="step"><h3>Correção</h3><p>Aplicação das correções ou apoio ao seu time, item a item.</p></div>
-          <div class="step"><h3>Reteste</h3><p>Nova varredura comprova que o risco realmente caiu.</p></div>
-          <div class="step"><h3>Recorrência</h3><p>Monitoramento programado como evidência contínua.</p></div>
+          <div class="step"><h3 data-i18n="step1.title">Diagnóstico</h3><p data-i18n="step1.desc">Varredura não-intrusiva da superfície exposta e coleta de evidências.</p></div>
+          <div class="step"><h3 data-i18n="step2.title">Priorização</h3><p data-i18n="step2.desc">Achados ordenados por severidade (CVSS) e risco de negócio.</p></div>
+          <div class="step"><h3 data-i18n="step3.title">Correção</h3><p data-i18n="step3.desc">Aplicação das correções ou apoio ao seu time, item a item.</p></div>
+          <div class="step"><h3 data-i18n="step4.title">Reteste</h3><p data-i18n="step4.desc">Nova varredura comprova que o risco realmente caiu.</p></div>
+          <div class="step"><h3 data-i18n="step5.title">Recorrência</h3><p data-i18n="step5.desc">Monitoramento programado como evidência contínua.</p></div>
         </div>
       </div>
     </section>
@@ -239,90 +247,90 @@
     <section id="ferramentas" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Ferramentas · Open source</p>
-          <h2 class="section-title">A suíte que eu uso — e que deixo aberta pra você auditar</h2>
-          <p class="section-lead">
+          <p class="section-eyebrow" data-i18n="tools.eyebrow">Ferramentas · Open source</p>
+          <h2 class="section-title" data-i18n="tools.title">A suíte que eu uso — e que deixo aberta pra você auditar</h2>
+          <p class="section-lead" data-i18n-html="tools.lead1">
             Você não contrata uma caixa-preta. Cada engajamento é apoiado por <strong>ferramenta própria, testada e aberta</strong> — cinco frentes do OWASP Top 10, do perímetro à autenticação, dos segredos à cadeia de suprimentos. Nenhum scanner sozinho vence: eu rodo a minha suíte ao lado do gitleaks, do trufflehog e do zizmor — e o que você contrata é a <strong>triagem e o laudo</strong>, não o scanner.
           </p>
-          <p class="section-lead">
+          <p class="section-lead" data-i18n-html="tools.lead2">
             Não acredite na minha palavra: publiquei o <a href="https://github.com/Paulo-Marcos-Lucio/guardiao/blob/main/BENCHMARK.md" target="_blank" rel="noopener"><strong>benchmark honesto</strong></a> contra esses três incumbentes — versões e commits fixados, reproduzível, e <strong>diz onde eles são mais enxutos que eu</strong>. Quem só mostra onde ganha está te escondendo alguma coisa.
           </p>
-          <ul class="hero-stats" aria-label="Números medidos em corpus público, reproduzíveis em dois comandos">
-            <li><strong>17/17 · 20/20</strong><span>regras e recall no corpus da Esteira · 0 falso-positivo</span></li>
-            <li><strong>22/22</strong><span>vetores JWT no corpus do Chaveiro · 0 falso-positivo</span></li>
-            <li><strong>7,1 s → &lt;0,01 s</strong><span>travamento de CI por ReDoS, medido e corrigido</span></li>
+          <ul class="hero-stats" aria-label="Números medidos em corpus público, reproduzíveis em dois comandos" data-i18n-attrs="aria-label:tools.statsAriaLabel">
+            <li><strong>17/17 · 20/20</strong><span data-i18n="tools.stat1Label">regras e recall no corpus da Esteira · 0 falso-positivo</span></li>
+            <li><strong>22/22</strong><span data-i18n="tools.stat2Label">vetores JWT no corpus do Chaveiro · 0 falso-positivo</span></li>
+            <li><strong data-i18n="tools.stat3Num">7,1 s → &lt;0,01 s</strong><span data-i18n="tools.stat3Label">travamento de CI por ReDoS, medido e corrigido</span></li>
           </ul>
         </header>
 
         <div class="suite-grid">
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🛡️</span><span class="suite-frente">Perímetro</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🛡️</span><span class="suite-frente" data-i18n="suite1.frente">Perímetro</span></div>
             <h3>Sentinela</h3>
-            <p>Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS <strong>e superfície de injeção</strong> (formulários, CSRF, reflexão de parâmetro) — mapeado ao OWASP Top 10:2025. A edição <strong>Pro</strong> acrescenta código: <strong>confirma</strong> SQLi/XSS com prova segura, só sob autorização.</p>
+            <p data-i18n-html="suite1.desc">Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS <strong>e superfície de injeção</strong> (formulários, CSRF, reflexão de parâmetro) — mapeado ao OWASP Top 10:2025. A edição <strong>Pro</strong> acrescenta código: <strong>confirma</strong> SQLi/XSS com prova segura, só sob autorização.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/guardiao" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente">Segredos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente" data-i18n="suite2.frente">Segredos</span></div>
             <h3>Guardião</h3>
-            <p>Scanner de segredos vazados no código <strong>e no histórico Git</strong> — entropia normalizada, baseline, SARIF e hook de pre-commit. Recall <strong>13/14</strong> no corpus, 0 falso-positivo.</p>
+            <p data-i18n-html="suite2.desc">Scanner de segredos vazados no código <strong>e no histórico Git</strong> — entropia normalizada, baseline, SARIF e hook de pre-commit. Recall <strong>13/14</strong> no corpus, 0 falso-positivo.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/chaveiro" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🗝️</span><span class="suite-frente">Autenticação</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🗝️</span><span class="suite-frente" data-i18n="suite3.frente">Autenticação</span></div>
             <h3>Chaveiro</h3>
-            <p>Auditor de tokens JWT/JWS — <code>alg:none</code>, confusão de algoritmo, brute de segredo HMAC, <code>jku</code>/<code>kid</code> SSRF + validação de referência.</p>
+            <p data-i18n-html="suite3.desc">Auditor de tokens JWT/JWS — <code>alg:none</code>, confusão de algoritmo, brute de segredo HMAC, <code>jku</code>/<code>kid</code> SSRF + validação de referência.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/esteira" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">⚙️</span><span class="suite-frente">Cadeia de suprimentos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">⚙️</span><span class="suite-frente" data-i18n="suite4.frente">Cadeia de suprimentos</span></div>
             <h3>Esteira</h3>
-            <p>Auditor de segurança de CI/CD (GitHub Actions) — script injection, actions não-fixadas por SHA, <code>pull_request_target</code>, permissões.</p>
+            <p data-i18n-html="suite4.desc">Auditor de segurança de CI/CD (GitHub Actions) — script injection, actions não-fixadas por SHA, <code>pull_request_target</code>, permissões.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/laboratorio-owasp" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente">Correção</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente" data-i18n="suite5.frente">Correção</span></div>
             <h3>Laboratório OWASP</h3>
-            <p><strong>8 vulnerabilidades em 3 categorias</strong> do OWASP Top 10:2025 (A01, A04 e A05) — com destaque para <strong>injeção (A05: SQLi, XSS, command)</strong> — cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando que o lado corrigido <strong>corrige de verdade</strong>. Em Spring Boot.</p>
+            <p data-i18n-html="suite5.desc"><strong>8 vulnerabilidades em 3 categorias</strong> do OWASP Top 10:2025 (A01, A04 e A05) — com destaque para <strong>injeção (A05: SQLi, XSS, command)</strong> — cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando que o lado corrigido <strong>corrige de verdade</strong>. Em Spring Boot.</p>
             <span class="suite-link">Java · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card suite-card-all" href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">
             <div class="suite-top"><span class="suite-ico" aria-hidden="true">📦</span></div>
-            <h3>Todos os repositórios</h3>
-            <p>Inclui minha suíte de referência de sistemas financeiros regulados (Pix, Open Finance, mTLS ICP-Brasil) — o rigor de engenharia por trás do olhar de AppSec.</p>
-            <span class="suite-link">Ver no GitHub <span class="arw">↗</span></span>
+            <h3 data-i18n="suiteAll.title">Todos os repositórios</h3>
+            <p data-i18n="suiteAll.desc">Inclui minha suíte de referência de sistemas financeiros regulados (Pix, Open Finance, mTLS ICP-Brasil) — o rigor de engenharia por trás do olhar de AppSec.</p>
+            <span class="suite-link"><span data-i18n="suiteAll.link">Ver no GitHub</span> <span class="arw">↗</span></span>
           </a>
         </div>
 
         <div class="project project-destacado">
           <div>
-            <span class="project-badge">Prova real · Sentinela</span>
-            <h3>Comecei pelo meu próprio site — achei, corrigi, retestei</h3>
-            <p>
+            <span class="project-badge" data-i18n="project1.badge">Prova real · Sentinela</span>
+            <h3 data-i18n="project1.title">Comecei pelo meu próprio site — achei, corrigi, retestei</h3>
+            <p data-i18n-html="project1.desc">
               Rodei a minha ferramenta no <strong>meu domínio</strong>, não-intrusiva. Deu <strong>C · 70/100</strong> e listou o quê: CSP ausente, clickjacking, DMARC. Corrigi o que a plataforma permite (CSP via <code>&lt;meta&gt;</code>) e o reteste subiu para <strong>B · 89/100</strong> — publicado assim, sem maquiar. <strong>Por que não é A?</strong> Os pontos que faltam (X-Frame-Options, X-Content-Type-Options, HSTS com subdomínios) são <strong>cabeçalhos que o GitHub Pages não deixa nenhum site definir</strong> — é limite da hospedagem, não do site, e a própria ferramenta me diz isso com a linha exata e a saída (domínio próprio + CDN). <strong>Um scanner te dá um número; um diagnóstico te diz por que o número é esse e o que fazer.</strong>
             </p>
             <ul class="project-feats">
-              <li><strong>Achei → corrigi → retestei:</strong> a subida C·70 → B·89 é o reteste que eu vendo, feito no meu próprio alvo</li>
-              <li>Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail — mapeados ao OWASP Top 10:2025 + CWE</li>
-              <li>Reconhece hospedagem gerenciada e <strong>não te penaliza por DNS que você não controla</strong> (o DMARC do github.io saiu, honestamente)</li>
-              <li>Relatório em HTML, Markdown, JSON e SARIF 2.1.0 (ingestável pela aba Security do GitHub)</li>
-              <li>Reproduzível em dois comandos — não é maquete, é o meu alvo</li>
+              <li data-i18n-html="project1.feat1"><strong>Achei → corrigi → retestei:</strong> a subida C·70 → B·89 é o reteste que eu vendo, feito no meu próprio alvo</li>
+              <li data-i18n="project1.feat2">Cabeçalhos, TLS, cookies, CORS, métodos HTTP, DNS/e-mail — mapeados ao OWASP Top 10:2025 + CWE</li>
+              <li data-i18n-html="project1.feat3">Reconhece hospedagem gerenciada e <strong>não te penaliza por DNS que você não controla</strong> (o DMARC do github.io saiu, honestamente)</li>
+              <li data-i18n="project1.feat4">Relatório em HTML, Markdown, JSON e SARIF 2.1.0 (ingestável pela aba Security do GitHub)</li>
+              <li data-i18n="project1.feat5">Reproduzível em dois comandos — não é maquete, é o meu alvo</li>
             </ul>
-            <a class="btn btn-primary" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Ver no GitHub ↗</a>
+            <a class="btn btn-primary" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener" data-i18n="project1.cta">Ver no GitHub ↗</a>
           </div>
           <div class="terminal" aria-hidden="true">
-            <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title">sentinela — reteste</span></div>
+            <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title" data-i18n="terminal1.title">sentinela — reteste</span></div>
             <div class="terminal-body">
               <div><span class="prompt">$</span> sentinela scan <span class="ok">paulo-marcos-lucio.github.io</span></div>
               <div class="muted">─────────────────────────────</div>
-              <div>Nota de higiene: <span class="grade">B · 89/100</span> <span class="muted">(era C · 70)</span></div>
-              <div class="muted">Cabeçalhos de Segurança</div>
-              <div><span class="ok">OK</span> CSP presente (via &lt;meta&gt;)</div>
-              <div><span class="warn">MÉDIA</span> Clickjacking — limite do GitHub Pages</div>
-              <div class="muted">TLS / Certificado</div>
-              <div><span class="ok">OK</span> TLS 1.3 · certificado válido</div>
-              <div class="muted">DNS / E-mail</div>
-              <div><span class="ok">INFO</span> Hospedagem gerenciada — não penaliza</div>
-              <div class="muted">→ relatório salvo em relatorio.html</div>
+              <div><span data-i18n="terminal1.hygieneLabel">Nota de higiene:</span> <span class="grade">B · 89/100</span> <span class="muted" data-i18n="terminal1.eraLabel">(era C · 70)</span></div>
+              <div class="muted" data-i18n="terminal1.sectionHeaders">Cabeçalhos de Segurança</div>
+              <div><span class="ok">OK</span> <span data-i18n-html="terminal1.cspOk">CSP presente (via &lt;meta&gt;)</span></div>
+              <div><span class="warn">MÉDIA</span> <span data-i18n="terminal1.clickjacking">Clickjacking — limite do GitHub Pages</span></div>
+              <div class="muted" data-i18n="terminal1.sectionTls">TLS / Certificado</div>
+              <div><span class="ok">OK</span> <span data-i18n="terminal1.tlsOk">TLS 1.3 · certificado válido</span></div>
+              <div class="muted" data-i18n="terminal1.sectionDns">DNS / E-mail</div>
+              <div><span class="ok">INFO</span> <span data-i18n="terminal1.hostingInfo">Hospedagem gerenciada — não penaliza</span></div>
+              <div class="muted" data-i18n="terminal1.savedTo">→ relatório salvo em relatorio.html</div>
             </div>
           </div>
         </div>
@@ -333,78 +341,78 @@
     <section id="pro" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Edição Pro</p>
-          <h2 class="section-title">O que <span class="gradient-text">está aberto continua aberto</span>. A Pro só acrescenta.</h2>
-          <p class="section-lead">
+          <p class="section-eyebrow" data-i18n="pro.eyebrow">Edição Pro</p>
+          <h2 class="section-title" data-i18n-html="pro.title">O que <span class="gradient-text">está aberto continua aberto</span>. A Pro só acrescenta.</h2>
+          <p class="section-lead" data-i18n-html="pro.lead">
             Nada sai do público — o que é gratuito hoje é seu, de graça, para sempre. A Pro nunca tira: ela <strong>acrescenta</strong>, e sempre diz por quê. No <strong>Sentinela</strong>, acrescenta código — o motor ativo que <strong>confirma</strong> a falha (emite requisição contra o alvo; por isso só roda com autorização por escrito, não num binário que qualquer um baixa). Nas outras ferramentas o motor é idêntico ao que você baixa: o que a Pro acrescenta é o <strong>serviço</strong> — triagem, correção e laudo datado. Detectar é de graça; <strong>corrigir é trabalho, e trabalho é o que eu vendo</strong>.
           </p>
         </header>
         <div class="project project-destacado">
           <div>
-            <span class="project-badge">Sentinela · edição Pro</span>
-            <h3>O que você vê / o que eu vejo</h3>
-            <p>
+            <span class="project-badge" data-i18n="proProject.badge">Sentinela · edição Pro</span>
+            <h3 data-i18n="proProject.title">O que você vê / o que eu vejo</h3>
+            <p data-i18n-html="proProject.desc">
               Mesmo alvo, mesmo dia. O diagnóstico público diz <em>“isto é uma superfície de injeção”</em>. A Pro dá o passo que falta e diz <em>“isto <strong>confirma</strong>”</em> — com payload seguro e marcador inerte, <strong>sem explorar</strong>, sem extrair um dado, sem persistir nada. A distância entre <em>talvez</em> e <em>confirmado</em> é a distância entre dormir e não dormir.
             </p>
             <ul class="project-feats">
-              <li>Confirma <strong>SQLi, XSS</strong> e mais cinco classes de injeção — não infere, prova</li>
-              <li>Mapeia a <strong>aplicação inteira</strong>, página a página — não só a URL que você digitou</li>
-              <li>Confirma <strong>no ar</strong> se um endpoint da API exige autenticação de fato</li>
-              <li>Read-only, só sob <strong>autorização por escrito</strong> — a linha vermelha é código, não promessa</li>
+              <li data-i18n-html="proProject.feat1">Confirma <strong>SQLi, XSS</strong> e mais cinco classes de injeção — não infere, prova</li>
+              <li data-i18n-html="proProject.feat2">Mapeia a <strong>aplicação inteira</strong>, página a página — não só a URL que você digitou</li>
+              <li data-i18n-html="proProject.feat3">Confirma <strong>no ar</strong> se um endpoint da API exige autenticação de fato</li>
+              <li data-i18n-html="proProject.feat4">Read-only, só sob <strong>autorização por escrito</strong> — a linha vermelha é código, não promessa</li>
             </ul>
-            <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20a%20leitura%20profunda%20%28edi%C3%A7%C3%A3o%20Pro%29%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Falar no WhatsApp sobre a edição Pro">
+            <a class="btn btn-wa" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20a%20leitura%20profunda%20%28edi%C3%A7%C3%A3o%20Pro%29%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" data-i18n-href="pro.wa" data-i18n-attrs="aria-label:proProject.ctaAria" aria-label="Falar no WhatsApp sobre a edição Pro">
               <svg class="wa-ico" viewBox="0 0 32 32" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero a confirmação ativa (Pro)
+              <span data-i18n="proProject.cta">Quero a confirmação ativa (Pro)</span>
             </a>
           </div>
           <div class="terminal" aria-hidden="true">
-            <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title">sentinela — edição Pro</span></div>
+            <div class="terminal-bar"><span></span><span></span><span></span><span class="t-title" data-i18n="terminal2.title">sentinela — edição Pro</span></div>
             <div class="terminal-body">
               <div><span class="prompt">$</span> sentinela scan <span class="ok">laboratorio-owasp</span> --autorizado --profundo</div>
-              <div class="muted">── alvo meu, vulnerável de propósito ──</div>
-              <div>superfície mapeada: <span class="grade">aplicação inteira</span></div>
-              <div class="muted">A05 · Injeção (confirmada)</div>
-              <div><span class="crit">CRÍTICA</span> SQLI_CONFIRMADO · /busca?q <span class="muted">(boolean+tempo)</span></div>
-              <div><span class="warn">ALTA</span> XSS_REFLETIDO_CONFIRMADO · /perfil?nome</div>
-              <div class="muted">1,00 / 1,00 em lab controlado · 0 falso-positivo</div>
-              <div class="muted">→ read-only · sob autorização · marcador inerte</div>
+              <div class="muted" data-i18n="terminal2.comment">── alvo meu, vulnerável de propósito ──</div>
+              <div><span data-i18n="terminal2.surfaceLabel">superfície mapeada:</span> <span class="grade" data-i18n="terminal2.surfaceValue">aplicação inteira</span></div>
+              <div class="muted" data-i18n="terminal2.a05">A05 · Injeção (confirmada)</div>
+              <div><span class="crit" data-i18n="terminal2.crit">CRÍTICA</span> SQLI_CONFIRMADO · /busca?q <span class="muted" data-i18n="terminal2.sqliNote">(boolean+tempo)</span></div>
+              <div><span class="warn" data-i18n="terminal2.high">ALTA</span> XSS_REFLETIDO_CONFIRMADO · /perfil?nome</div>
+              <div class="muted" data-i18n="terminal2.footer1">1,00 / 1,00 em lab controlado · 0 falso-positivo</div>
+              <div class="muted" data-i18n="terminal2.footer2">→ read-only · sob autorização · marcador inerte</div>
             </div>
           </div>
         </div>
         <div class="suite-sub-header">
-          <h3>A suíte inteira tem edição Pro</h3>
-          <p>O Sentinela é o único caso em que a Pro é <strong>código a mais</strong> (o motor ativo acima). Nas outras quatro, o motor é <strong>idêntico ao que você baixa</strong> — a Pro acrescenta <strong>escopo e serviço</strong>: a organização inteira em vez de um alvo, a triagem que separa o real do ruído, a correção que eu executo e o reteste que prova. É a mesma honestidade: nada sai do público, e cada acréscimo diz por que existe.</p>
+          <h3 data-i18n="suiteSub.title">A suíte inteira tem edição Pro</h3>
+          <p data-i18n-html="suiteSub.desc">O Sentinela é o único caso em que a Pro é <strong>código a mais</strong> (o motor ativo acima). Nas outras quatro, o motor é <strong>idêntico ao que você baixa</strong> — a Pro acrescenta <strong>escopo e serviço</strong>: a organização inteira em vez de um alvo, a triagem que separa o real do ruído, a correção que eu executo e o reteste que prova. É a mesma honestidade: nada sai do público, e cada acréscimo diz por que existe.</p>
         </div>
         <div class="suite-grid">
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente">Segredos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente" data-i18n="proSuite1.frente">Segredos</span></div>
             <h3>Guardião · Pro</h3>
-            <p><strong>Você roda:</strong> a busca de segredos no repositório que aponta. <strong>A Pro acrescenta:</strong> a <strong>organização inteira</strong> e <strong>todo o histórico Git</strong> (não só o HEAD), a triagem que adjudica cada achado como real ou falso-positivo, e o <strong>plano de rotação por provedor com reteste</strong> que prova que a credencial saiu de circulação — mais o laudo de evidência LGPD.</p>
-            <span class="suite-link">Pro = escopo + serviço</span>
+            <p data-i18n-html="proSuite1.desc"><strong>Você roda:</strong> a busca de segredos no repositório que aponta. <strong>A Pro acrescenta:</strong> a <strong>organização inteira</strong> e <strong>todo o histórico Git</strong> (não só o HEAD), a triagem que adjudica cada achado como real ou falso-positivo, e o <strong>plano de rotação por provedor com reteste</strong> que prova que a credencial saiu de circulação — mais o laudo de evidência LGPD.</p>
+            <span class="suite-link" data-i18n="proSuite1.link">Pro = escopo + serviço</span>
           </div>
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🎫</span><span class="suite-frente">Autenticação</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🎫</span><span class="suite-frente" data-i18n="proSuite2.frente">Autenticação</span></div>
             <h3>Chaveiro · Pro</h3>
-            <p><strong>Você roda:</strong> a auditoria de um token JWT, 100% offline. <strong>A Pro acrescenta:</strong> a auditoria do <strong>emissor e do verificador do sistema inteiro</strong>, a análise do JWKS que você me entrega, o enquadramento de <strong>conformidade FAPI / Open Finance Brasil</strong> e o laudo datado — de quem escreveu emissor e verificador em finanças reguladas.</p>
-            <span class="suite-link">Pro = escopo + serviço</span>
+            <p data-i18n-html="proSuite2.desc"><strong>Você roda:</strong> a auditoria de um token JWT, 100% offline. <strong>A Pro acrescenta:</strong> a auditoria do <strong>emissor e do verificador do sistema inteiro</strong>, a análise do JWKS que você me entrega, o enquadramento de <strong>conformidade FAPI / Open Finance Brasil</strong> e o laudo datado — de quem escreveu emissor e verificador em finanças reguladas.</p>
+            <span class="suite-link" data-i18n="proSuite2.link">Pro = escopo + serviço</span>
           </div>
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔗</span><span class="suite-frente">Cadeia de suprimentos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔗</span><span class="suite-frente" data-i18n="proSuite3.frente">Cadeia de suprimentos</span></div>
             <h3>Esteira · Pro</h3>
-            <p><strong>Você roda:</strong> a auditoria dos seus workflows do GitHub Actions. <strong>A Pro acrescenta:</strong> a varredura da <strong>organização inteira</strong> numa tacada, a <strong>remediação verificada</strong> (eu corrijo o workflow e o reteste prova que o buraco fechou), a auditoria de trust policy OIDC e o relatório executivo que o regulador arquiva.</p>
-            <span class="suite-link">Pro = escopo + serviço</span>
+            <p data-i18n-html="proSuite3.desc"><strong>Você roda:</strong> a auditoria dos seus workflows do GitHub Actions. <strong>A Pro acrescenta:</strong> a varredura da <strong>organização inteira</strong> numa tacada, a <strong>remediação verificada</strong> (eu corrijo o workflow e o reteste prova que o buraco fechou), a auditoria de trust policy OIDC e o relatório executivo que o regulador arquiva.</p>
+            <span class="suite-link" data-i18n="proSuite3.link">Pro = escopo + serviço</span>
           </div>
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente">Correção</span></div>
-            <h3>Laboratório · Pro</h3>
-            <p><strong>Você roda:</strong> o laboratório aberto — 8 vulnerabilidades vulnerável→corrigido, com teste. <strong>A Pro acrescenta:</strong> o <strong>workshop ao vivo</strong> com o seu time, mapeando cada falha do lab para o <strong>código real do cliente</strong>, e a transferência de método — o time entende o porquê de cada correção, não só o patch.</p>
-            <span class="suite-link">Pro = serviço</span>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente" data-i18n="proSuite4.frente">Correção</span></div>
+            <h3 data-i18n="proSuite4.title">Laboratório · Pro</h3>
+            <p data-i18n-html="proSuite4.desc"><strong>Você roda:</strong> o laboratório aberto — 8 vulnerabilidades vulnerável→corrigido, com teste. <strong>A Pro acrescenta:</strong> o <strong>workshop ao vivo</strong> com o seu time, mapeando cada falha do lab para o <strong>código real do cliente</strong>, e a transferência de método — o time entende o porquê de cada correção, não só o patch.</p>
+            <span class="suite-link" data-i18n="proSuite4.link">Pro = serviço</span>
           </div>
         </div>
-        <ul class="hero-stats" aria-label="A fronteira da edição Pro">
-          <li><strong>Nada sai do público</strong><span>o que é aberto continua aberto, para sempre</span></li>
-          <li><strong>Confirma, não explora</strong><span>payload seguro, marcador inerte, read-only</span></li>
-          <li><strong>Linha vermelha em código</strong><span>só sob autorização por escrito — é uma flag, não promessa</span></li>
+        <ul class="hero-stats" aria-label="A fronteira da edição Pro" data-i18n-attrs="aria-label:pro.statsAriaLabel">
+          <li><strong data-i18n="pro.stat1Num">Nada sai do público</strong><span data-i18n="pro.stat1Label">o que é aberto continua aberto, para sempre</span></li>
+          <li><strong data-i18n="pro.stat2Num">Confirma, não explora</strong><span data-i18n="pro.stat2Label">payload seguro, marcador inerte, read-only</span></li>
+          <li><strong data-i18n="pro.stat3Num">Linha vermelha em código</strong><span data-i18n="pro.stat3Label">só sob autorização por escrito — é uma flag, não promessa</span></li>
         </ul>
       </div>
     </section>
@@ -413,9 +421,9 @@
     <section class="section">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Autoridade</p>
-          <h2 class="section-title">Eu escrevi o código que o seu time vai ter que mudar</h2>
-          <p class="section-lead">
+          <p class="section-eyebrow" data-i18n="cred.eyebrow">Autoridade</p>
+          <h2 class="section-title" data-i18n="cred.title">Eu escrevi o código que o seu time vai ter que mudar</h2>
+          <p class="section-lead" data-i18n-html="cred.lead">
             Venho de <strong>construir sistemas onde errar em segurança não é uma opção</strong> — as implementações de referência do Pix, do Open Finance e do DICT. Trago essa régua para o seu diagnóstico, e as correções que eu recomendo cabem no sprint do seu time.
           </p>
         </header>
@@ -423,22 +431,22 @@
           <div class="cred-list">
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🔐</span>
-              <div><h3>Desenvolvimento seguro na prática</h3><p>Desenvolvedor Java/Spring. Escrevi implementações de referência dos sistemas financeiros regulados brasileiros — Pix, Open Finance, DICT, Open Insurance — com autenticação, mTLS ICP-Brasil e FAPI. Código público, com teste.</p></div>
+              <div><h3 data-i18n="cred1.title">Desenvolvimento seguro na prática</h3><p data-i18n="cred1.desc">Desenvolvedor Java/Spring. Escrevi implementações de referência dos sistemas financeiros regulados brasileiros — Pix, Open Finance, DICT, Open Insurance — com autenticação, mTLS ICP-Brasil e FAPI. Código público, com teste.</p></div>
             </div>
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🧰</span>
-              <div><h3>Ferramental próprio, aberto</h3><p>Construo minhas próprias ferramentas de análise — código público e testado que documenta o meu critério técnico.</p></div>
+              <div><h3 data-i18n="cred2.title">Ferramental próprio, aberto</h3><p data-i18n="cred2.desc">Construo minhas próprias ferramentas de análise — código público e testado que documenta o meu critério técnico.</p></div>
             </div>
             <div class="cred-item">
               <span class="ci" aria-hidden="true">🐧</span>
-              <div><h3>Redes e Linux</h3><p>Base sólida em redes, servidores e Linux — o terreno onde as aplicações web de fato rodam e se expõem.</p></div>
+              <div><h3 data-i18n="cred3.title">Redes e Linux</h3><p data-i18n="cred3.desc">Base sólida em redes, servidores e Linux — o terreno onde as aplicações web de fato rodam e se expõem.</p></div>
             </div>
           </div>
           <div class="cred-note">
-            <p>
+            <p data-i18n-html="credNote.p1">
               Quer conferir o rigor de engenharia? Minha <strong>suíte pública de implementações de referência</strong> do mercado financeiro regulado (Spring Boot, arquitetura hexagonal, observabilidade, CI) está toda no GitHub.
             </p>
-            <p class="cred-note-cta"><a href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">Ver meus repositórios de engenharia ↗</a></p>
+            <p class="cred-note-cta"><a href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener" data-i18n="credNote.cta">Ver meus repositórios de engenharia ↗</a></p>
           </div>
         </div>
       </div>
@@ -448,80 +456,80 @@
     <section id="pacotes" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Pacotes</p>
-          <h2 class="section-title">Escolha por onde começar</h2>
-          <p class="section-lead">
+          <p class="section-eyebrow" data-i18n="pacotes.eyebrow">Pacotes</p>
+          <h2 class="section-title" data-i18n="pacotes.title">Escolha por onde começar</h2>
+          <p class="section-lead" data-i18n-html="pacotes.lead">
             Sempre <strong>pacote fechado</strong>, escopo definido e <strong>reteste incluso</strong>. Sem retainer obrigatório e sem call de vendas para descobrir o preço: você recebe uma proposta com valor fechado logo na primeira conversa. Se não couber no seu momento, eu digo na hora.
           </p>
         </header>
         <div class="work-grid">
           <article class="work-card acc-teal">
-            <p class="work-tier">Entrada</p>
-            <h3 class="work-title">Diagnóstico</h3>
-            <p class="work-desc">O mapa priorizado do que está exposto na sua superfície — com evidência. É o passo que troca o "acho que estamos seguros" por <strong>evidência datada</strong>.</p>
+            <p class="work-tier" data-i18n="work1.tier">Entrada</p>
+            <h3 class="work-title" data-i18n="work1.title">Diagnóstico</h3>
+            <p class="work-desc" data-i18n-html="work1.desc">O mapa priorizado do que está exposto na sua superfície — com evidência. É o passo que troca o "acho que estamos seguros" por <strong>evidência datada</strong>.</p>
             <ul class="work-list">
-              <li>Varredura completa da superfície exposta</li>
-              <li>Relatório executivo (para a diretoria)</li>
-              <li>Relatório técnico com severidade e evidência</li>
-              <li>Recomendações de correção priorizadas</li>
-              <li>Reunião de apresentação dos resultados</li>
+              <li data-i18n="work1.list1">Varredura completa da superfície exposta</li>
+              <li data-i18n="work1.list2">Relatório executivo (para a diretoria)</li>
+              <li data-i18n="work1.list3">Relatório técnico com severidade e evidência</li>
+              <li data-i18n="work1.list4">Recomendações de correção priorizadas</li>
+              <li data-i18n="work1.list5">Reunião de apresentação dos resultados</li>
             </ul>
-            <p class="work-price">Valor fechado na proposta · reunião de resultados inclusa</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico." target="_blank" rel="noopener" aria-label="Quero começar pelo diagnóstico — falar no WhatsApp">
+            <p class="work-price" data-i18n="work1.price">Valor fechado na proposta · reunião de resultados inclusa</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico." target="_blank" rel="noopener" data-i18n-href="work1.wa" data-i18n-attrs="aria-label:work1.ctaAria" aria-label="Quero começar pelo diagnóstico — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero começar pelo diagnóstico
+              <span data-i18n="work1.cta">Quero começar pelo diagnóstico</span>
             </a>
           </article>
 
           <article class="work-card work-card-featured acc-grad">
-            <p class="work-tier">Recomendado</p>
-            <h3 class="work-title">Diagnóstico + Correção</h3>
-            <p class="work-desc">Do problema à <strong>prova de que foi resolvido</strong>: eu encontro, eu corrijo — e comprovo com reteste. Você sai com a evidência na mão.</p>
+            <p class="work-tier" data-i18n="work2.tier">Recomendado</p>
+            <h3 class="work-title" data-i18n="work2.title">Diagnóstico + Correção</h3>
+            <p class="work-desc" data-i18n-html="work2.desc">Do problema à <strong>prova de que foi resolvido</strong>: eu encontro, eu corrijo — e comprovo com reteste. Você sai com a evidência na mão.</p>
             <ul class="work-list">
-              <li>Tudo do Diagnóstico</li>
-              <li>Correção/hardening dos achados priorizados</li>
-              <li>Reteste comprovando a redução de risco</li>
-              <li>Carta de atestação com data e escopo (LGPD)</li>
+              <li data-i18n="work2.list1">Tudo do Diagnóstico</li>
+              <li data-i18n="work2.list2">Correção/hardening dos achados priorizados</li>
+              <li data-i18n="work2.list3">Reteste comprovando a redução de risco</li>
+              <li data-i18n="work2.list4">Carta de atestação com data e escopo (LGPD)</li>
             </ul>
-            <p class="work-price">Valor fechado na proposta · reteste e atestação inclusos</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico%20%2B%20Corre%C3%A7%C3%A3o%20(o%20recomendado)." target="_blank" rel="noopener" aria-label="Quero o pacote recomendado: Diagnóstico + Correção — falar no WhatsApp">
+            <p class="work-price" data-i18n="work2.price">Valor fechado na proposta · reteste e atestação inclusos</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20Diagn%C3%B3stico%20%2B%20Corre%C3%A7%C3%A3o%20(o%20recomendado)." target="_blank" rel="noopener" data-i18n-href="work2.wa" data-i18n-attrs="aria-label:work2.ctaAria" aria-label="Quero o pacote recomendado: Diagnóstico + Correção — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero o recomendado
+              <span data-i18n="work2.cta">Quero o recomendado</span>
             </a>
           </article>
 
           <article class="work-card acc-sky">
-            <p class="work-tier">Contínuo</p>
-            <h3 class="work-title">Acompanhamento</h3>
-            <p class="work-desc">Segurança que <strong>não expira num PDF</strong>: a cada release, uma nova varredura — e a evidência sempre pronta para a auditoria.</p>
+            <p class="work-tier" data-i18n="work3.tier">Contínuo</p>
+            <h3 class="work-title" data-i18n="work3.title">Acompanhamento</h3>
+            <p class="work-desc" data-i18n-html="work3.desc">Segurança que <strong>não expira num PDF</strong>: a cada release, uma nova varredura — e a evidência sempre pronta para a auditoria.</p>
             <ul class="work-list">
-              <li>Varredura programada (mensal/por release)</li>
-              <li>Relatório de evolução do risco</li>
-              <li>Canal direto para dúvidas de segurança</li>
-              <li>Evidência contínua para compliance</li>
+              <li data-i18n="work3.list1">Varredura programada (mensal/por release)</li>
+              <li data-i18n="work3.list2">Relatório de evolução do risco</li>
+              <li data-i18n="work3.list3">Canal direto para dúvidas de segurança</li>
+              <li data-i18n="work3.list4">Evidência contínua para compliance</li>
             </ul>
-            <p class="work-price">Mensalidade fechada na proposta · sem fidelidade</p>
-            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20de%20Acompanhamento%20recorrente." target="_blank" rel="noopener" aria-label="Quero acompanhamento contínuo — falar no WhatsApp">
+            <p class="work-price" data-i18n="work3.price">Mensalidade fechada na proposta · sem fidelidade</p>
+            <a class="btn btn-wa btn-block" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20quero%20o%20pacote%20de%20Acompanhamento%20recorrente." target="_blank" rel="noopener" data-i18n-href="work3.wa" data-i18n-attrs="aria-label:work3.ctaAria" aria-label="Quero acompanhamento contínuo — falar no WhatsApp">
               <svg class="wa-ico" viewBox="0 0 32 32" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-              Quero acompanhamento contínuo
+              <span data-i18n="work3.cta">Quero acompanhamento contínuo</span>
             </a>
           </article>
         </div>
-        <p class="work-foot">Segurança é redução de risco mensurável — comprovada com reteste datado, não com PDF de promessa.</p>
+        <p class="work-foot" data-i18n="pacotes.foot">Segurança é redução de risco mensurável — comprovada com reteste datado, não com PDF de promessa.</p>
       </div>
     </section>
 
     <!-- ===================== CONTATO / CTA ===================== -->
     <section id="contato" class="section section-cta">
       <div class="container cta-inner">
-        <h2 class="cta-title">Seu sistema web já foi olhado por um par técnico?</h2>
-        <p class="cta-lead">
+        <h2 class="cta-title" data-i18n="contato.title">Seu sistema web já foi olhado por um par técnico?</h2>
+        <p class="cta-lead" data-i18n="contato.lead">
           Me conta em uma linha qual é a aplicação e o contexto — você já sai sabendo o próximo passo. Ainda medindo? Rode o Sentinela no seu domínio; se a nota vier abaixo de B, me manda o relatório e a conversa começa no seu achado, não no meu discurso.
         </p>
         <div class="cta-actions">
-          <a class="btn btn-wa btn-lg" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20conversar%20sobre%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a." target="_blank" rel="noopener">
+          <a class="btn btn-wa btn-lg" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20conversar%20sobre%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a." target="_blank" rel="noopener" data-i18n-href="contato.wa">
             <svg class="wa-ico" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-            Chamar no WhatsApp<span class="cta-num"> · (12) 99147-8991</span>
+            <span data-i18n="contato.ctaWhatsapp">Chamar no WhatsApp</span><span class="cta-num"> · (12) 99147-8991</span>
           </a>
           <a class="btn btn-ghost" href="mailto:contatopml26@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20diagn%C3%B3stico%20de%20seguran%C3%A7a">contatopml26@gmail.com</a>
           <a class="btn btn-ghost" href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -536,7 +544,7 @@
         <span class="brand-mark" aria-hidden="true">🛡</span>
         <div>
           <p class="footer-name">Paulo Marcos Lucio</p>
-          <p class="footer-tag">Segurança de Aplicações Web · AppSec · BR</p>
+          <p class="footer-tag" data-i18n="footer.tag">Segurança de Aplicações Web · AppSec · BR</p>
         </div>
       </div>
       <nav class="footer-nav" aria-label="Rodapé">
@@ -545,19 +553,20 @@
         <a href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="mailto:contatopml26@gmail.com">Email</a>
       </nav>
-      <p class="footer-meta">
+      <p class="footer-meta" data-i18n-html="footer.meta">
         © <span id="year">2026</span> Paulo Marcos Lucio · São Paulo, BR · Diagnóstico conduzido sob autorização e escopo definido
       </p>
     </div>
   </footer>
 
   <!-- Botão flutuante do WhatsApp -->
-  <a class="wa-fab" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" aria-label="Fale comigo no WhatsApp">
+  <a class="wa-fab" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vim%20pelo%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener" data-i18n-href="hero.wa" data-i18n-attrs="aria-label:waFab.ariaLabel" aria-label="Fale comigo no WhatsApp">
     <span class="wa-fab-ring" aria-hidden="true"></span>
     <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path fill="currentColor" d="M16.04 4C9.4 4 4 9.4 4 16.04c0 2.12.55 4.19 1.6 6.02L4 28l6.1-1.6a12 12 0 0 0 5.94 1.52h.01c6.64 0 12.04-5.4 12.04-12.04C28.09 9.4 22.68 4 16.04 4zm7.02 17.2c-.3.83-1.48 1.52-2.42 1.66-.62.09-1.42.16-4.02-.87-3.38-1.34-5.56-4.77-5.73-4.99-.17-.22-1.36-1.81-1.36-3.46 0-1.64.86-2.45 1.17-2.78.3-.33.66-.41.88-.41l.63.01c.2.01.47-.08.74.56.3.72 1 2.5 1.09 2.68.09.18.15.4.03.62-.11.22-.17.36-.33.55-.17.19-.35.42-.5.57-.17.17-.34.35-.15.68.19.33.86 1.42 1.85 2.3 1.27 1.13 2.34 1.48 2.67 1.65.33.17.52.14.71-.08.19-.22.82-.96 1.04-1.29.22-.33.44-.27.74-.16.3.11 1.9.9 2.23 1.06.33.17.55.24.63.38.08.14.08.8-.22 1.62z"/></svg>
-    <span class="wa-fab-label">Fale comigo</span>
+    <span class="wa-fab-label" data-i18n="waFab.label">Fale comigo</span>
   </a>
 
+  <script src="i18n.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+<p align="right"><a href="README.en.md">🇺🇸 Read in English</a></p>
+
 # paulo-marcos-lucio.github.io
 
 Página profissional de **Paulo Marcos Lucio** — consultoria em **segurança de
@@ -17,6 +19,7 @@ dinâmico). Deploy via GitHub Pages, branch `main`, raiz do repo.
 - `index.html` — single page: hero, serviços, método, Sentinela, credibilidade, pacotes, contato
 - `styles.css` — dark theme, mobile-first, design tokens (paleta de segurança teal/ciano)
 - `script.js` — IntersectionObserver para reveal, chuva de binários em canvas, footer year auto
+- `i18n.js` — troca de idioma PT/EN no cliente (ver abaixo)
 - `fonts/` — Inter e JetBrains Mono **auto-hospedadas** (SIL OFL 1.1, ver `fonts/LICENSE-fontes.md`)
 - `favicon.svg` / `apple-touch-icon.png` / `og-image.svg` / `og-image.png` — identidade visual (escudo)
 - `avatar.jpg` — foto de perfil, também auto-hospedada
@@ -24,6 +27,19 @@ dinâmico). Deploy via GitHub Pages, branch `main`, raiz do repo.
 - `.well-known/security.txt` — canal de divulgação responsável (RFC 9116)
 - `.nojekyll` — desliga o Jekyll, sem o qual `/.well-known/` não seria servido
 - `_headers` — cabeçalhos prontos, **inertes no GitHub Pages** (ver abaixo)
+
+## Alternância de idioma (PT/EN)
+
+A página nasce em português — idioma nativo do site e do público primário —
+com um **botão EN** no cabeçalho que traduz o texto visível no cliente, sem
+recarregar a página, sem URL separada. O `i18n.js` captura o português
+original de cada elemento na primeira renderização (por isso não existe um
+dicionário PT duplicado à mão que possa dessincronizar do HTML), guarda só um
+dicionário em inglês, e troca `<title>`/meta description/OG/Twitter/JSON-LD
+junto com o texto visível. A escolha persiste em `localStorage`. Como a troca
+roda no cliente, um crawler que não executa JS sempre indexa a versão em
+português — esperado e correto, já que português é o idioma canônico da
+página.
 
 ## Postura de segurança e privacidade
 
