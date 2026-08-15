@@ -83,6 +83,7 @@
     'suite3.frente': 'Authentication',
     'suite4.frente': 'Supply chain',
     'suite5.frente': 'Remediation',
+    'suite6.frente': 'Surveillance',
     'suiteAll.title': 'All repositories',
     'suiteAll.desc': 'Includes my reference suite for regulated financial systems (Pix, Open Finance, mTLS on ICP-Brasil) — the engineering rigor behind the AppSec lens.',
     'suiteAll.link': 'View on GitHub',
@@ -209,6 +210,7 @@
     'suite3.desc': 'JWT/JWS token auditor — <code>alg:none</code>, algorithm confusion, HMAC secret brute-forcing, <code>jku</code>/<code>kid</code> SSRF + a validation reference.',
     'suite4.desc': 'CI/CD (GitHub Actions) security auditor — script injection, actions not pinned by SHA, <code>pull_request_target</code>, permissions.',
     'suite5.desc': '<strong>8 vulnerabilities across 3 categories</strong> of the OWASP Top 10:2025 (A01, A04, and A05) — spotlighting <strong>injection (A05: SQLi, XSS, command)</strong> — each one paired <strong>vulnerable → exploit → fixed</strong>, with an automated test proving the fixed side <strong>actually fixes it</strong>. Built in Spring Boot.',
+    'suite6.desc': 'Passive, continuous reading of headers, TLS, DNS, and Certificate Transparency across a handful of my own and reference targets, <strong>kept as a time series</strong> — because a report taken on a single day only says how the target looked that day; drift only shows up by measuring every day and comparing. Runs on its own in GitHub Actions, public.',
 
     'project1.desc': 'I ran my own tool against <strong>my own domain</strong>, non-intrusively. It came back <strong>C · 70/100</strong> and listed what was wrong. I fixed what the platform allows (CSP via <code>&lt;meta&gt;</code>) and the retest climbed to <strong>B · 89/100</strong> — published as-is, no touch-ups. <strong>Why not an A?</strong> The remaining gaps (X-Frame-Options, X-Content-Type-Options, HSTS with subdomains) are <strong>headers that GitHub Pages doesn’t let any site set</strong> — a hosting limit, not a site flaw, and the tool itself tells me so with the exact line and output (custom domain + CDN). <strong>A scanner gives you a number; a diagnosis tells you why that’s the number and what to do about it.</strong>',
     'project1.feat1': '<strong>Found it → fixed it → retested it:</strong> the C·70 → B·89 climb is the retest I sell, done on my own target',
