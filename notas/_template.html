@@ -1,0 +1,163 @@
+<!--
+  Template de artigo — "Notas de campo" (item ACV-NOTAS-00).
+
+  Como usar: copie este arquivo para notas/<slug-da-nota>.html e substitua
+  todo texto entre colchetes. Depois:
+    1. Remova a linha `<meta name="robots" content="noindex, nofollow" />`
+       — ela existe só para este template não ser indexado por engenho de
+       busca nem contar como nota publicada.
+    2. Preencha <title>, description, canonical, article:published_time e o
+       JSON-LD com o conteúdo real da nota.
+    3. Ajuste `datetime` e o texto de `.nota-meta` para a data REAL de
+       publicação — nunca retroaja para preencher buraco de calendário
+       (POLITICA.md, "todo commit precisa carregar informação que não
+       existia antes").
+    4. Depois de publicar, adicione um <li class="notas-item"> em
+       notas/index.html e uma entrada em sitemap.xml.
+    5. Rode a Sentinela contra a página publicada (local ou já no ar) para
+       confirmar que a nota não abaixa a nota de higiene do site: mesma CSP
+       via <meta>, mesma Referrer-Policy, zero requisição a terceiro, sem
+       `style=`/`<script>` inline.
+
+  Este arquivo em si NÃO é uma nota — é a base estrutural verificada. Ele
+  fica fora do sitemap.xml e do índice de propósito.
+-->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Mesma política de segurança do resto do site — ver index.html para o
+       porquê de X-Content-Type-Options e X-Frame-Options não aparecerem
+       aqui (GitHub Pages não emite cabeçalho de resposta, e via <meta> o
+       navegador ignora os dois). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="color-scheme" content="dark" />
+
+  <meta name="robots" content="noindex, nofollow" />
+
+  <title>[TÍTULO DA NOTA] · Notas de campo · Paulo Marcos Lucio</title>
+  <meta name="description" content="[Descrição de uma frase — o que a nota mostra, sem spoiler do argumento inteiro.]" />
+  <meta name="author" content="Paulo Marcos Lucio" />
+
+  <link rel="canonical" href="https://paulo-marcos-lucio.github.io/notas/[slug-da-nota].html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Paulo Marcos Lucio" />
+  <meta property="og:title" content="[TÍTULO DA NOTA]" />
+  <meta property="og:description" content="[Mesma descrição de uma frase, ou uma variação curta.]" />
+  <meta property="og:url" content="https://paulo-marcos-lucio.github.io/notas/[slug-da-nota].html" />
+  <meta property="og:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Paulo Marcos Lucio — Segurança de Aplicações Web (AppSec)" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="article:published_time" content="[AAAA-MM-DD]" />
+  <meta property="article:author" content="Paulo Marcos Lucio" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="[TÍTULO DA NOTA]" />
+  <meta name="twitter:description" content="[Descrição curta.]" />
+  <meta name="twitter:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+
+  <link rel="preload" href="../fonts/inter-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="../styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "[TÍTULO DA NOTA]",
+    "description": "[Descrição de uma frase.]",
+    "author": { "@type": "Person", "name": "Paulo Marcos Lucio", "url": "https://paulo-marcos-lucio.github.io/" },
+    "datePublished": "[AAAA-MM-DD]",
+    "mainEntityOfPage": "https://paulo-marcos-lucio.github.io/notas/[slug-da-nota].html",
+    "image": "https://paulo-marcos-lucio.github.io/og-image.png",
+    "inLanguage": "pt-BR"
+  }
+  </script>
+</head>
+<body>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Início — Paulo Marcos Lucio">
+        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <span class="brand-name">Paulo Marcos Lucio</span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <a href="../index.html#servicos">Serviços</a>
+        <a href="../index.html#ferramentas">Ferramentas</a>
+        <a href="index.html">Notas de campo</a>
+        <a href="../index.html#contato">Contato</a>
+        <a class="nav-cta" href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="nota-article">
+      <div class="container">
+        <div class="nota-container">
+          <a class="nota-back" href="index.html">← Notas de campo</a>
+
+          <p class="nota-eyebrow">Nota de campo · [tema: LGPD / OWASP / método]</p>
+          <h1 class="nota-title">[TÍTULO DA NOTA]</h1>
+          <p class="nota-meta">Por Paulo Marcos Lucio · <time datetime="[AAAA-MM-DD]">[dia de mês de ano]</time></p>
+
+          <div class="nota-body">
+            <p>[Parágrafo de abertura — o gancho real, não um resumo do resumo.]</p>
+
+            <h2>[Subtítulo, se a nota tiver mais de uma seção]</h2>
+            <p>[Corpo da nota.]</p>
+
+            <!-- Citação literal (lei, achado de scan, trecho de log) — sempre
+                 verbatim, nunca parafraseada dentro de aspas. -->
+            <blockquote class="nota-quote">
+              <p>&ldquo;[Citação literal.]&rdquo;</p>
+              <cite>[Fonte exata da citação.]</cite>
+            </blockquote>
+
+            <p>[Fechamento — o que muda na prática, sem prometer resultado que a nota não sustenta.]</p>
+          </div>
+
+          <p class="nota-disclaimer">[Disclaimer, se aplicável — ex.: "não constitui aconselhamento jurídico" para nota sobre norma, ou nota de que nenhum dado de cliente real aparece aqui.]</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <div>
+          <p class="footer-name">Paulo Marcos Lucio</p>
+          <p class="footer-tag">Segurança de Aplicações Web · AppSec · BR</p>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Rodapé">
+        <a href="https://wa.me/5512991478991" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:contatopml26@gmail.com">Email</a>
+      </nav>
+      <p class="footer-meta">© <span id="year">2026</span> Paulo Marcos Lucio · São Paulo, BR</p>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+</body>
+</html>

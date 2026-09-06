@@ -166,7 +166,7 @@ body > * { position: relative; z-index: 1; }
 .nav a:hover { color: var(--fg-1); background: var(--bg-3); }
 .nav-cta { color: var(--fg-1) !important; background: var(--bg-3); border: 1px solid var(--border-strong); }
 .nav-cta:hover { background: var(--bg-4) !important; }
-@media (max-width: 700px) { .nav a[href="#servicos"], .nav a[href="#ferramentas"] { display: none; } }
+@media (max-width: 700px) { .nav a[href="#servicos"], .nav a[href="#ferramentas"], .nav a[href="notas/index.html"] { display: none; } }
 @media (max-width: 400px) { .nav { gap: 2px; } .nav a { padding: 8px 9px; } }
 
 /* ----- seletor de idioma PT/EN -----
@@ -582,3 +582,50 @@ body > * { position: relative; z-index: 1; }
 /* (a regra .work-badge foi removida junto com o selo "Mais procurado":
    métrica social sem lastro — o .work-tier "Recomendado" já cumpre o papel) */
 .work-card:hover .work-title { color: var(--fg-1); }
+
+/* ============================================================================
+   Notas de campo (item ACV-NOTAS-00)
+   Duas famílias de classe: .notas-* para o índice (notas/index.html, lista
+   de todas as notas) e .nota-* para o template de artigo individual
+   (notas/_template.html — a base que cada nota nova copia). Nomes parecidos
+   de propósito: são a mesma seção, o "s" a mais é a única diferença entre
+   "a lista" e "um item da lista".
+   ============================================================================ */
+
+/* ----- índice (notas/index.html) ----- */
+.notas-list { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+.notas-item { display: block; }
+.notas-item a {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 18px 20px; border-radius: var(--radius); border: 1px solid var(--border);
+  background: var(--bg-3); transition: border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.notas-item a:hover { border-color: var(--border-strong); transform: translateX(2px); }
+.notas-item-title { color: var(--fg-1); font-weight: 700; font-size: 16px; }
+.notas-item-meta { font-family: var(--font-mono); font-size: 12px; color: var(--fg-4); }
+.notas-empty {
+  margin-top: 8px; padding: 22px 24px; border: 1px dashed var(--border); border-radius: var(--radius-lg);
+  color: var(--fg-3); font-size: 14px;
+}
+
+/* ----- template de artigo (notas/_template.html e toda nota publicada a partir dele) ----- */
+.nota-article { padding: clamp(48px, 8vw, 88px) 0 clamp(64px, 10vw, 120px); }
+.nota-container { max-width: 720px; }
+.nota-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--fg-3); margin-bottom: 28px; }
+.nota-back:hover { color: var(--link-hover); }
+.nota-eyebrow { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.nota-title { font-size: clamp(28px, 4.5vw, 40px); margin-bottom: 14px; }
+.nota-meta { font-size: 13px; color: var(--fg-4); margin-bottom: 36px; }
+.nota-meta time { font-family: var(--font-mono); }
+.nota-body { font-size: 16px; color: var(--fg-2); line-height: 1.75; }
+.nota-body p { margin: 0 0 20px; max-width: 66ch; }
+.nota-body h2 { font-size: 22px; margin: 40px 0 14px; }
+.nota-body strong { color: var(--fg-1); font-weight: 600; }
+.nota-body em { color: var(--fg-1); font-style: italic; }
+.nota-body a { text-decoration: underline; text-underline-offset: 2px; }
+.nota-quote { border-left: 3px solid var(--accent); background: var(--bg-3); padding: 18px 22px; border-radius: 0 var(--radius) var(--radius) 0; margin: 0 0 24px; }
+.nota-quote p { margin: 0 0 8px; font-size: 15px; color: var(--fg-2); max-width: none; }
+.nota-quote p:last-child { margin-bottom: 0; }
+.nota-quote cite { display: block; margin-top: 10px; font-family: var(--font-mono); font-size: 12px; color: var(--fg-4); font-style: normal; }
+.nota-disclaimer { margin-top: 48px; padding-top: 20px; border-top: 1px dashed var(--border); font-size: 12.5px; color: var(--fg-4); max-width: 66ch; }
+.nota-disclaimer a { color: var(--fg-4); text-decoration: underline; }
