@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Mesma política de segurança do index.html — ver o comentário lá para o
+       motivo de X-Content-Type-Options e X-Frame-Options não aparecerem aqui:
+       GitHub Pages não emite header de resposta, e via <meta> eles são
+       ignorados pelo navegador, então declará-los seria falsa sensação de
+       proteção. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>A LGPD não pede que você seja invulnerável (art. 46) · Notas de campo · Paulo Marcos Lucio</title>
+  <meta name="description" content="O art. 46 da LGPD exige medidas de segurança técnicas e administrativas 'aptas a proteger' os dados pessoais — não invulnerabilidade. Uma leitura do texto da lei, artigo por artigo." />
+  <meta name="author" content="Paulo Marcos Lucio" />
+
+  <link rel="canonical" href="https://paulo-marcos-lucio.github.io/notas/a-lgpd-nao-pede-invulnerabilidade.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Paulo Marcos Lucio" />
+  <meta property="og:title" content="A LGPD não pede que você seja invulnerável (art. 46)" />
+  <meta property="og:description" content="Obrigação de meio, não de resultado: o que o art. 46 da LGPD pede de verdade, lido junto com o §1º, o §2º e o dever de notificação de incidente do art. 48." />
+  <meta property="og:url" content="https://paulo-marcos-lucio.github.io/notas/a-lgpd-nao-pede-invulnerabilidade.html" />
+  <meta property="og:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Paulo Marcos Lucio — Segurança de Aplicações Web (AppSec)" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="article:published_time" content="2026-09-06" />
+  <meta property="article:author" content="Paulo Marcos Lucio" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="A LGPD não pede que você seja invulnerável (art. 46)" />
+  <meta name="twitter:description" content="O que o art. 46 da LGPD pede de verdade — lido no texto, não no medo do texto." />
+  <meta name="twitter:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+
+  <!-- Fontes auto-hospedadas: mesma justificativa do index.html — zero
+       requisição a terceiro, nenhum IP de visitante (LGPD art. 5º I) sai
+       para fora (art. 33) por carregar esta página. -->
+  <link rel="preload" href="../fonts/inter-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="../styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "A LGPD não pede que você seja invulnerável",
+    "description": "O art. 46 da LGPD exige medidas de segurança aptas a proteger os dados pessoais — não invulnerabilidade.",
+    "author": { "@type": "Person", "name": "Paulo Marcos Lucio", "url": "https://paulo-marcos-lucio.github.io/" },
+    "datePublished": "2026-09-06",
+    "mainEntityOfPage": "https://paulo-marcos-lucio.github.io/notas/a-lgpd-nao-pede-invulnerabilidade.html",
+    "image": "https://paulo-marcos-lucio.github.io/og-image.png",
+    "inLanguage": "pt-BR"
+  }
+  </script>
+</head>
+<body>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Início — Paulo Marcos Lucio">
+        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <span class="brand-name">Paulo Marcos Lucio</span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <a href="../index.html#servicos">Serviços</a>
+        <a href="../index.html#ferramentas">Ferramentas</a>
+        <a href="../index.html#contato">Contato</a>
+        <a class="nav-cta" href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <article class="nota-article">
+      <div class="container">
+        <div class="nota-container">
+          <a class="nota-back" href="../index.html">← paulo-marcos-lucio.github.io</a>
+
+          <p class="nota-eyebrow">Nota de campo · LGPD</p>
+          <h1 class="nota-title">A LGPD não pede que você seja invulnerável</h1>
+          <p class="nota-meta">Por Paulo Marcos Lucio · <time datetime="2026-09-06">6 de setembro de 2026</time></p>
+
+          <div class="nota-body">
+            <p>Quando um cliente me pergunta "meu sistema está em conformidade com a LGPD?", devolvo outra pergunta: conformidade para evitar o quê — um incidente acontecer, ou uma autuação depois que ele acontecer? São coisas diferentes, e a lei não confunde as duas. Vale ler o que ela pede, literalmente, no artigo que trata de segurança dos dados.</p>
+
+            <h2>O que o art. 46 diz</h2>
+            <blockquote class="nota-quote">
+              <p>&ldquo;Os agentes de tratamento devem adotar medidas de segurança, técnicas e administrativas aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas de destruição, perda, alteração, comunicação ou qualquer forma de tratamento inadequado ou ilícito.&rdquo;</p>
+              <cite>Lei 13.709/2018 (LGPD), art. 46, caput</cite>
+            </blockquote>
+
+            <p>Repare no verbo e no adjetivo: adotar medidas <strong>aptas a proteger</strong>. Não "impedir todo acesso não autorizado" — aptas a proteger contra ele. É uma obrigação de meio, não de resultado. O texto não promete, e não pede que você prometa, um sistema onde nada dá errado; pede um sistema em que alguém pensou, dimensionou e manteve medida proporcional ao risco.</p>
+
+            <p>Os dois parágrafos do mesmo artigo reforçam essa leitura em vez de contradizê-la.</p>
+
+            <blockquote class="nota-quote">
+              <p>&ldquo;A autoridade nacional poderá dispor sobre padrões técnicos mínimos para tornar aplicável o disposto no caput deste artigo, considerados a natureza das informações tratadas, as características específicas do tratamento e o estado atual da tecnologia, especialmente no caso de dados pessoais sensíveis, assim como os princípios previstos no caput do art. 6º desta Lei.&rdquo;</p>
+              <cite>Lei 13.709/2018 (LGPD), art. 46, §1º</cite>
+            </blockquote>
+
+            <p><strong>Estado atual da tecnologia.</strong> A própria lei reconhece que o padrão de "medida apta" se desloca com o tempo — o que bastava em 2018 pode não bastar hoje. Uma régua que se move não é uma régua de invulnerabilidade; é uma régua de diligência continuada.</p>
+
+            <blockquote class="nota-quote">
+              <p>&ldquo;As medidas de que trata o caput deste artigo deverão ser observadas desde a fase de concepção do produto ou do serviço até a sua execução.&rdquo;</p>
+              <cite>Lei 13.709/2018 (LGPD), art. 46, §2º</cite>
+            </blockquote>
+
+            <p>Isso é <em>privacy by design</em> escrito em lei brasileira: a exigência recai sobre o processo — pensar em segurança desde o desenho até a operação — não sobre o resultado final estar livre de incidente. E a própria lei prevê o que fazer quando um incidente acontece mesmo assim: o art. 48 estabelece o dever do controlador de comunicar a ocorrência à autoridade nacional e aos titulares afetados. Uma lei que partisse do pressuposto de invulnerabilidade não precisaria de um artigo inteiro para o dia em que ela falha.</p>
+
+            <h2>O que isso muda na prática</h2>
+            <p>Não muda a exigência para baixo — muda o alvo. Não é "nunca ter um incidente"; é "ter adotado, antes do incidente, medida técnica e administrativa proporcional ao dado e ao risco, e conseguir mostrar isso". Num diagnóstico, isso vira coisa concreta: cabeçalho de segurança configurado, TLS correto, controle de acesso testado, plano de resposta a incidente que existe antes de precisar dele — e o registro de que essas decisões foram tomadas, não descobertas depois, numa auditoria.</p>
+
+            <p>Nenhuma dessas medidas — nem esta nota — é garantia de conformidade ou de segurança absoluta. Isto é leitura do texto da lei; a aplicação ao caso concreto de cada empresa depende do risco, do volume e da natureza dos dados tratados, e isso é avaliação caso a caso, não selo genérico.</p>
+          </div>
+
+          <p class="nota-disclaimer">Esta nota é uma leitura técnica do texto da Lei 13.709/2018 e não constitui aconselhamento jurídico. Para a situação específica da sua empresa, consulte um profissional jurídico; para a camada técnica, veja o <a href="https://github.com/Paulo-Marcos-Lucio/sentinela">Sentinela</a>.</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <div>
+          <p class="footer-name">Paulo Marcos Lucio</p>
+          <p class="footer-tag">Segurança de Aplicações Web · AppSec · BR</p>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Rodapé">
+        <a href="https://wa.me/5512991478991" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:contatopml26@gmail.com">Email</a>
+      </nav>
+      <p class="footer-meta">© <span id="year">2026</span> Paulo Marcos Lucio · São Paulo, BR</p>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+</body>
+</html>
