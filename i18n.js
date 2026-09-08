@@ -27,6 +27,10 @@
 
     'nav.servicos': 'Services',
     'nav.ferramentas': 'Tools',
+    'nav.notas': 'Field notes',
+
+    'pageMeta.title': 'Paulo Marcos Lucio · Web Application Security (AppSec) · Brazil',
+    'notasIndex.metaTitle': 'Field notes · Paulo Marcos Lucio',
     'nav.pro': 'Pro Edition',
     'nav.pacotes': 'Packages',
     'nav.contato': 'Contact',
@@ -188,6 +192,10 @@
 
     'footer.tag': 'Web Application Security · AppSec · Brazil',
     'waFab.label': 'Message me',
+
+    'notasIndex.eyebrow': 'Field notes',
+    'notasIndex.title': 'What I find, written as I find it',
+    'notasIndex.empty': 'No note published yet. When the first one goes up, it appears in this list.',
   };
 
   var EN_HTML = {
@@ -240,6 +248,8 @@
     'work3.desc': 'Security that <strong>doesn’t expire in a PDF</strong>: a new scan with every release — and evidence always ready for audit.',
 
     'footer.meta': '© <span id="year">2026</span> Paulo Marcos Lucio · São Paulo, Brazil · Diagnosis conducted under authorization and defined scope',
+
+    'notasIndex.lead': 'Diagnosis finding, technical decision, reading of a standard (LGPD, OWASP) — published with the date it was actually written, never backdated to fill a calendar gap. No real client data: any name or detail that would identify someone is removed or generalized before publishing.',
   };
 
   var EN_ATTRS = {
@@ -253,6 +263,22 @@
     'work2.ctaAria': 'I want the recommended package: Diagnosis + Fix — message on WhatsApp',
     'work3.ctaAria': 'I want ongoing follow-up — message on WhatsApp',
     'waFab.ariaLabel': 'Message me on WhatsApp',
+
+    'meta.htmlLangEn': 'en',
+
+    'pageMeta.description': "Web application security consulting in Brazil: vulnerability diagnosis and remediation, hardening, header analysis, TLS, CORS, and exposure — mapped to the OWASP Top 10 and Brazil's LGPD. Open-source tool suite. For SMBs and fintechs.",
+    'pageMeta.keywords': 'web application security, AppSec, vulnerability diagnosis, web pentest, hardening, OWASP Top 10, LGPD, security headers, TLS, cybersecurity consulting Brazil',
+    'pageMeta.ogTitle': 'Paulo Marcos Lucio · Web Application Security (AppSec)',
+    'pageMeta.ogDescription': 'Vulnerability diagnosis and remediation for web systems, for SMBs and fintechs. OWASP Top 10 · TLS · LGPD art. 46. Open-source tool suite.',
+    'pageMeta.ogImageAlt': 'Paulo Marcos Lucio — Web Application Security (AppSec): diagnosis, remediation, OWASP Top 10, and LGPD',
+    'pageMeta.ogLocale': 'en_US',
+    'pageMeta.twitterTitle': 'Paulo Marcos Lucio · Web Application Security',
+    'pageMeta.twitterDescription': 'Vulnerability diagnosis and remediation for web systems. OWASP Top 10 · TLS · LGPD.',
+
+    'notasIndex.metaDescription': 'Public record of diagnosis findings, technical decisions, and standard readings (LGPD, OWASP) — published with a real date, never backdated.',
+    'notasIndex.ogTitle': 'Field notes · Paulo Marcos Lucio',
+    'notasIndex.ogImageAlt': 'Paulo Marcos Lucio — Web Application Security (AppSec)',
+    'notasIndex.twitterDescription': 'Public record of diagnosis findings and standard readings — LGPD, OWASP.',
   };
 
   var EN_HREF = {
@@ -264,65 +290,44 @@
     'contato.wa': 'https://wa.me/5512991478991?text=Hi%20Paulo%2C%20I%20found%20you%20through%20your%20site%20and%20I%27d%20like%20to%20talk%20about%20a%20security%20diagnostic.',
   };
 
-  var META = {
-    pt: {
-      title: 'Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec) · BR',
-      description: 'Consultoria em segurança de aplicações web no Brasil: diagnóstico e correção de vulnerabilidades, hardening, análise de cabeçalhos, TLS, CORS e exposição — mapeado ao OWASP Top 10 e à LGPD. Suíte de ferramentas open source. Para PMEs e fintechs.',
-      keywords: 'segurança de aplicações web, AppSec, diagnóstico de vulnerabilidades, pentest web, hardening, OWASP Top 10, LGPD, cabeçalhos de segurança, TLS, consultoria cybersecurity Brasil',
-      ogTitle: 'Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec)',
-      ogDescription: 'Diagnóstico e correção de vulnerabilidades em sistemas web para PMEs e fintechs. OWASP Top 10 · TLS · LGPD art. 46. Suíte de ferramentas open source.',
-      ogImageAlt: 'Paulo Marcos Lucio — Segurança de Aplicações Web (AppSec): diagnóstico, correção, OWASP Top 10 e LGPD',
-      ogLocale: 'pt_BR',
-      twitterTitle: 'Paulo Marcos Lucio · Segurança de Aplicações Web',
-      twitterDescription: 'Diagnóstico e correção de vulnerabilidades em sistemas web. OWASP Top 10 · TLS · LGPD.',
-      jobTitle: 'Consultor em Segurança de Aplicações Web (AppSec)',
-      knowsAbout: ['Segurança de Aplicações Web', 'OWASP Top 10', 'Diagnóstico de Vulnerabilidades', 'TLS', 'Cabeçalhos de Segurança HTTP', 'LGPD', 'Hardening de Servidores', 'Linux'],
-      htmlLang: 'pt-BR',
-    },
-    en: {
-      title: 'Paulo Marcos Lucio · Web Application Security (AppSec) · Brazil',
-      description: "Web application security consulting in Brazil: vulnerability diagnosis and remediation, hardening, header analysis, TLS, CORS, and exposure — mapped to the OWASP Top 10 and Brazil's LGPD. Open-source tool suite. For SMBs and fintechs.",
-      keywords: 'web application security, AppSec, vulnerability diagnosis, web pentest, hardening, OWASP Top 10, LGPD, security headers, TLS, cybersecurity consulting Brazil',
-      ogTitle: 'Paulo Marcos Lucio · Web Application Security (AppSec)',
-      ogDescription: 'Vulnerability diagnosis and remediation for web systems, for SMBs and fintechs. OWASP Top 10 · TLS · LGPD art. 46. Open-source tool suite.',
-      ogImageAlt: 'Paulo Marcos Lucio — Web Application Security (AppSec): diagnosis, remediation, OWASP Top 10, and LGPD',
-      ogLocale: 'en_US',
-      twitterTitle: 'Paulo Marcos Lucio · Web Application Security',
-      twitterDescription: 'Vulnerability diagnosis and remediation for web systems. OWASP Top 10 · TLS · LGPD.',
-      jobTitle: 'Web Application Security (AppSec) Consultant',
-      knowsAbout: ['Web Application Security', 'OWASP Top 10', 'Vulnerability Diagnosis', 'TLS', 'HTTP Security Headers', 'LGPD', 'Server Hardening', 'Linux'],
-      htmlLang: 'en',
-    }
+  /* Título, description, OG/Twitter e o atributo lang do <html> trocam de
+     idioma pelo MESMO mecanismo genérico do texto visível — data-i18n no
+     <title> (ele tem textContent como qualquer elemento) e data-i18n-attrs
+     no resto (troca o atributo `content`/`lang`, com o PT sempre capturado
+     do próprio HTML, nunca de um dicionário à parte). Não existe mais um
+     objeto META/applyMeta dedicado: era pensado só para o index.html, e
+     incluir i18n.js em outra página (ex.: notas/index.html) sobrescrevia o
+     título/description dela com o conteúdo fixo desta home, mesmo em
+     português, no primeiro applyLang() do DOMContentLoaded — generalizado
+     no item ACV-NOTAS-00. As chaves 'pageMeta.*' abaixo são só do
+     index.html; outra página declara as suas próprias no HTML (ver
+     'notasIndex.*') e simplesmente não usa estas.
+
+     O único caso que ainda precisa de tratamento especial é o JSON-LD: o
+     schema.org "Person" do index.html tem os campos jobTitle/knowsAbout,
+     que não são texto solto nem atributo — são chave de um objeto dentro do
+     JSON. applyJsonLd() só toca nesses campos SE eles já existirem no JSON-LD
+     original da página, então uma nota com JSON-LD "Article" (sem jobTitle
+     nem knowsAbout) fica intocada. */
+  var PERSON_JSONLD_EN = {
+    jobTitle: 'Web Application Security (AppSec) Consultant',
+    knowsAbout: ['Web Application Security', 'OWASP Top 10', 'Vulnerability Diagnosis', 'TLS', 'HTTP Security Headers', 'LGPD', 'Server Hardening', 'Linux'],
   };
 
-  function setMetaContent(selector, content) {
-    var el = document.querySelector(selector);
-    if (el && content != null) el.setAttribute('content', content);
-  }
-
-  function applyMeta(lang) {
-    var m = META[lang] || META.pt;
-    document.title = m.title;
-    setMetaContent('meta[name="description"]', m.description);
-    setMetaContent('meta[name="keywords"]', m.keywords);
-    setMetaContent('meta[property="og:title"]', m.ogTitle);
-    setMetaContent('meta[property="og:description"]', m.ogDescription);
-    setMetaContent('meta[property="og:image:alt"]', m.ogImageAlt);
-    setMetaContent('meta[property="og:locale"]', m.ogLocale);
-    setMetaContent('meta[name="twitter:title"]', m.twitterTitle);
-    setMetaContent('meta[name="twitter:description"]', m.twitterDescription);
-    document.documentElement.setAttribute('lang', m.htmlLang);
-
+  function applyJsonLd(isEn) {
     var ld = document.querySelector('script[type="application/ld+json"]');
-    if (ld) {
-      if (ld._pt === undefined) ld._pt = ld.textContent;
-      try {
-        var data = JSON.parse(ld._pt);
-        data.jobTitle = m.jobTitle;
-        data.knowsAbout = m.knowsAbout;
-        ld.textContent = JSON.stringify(data, null, 2);
-      } catch (e) { /* JSON-LD malformado: não quebra a troca de idioma por causa disso */ }
+    if (!ld) return;
+    if (ld._pt === undefined) ld._pt = ld.textContent;
+    if (!isEn) {
+      ld.textContent = ld._pt;
+      return;
     }
+    try {
+      var data = JSON.parse(ld._pt);
+      if ('jobTitle' in data) data.jobTitle = PERSON_JSONLD_EN.jobTitle;
+      if ('knowsAbout' in data) data.knowsAbout = PERSON_JSONLD_EN.knowsAbout;
+      ld.textContent = JSON.stringify(data, null, 2);
+    } catch (e) { /* JSON-LD malformado: não quebra a troca de idioma por causa disso */ }
   }
 
   function applyLang(lang) {
@@ -361,7 +366,7 @@
       el.setAttribute('href', val != null ? val : el._ptHref);
     });
 
-    applyMeta(isEn ? 'en' : 'pt');
+    applyJsonLd(isEn);
 
     document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
       var active = btn.getAttribute('data-lang-btn') === lang;

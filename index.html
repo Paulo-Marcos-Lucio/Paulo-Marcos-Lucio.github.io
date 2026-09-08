@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-i18n-attrs="lang:meta.htmlLangEn">
 <head>
   <meta charset="utf-8" />
 
@@ -22,30 +22,37 @@
   <!-- Título/description/OG/Twitter/JSON-LD abaixo estão em PT-BR "de fábrica";
        i18n.js troca o conteúdo deles dinamicamente (client-side) quando o
        visitante clica no botão EN — ver site/i18n.js. Um crawler que não roda
-       JS sempre vê a versão PT-BR, que é o idioma nativo do site. -->
-  <title>Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec) · BR</title>
-  <meta name="description" content="Consultoria em segurança de aplicações web no Brasil: diagnóstico e correção de vulnerabilidades, hardening, análise de cabeçalhos, TLS, CORS e exposição — mapeado ao OWASP Top 10 e à LGPD. Suíte de ferramentas open source. Para PMEs e fintechs." />
+       JS sempre vê a versão PT-BR, que é o idioma nativo do site.
+
+       Cada um carrega data-i18n/data-i18n-attrs com a MESMA convenção do
+       resto da página (texto visível), em vez de um objeto META à parte —
+       antes disso, applyMeta() tinha um dicionário fixo pensado só para esta
+       página, e incluir i18n.js em outra página (ex.: notas/index.html)
+       sobrescrevia o título/description dela com o desta home. Generalizado
+       no item ACV-NOTAS-00. -->
+  <title data-i18n="pageMeta.title">Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec) · BR</title>
+  <meta name="description" content="Consultoria em segurança de aplicações web no Brasil: diagnóstico e correção de vulnerabilidades, hardening, análise de cabeçalhos, TLS, CORS e exposição — mapeado ao OWASP Top 10 e à LGPD. Suíte de ferramentas open source. Para PMEs e fintechs." data-i18n-attrs="content:pageMeta.description" />
   <meta name="author" content="Paulo Marcos Lucio" />
-  <meta name="keywords" content="segurança de aplicações web, AppSec, diagnóstico de vulnerabilidades, pentest web, hardening, OWASP Top 10, LGPD, cabeçalhos de segurança, TLS, consultoria cybersecurity Brasil" />
+  <meta name="keywords" content="segurança de aplicações web, AppSec, diagnóstico de vulnerabilidades, pentest web, hardening, OWASP Top 10, LGPD, cabeçalhos de segurança, TLS, consultoria cybersecurity Brasil" data-i18n-attrs="content:pageMeta.keywords" />
 
   <link rel="canonical" href="https://paulo-marcos-lucio.github.io/" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Paulo Marcos Lucio" />
-  <meta property="og:title" content="Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec)" />
-  <meta property="og:description" content="Diagnóstico e correção de vulnerabilidades em sistemas web para PMEs e fintechs. OWASP Top 10 · TLS · LGPD art. 46. Suíte de ferramentas open source." />
+  <meta property="og:title" content="Paulo Marcos Lucio · Segurança de Aplicações Web (AppSec)" data-i18n-attrs="content:pageMeta.ogTitle" />
+  <meta property="og:description" content="Diagnóstico e correção de vulnerabilidades em sistemas web para PMEs e fintechs. OWASP Top 10 · TLS · LGPD art. 46. Suíte de ferramentas open source." data-i18n-attrs="content:pageMeta.ogDescription" />
   <meta property="og:url" content="https://paulo-marcos-lucio.github.io/" />
   <meta property="og:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Paulo Marcos Lucio — Segurança de Aplicações Web (AppSec): diagnóstico, correção, OWASP Top 10 e LGPD" />
-  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image:alt" content="Paulo Marcos Lucio — Segurança de Aplicações Web (AppSec): diagnóstico, correção, OWASP Top 10 e LGPD" data-i18n-attrs="content:pageMeta.ogImageAlt" />
+  <meta property="og:locale" content="pt_BR" data-i18n-attrs="content:pageMeta.ogLocale" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Paulo Marcos Lucio · Segurança de Aplicações Web" />
-  <meta name="twitter:description" content="Diagnóstico e correção de vulnerabilidades em sistemas web. OWASP Top 10 · TLS · LGPD." />
+  <meta name="twitter:title" content="Paulo Marcos Lucio · Segurança de Aplicações Web" data-i18n-attrs="content:pageMeta.twitterTitle" />
+  <meta name="twitter:description" content="Diagnóstico e correção de vulnerabilidades em sistemas web. OWASP Top 10 · TLS · LGPD." data-i18n-attrs="content:pageMeta.twitterDescription" />
   <meta name="twitter:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -91,6 +98,7 @@
       <nav class="nav" aria-label="Principal">
         <a href="#servicos" data-i18n="nav.servicos">Serviços</a>
         <a href="#ferramentas" data-i18n="nav.ferramentas">Ferramentas</a>
+        <a href="notas/index.html" data-i18n="nav.notas">Notas de campo</a>
         <a href="#pro" data-i18n="nav.pro">Edição Pro</a>
         <a href="#pacotes" data-i18n="nav.pacotes">Pacotes</a>
         <a href="#contato" data-i18n="nav.contato">Contato</a>
