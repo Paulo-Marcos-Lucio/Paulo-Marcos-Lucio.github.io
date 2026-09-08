@@ -114,7 +114,7 @@
     'terminal2.title': 'sentinela — Pro edition',
     'terminal2.comment': '── my own target, vulnerable on purpose ──',
     'terminal2.surfaceLabel': 'surface mapped:',
-    'terminal2.surfaceValue': 'entire application',
+    'terminal2.surfaceValue': 'same-origin pages · SPA routes · endpoints',
     'terminal2.a05': 'A05 · Injection (confirmed)',
     'terminal2.crit': 'CRITICAL',
     'terminal2.sqliNote': '(boolean+time)',
@@ -221,7 +221,7 @@
     'pro.lead': 'Nothing leaves the public side — what’s free today is yours, free, forever. Pro never takes away: it <strong>adds</strong>, and always says why. In <strong>Sentinela</strong>, it adds code — the active engine that <strong>confirms</strong> the flaw (it sends requests against the target; that’s why it only runs with written authorization, not as a binary anyone can download). In the other tools the engine is identical to the one you download: what Pro adds is the <strong>service</strong> — triage, fix, and dated report. Detection is free; <strong>fixing is work, and work is what I sell</strong>.',
     'proProject.desc': 'Same target, same day. The public diagnostic says <em>“this is an injection surface.”</em> Pro takes the missing step and says <em>“this <strong>confirms</strong> it”</em> — with a safe payload and an inert marker, <strong>without exploiting</strong>, without extracting a single piece of data, without persisting anything. The distance between <em>maybe</em> and <em>confirmed</em> is the distance between sleeping and not sleeping.',
     'proProject.feat1': "Confirms <strong>SQLi, XSS</strong>, and five more injection classes — it doesn't infer, it proves",
-    'proProject.feat2': 'Maps the <strong>entire application</strong>, page by page — not just the URL you typed',
+    'proProject.feat2': 'Maps the <strong>navigable surface</strong> — dozens of same-origin pages, SPA routes read from the bundle, and endpoints, not just the URL you typed',
     'proProject.feat3': 'Confirms <strong>live</strong> whether an API endpoint actually requires authentication',
     'proProject.feat4': 'Read-only, only under <strong>written authorization</strong> — the red line is code, not a promise',
 
