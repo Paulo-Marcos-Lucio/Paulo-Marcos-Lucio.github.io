@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Mesma postura do resto do site: GitHub Pages não permite cabeçalho de
+       resposta, então só CSP e Referrer-Policy valem via <meta> — ver
+       README.md "O teto da plataforma, dito na cara". -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Exemplo de laudo · Sentinela · Paulo Marcos Lucio</title>
+  <meta name="description" content="Um laudo real da Sentinela contra o próprio site: achados, severidade, evidência e recomendação — datado, não maquiado." />
+  <meta name="author" content="Paulo Marcos Lucio" />
+  <link rel="canonical" href="https://paulo-marcos-lucio.github.io/exemplo-de-laudo/" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Paulo Marcos Lucio" />
+  <meta property="og:title" content="Exemplo de laudo — Sentinela contra o próprio site" />
+  <meta property="og:description" content="Um laudo real, não um mockup: achados, severidade, evidência e recomendação — datado, com metodologia e limites declarados." />
+  <meta property="og:url" content="https://paulo-marcos-lucio.github.io/exemplo-de-laudo/" />
+  <meta property="og:image" content="https://paulo-marcos-lucio.github.io/og-image.png" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="style-laudo.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../" aria-label="Início — Paulo Marcos Lucio">
+        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <span class="brand-name">Paulo Marcos Lucio</span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <a href="../#servicos">Serviços</a>
+        <a href="../#ferramentas">Ferramentas</a>
+        <a href="../#contato">Contato</a>
+        <a class="nav-cta" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Sentinela ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section laudo-hero">
+      <div class="container">
+        <a class="laudo-back" href="../">← Voltar para paulo-marcos-lucio.github.io</a>
+
+        <p class="section-eyebrow">Exemplo de laudo</p>
+        <h1 class="section-title">Relatório de Diagnóstico de Segurança — paulo-marcos-lucio.github.io</h1>
+        <p class="section-lead">
+          Um laudo real da <a href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener"><strong>Sentinela</strong></a>
+          contra o meu próprio site, publicado como veio — sem editar achado nem maquiar nota.
+        </p>
+
+        <div class="laudo-meta">
+          <span>Gerado pela <strong>Sentinela v0.1.0</strong></span>
+          <span><strong>29/07/2026 19:38 UTC</strong></span>
+          <span>Alvo: <strong>https://paulo-marcos-lucio.github.io/</strong></span>
+          <span>Modo: <strong>Não-intrusivo</strong></span>
+          <span>Checagens: <strong>11</strong></span>
+          <span class="laudo-grade">75/100 · Conceito B</span>
+        </div>
+
+        <div class="laudo-note">
+          <span class="laudo-note-ico" aria-hidden="true">🕒</span>
+          <p>
+            <strong>Isto é um retrato datado, não o status atual do site.</strong>
+            É o mesmo compromisso que rege a série do
+            <a href="https://github.com/Paulo-Marcos-Lucio/observatorio-da-superficie" target="_blank" rel="noopener">Observatório da Superfície</a>:
+            um laudo vale pela data em que foi tirado, e publicar um exemplo antigo como se fosse hoje seria o
+            oposto do que essa suíte defende. Desde este scan (nota B·75) o site já corrigiu itens daqui —
+            CSP e proteção a enquadramento têm decisão registrada (ver rodapé) e as fontes deixaram de vir de
+            <code>fonts.googleapis.com</code>, fechando o achado de SRI abaixo. O placar atualizado
+            (<strong>hoje é B·89</strong>) está na página inicial. Isto aqui é o laudo em si — a evidência,
+            não o resumo.
+          </p>
+        </div>
+
+        <div class="laudo-summary">
+          <div class="laudo-summary-item is-critica"><span class="num">0</span><span class="lbl">🔴 Crítica</span></div>
+          <div class="laudo-summary-item is-alta"><span class="num">0</span><span class="lbl">🟠 Alta</span></div>
+          <div class="laudo-summary-item is-media"><span class="num">2</span><span class="lbl">🟡 Média</span></div>
+          <div class="laudo-summary-item is-baixa"><span class="num">3</span><span class="lbl">🔵 Baixa</span></div>
+          <div class="laudo-summary-item is-info"><span class="num">4</span><span class="lbl">⚪ Informativa</span></div>
+        </div>
+
+        <h2 class="laudo-cat-title">Cabeçalhos de segurança</h2>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-media">MÉDIA</span><h3 class="finding-title">Content-Security-Policy ausente</h3></div>
+          <p class="finding-meta">ID: <code>CSP_AUSENTE</code> · OWASP: A02:2025 Security Misconfiguration · CWE-693 (Protection Mechanism Failure)</p>
+          <p class="finding-desc">A resposta não define uma Content-Security-Policy.</p>
+          <p class="finding-desc"><strong>Impacto:</strong> a CSP é a defesa em profundidade mais eficaz contra XSS e injeção de conteúdo. Sem ela, qualquer falha de saída não escapada vira execução de script no navegador da vítima.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> implante uma CSP restritiva (idealmente baseada em nonce/hash), começando por <code>default-src 'self'</code> e liberando origens sob demanda. Use <code>Content-Security-Policy-Report-Only</code> para calibrar sem quebrar o site.</p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank" rel="noopener">MDN</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Cheat Sheet</a></p>
+        </article>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-media">MÉDIA</span><h3 class="finding-title">Sem proteção contra clickjacking</h3></div>
+          <p class="finding-meta">ID: <code>CLICKJACKING_SEM_PROTECAO</code> · OWASP: A02:2025 Security Misconfiguration · CWE-1021 (Improper Restriction of Rendered UI Layers)</p>
+          <p class="finding-desc">Não há <code>X-Frame-Options</code> nem a diretiva <code>frame-ancestors</code> na CSP.</p>
+          <p class="finding-desc"><strong>Impacto:</strong> a página pode ser embutida num <code>&lt;iframe&gt;</code> de um site malicioso (clickjacking), induzindo o usuário a clicar em ações sem perceber.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> defina <code>Content-Security-Policy: frame-ancestors 'none'</code> (ou <code>'self'</code>) e/ou <code>X-Frame-Options: DENY</code>.</p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/X-Frame-Options" target="_blank" rel="noopener">MDN</a> · <a href="https://owasp.org/www-project-secure-headers/" target="_blank" rel="noopener">OWASP Secure Headers</a></p>
+        </article>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-baixa">BAIXA</span><h3 class="finding-title">Referrer-Policy ausente</h3></div>
+          <p class="finding-meta">ID: <code>REFERRER_POLICY_AUSENTE</code> · OWASP: A02:2025 Security Misconfiguration · CWE-200 (Exposure of Sensitive Information)</p>
+          <p class="finding-desc">O cabeçalho <code>Referrer-Policy</code> não foi encontrado na resposta.</p>
+          <p class="finding-desc"><strong>Impacto:</strong> sem política de referenciador, URLs internas (com tokens, IDs ou dados sensíveis no path/query) podem vazar para sites de terceiros no cabeçalho Referer.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> defina <code>Referrer-Policy: strict-origin-when-cross-origin</code> (ou <code>no-referrer</code> para o máximo de privacidade).</p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/Referrer-Policy" target="_blank" rel="noopener">MDN</a> · <a href="https://owasp.org/www-project-secure-headers/" target="_blank" rel="noopener">OWASP Secure Headers</a></p>
+        </article>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-baixa">BAIXA</span><h3 class="finding-title">X-Content-Type-Options ausente</h3></div>
+          <p class="finding-meta">ID: <code>XCTO_AUSENTE</code> · OWASP: A02:2025 Security Misconfiguration · CWE-693 (Protection Mechanism Failure)</p>
+          <p class="finding-desc">O cabeçalho <code>X-Content-Type-Options</code> não foi encontrado na resposta.</p>
+          <p class="finding-desc"><strong>Impacto:</strong> sem 'nosniff', o navegador pode tentar adivinhar (MIME sniffing) o tipo de conteúdo e interpretar um arquivo como script, abrindo espaço para XSS a partir de uploads ou respostas mal tipadas.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> envie o cabeçalho <code>X-Content-Type-Options: nosniff</code> em todas as respostas.</p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/X-Content-Type-Options" target="_blank" rel="noopener">MDN</a> · <a href="https://owasp.org/www-project-secure-headers/" target="_blank" rel="noopener">OWASP Secure Headers</a></p>
+        </article>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-info">INFO</span><h3 class="finding-title">Cross-Origin-Opener-Policy ausente</h3></div>
+          <p class="finding-meta">ID: <code>COOP_AUSENTE</code> · OWASP: A02:2025 Security Misconfiguration · CWE-693 (Protection Mechanism Failure)</p>
+          <p class="finding-desc">O cabeçalho <code>Cross-Origin-Opener-Policy</code> não foi encontrado na resposta.</p>
+          <p class="finding-desc"><strong>Impacto:</strong> sem COOP, a página compartilha o mesmo grupo de contexto de navegação com janelas de outras origens, facilitando ataques de canal lateral cross-origin (ex.: Spectre) e manipulação via <code>window.opener</code>.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> defina <code>Cross-Origin-Opener-Policy: same-origin</code> em páginas sensíveis.</p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy" target="_blank" rel="noopener">MDN</a> · <a href="https://owasp.org/www-project-secure-headers/" target="_blank" rel="noopener">OWASP Secure Headers</a></p>
+        </article>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-info">INFO</span><h3 class="finding-title">HSTS sem includeSubDomains</h3></div>
+          <p class="finding-meta">ID: <code>HSTS_SEM_SUBDOMINIOS</code> · OWASP: A04:2025 Cryptographic Failures · CWE-319 (Cleartext Transmission of Sensitive Information)</p>
+          <p class="finding-desc">O HSTS não cobre os subdomínios.</p>
+          <p class="finding-evid">Strict-Transport-Security: max-age=31556952</p>
+          <p class="finding-desc"><strong>Impacto:</strong> subdomínios sem HSTS podem ser usados para ataques de rebaixamento e para plantar/ler cookies do domínio pai.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> adicione a diretiva <code>includeSubDomains</code> após validar todos os subdomínios em HTTPS.</p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/Strict-Transport-Security" target="_blank" rel="noopener">MDN</a></p>
+        </article>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-info">INFO</span><h3 class="finding-title">Permissions-Policy ausente</h3></div>
+          <p class="finding-meta">ID: <code>PERMISSIONS_POLICY_AUSENTE</code> · OWASP: A02:2025 Security Misconfiguration · CWE-693 (Protection Mechanism Failure)</p>
+          <p class="finding-desc">O cabeçalho <code>Permissions-Policy</code> não foi encontrado na resposta.</p>
+          <p class="finding-desc"><strong>Impacto:</strong> sem essa política, a página não restringe explicitamente recursos poderosos do navegador (câmera, microfone, geolocalização etc.), ampliando o impacto de um eventual XSS.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> defina uma <code>Permissions-Policy</code> restritiva, desabilitando recursos não usados, ex.: <code>Permissions-Policy: camera=(), microphone=(), geolocation=()</code>.</p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/HTTP/Headers/Permissions-Policy" target="_blank" rel="noopener">MDN</a> · <a href="https://owasp.org/www-project-secure-headers/" target="_blank" rel="noopener">OWASP Secure Headers</a></p>
+        </article>
+
+        <h2 class="laudo-cat-title">Conteúdo da página</h2>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-baixa">BAIXA</span><h3 class="finding-title">Sub-recurso de terceiro sem Subresource Integrity (SRI)</h3></div>
+          <p class="finding-meta">ID: <code>SRI_AUSENTE</code> · OWASP: A03:2025 Software Supply Chain Failures · CWE-353 (Missing Support for Integrity Check)</p>
+          <p class="finding-desc">Há scripts/estilos carregados de origens externas sem o atributo <code>integrity</code> (SRI).</p>
+          <p class="finding-evid">fonts.googleapis.com</p>
+          <p class="finding-desc"><strong>Impacto:</strong> sem SRI, se o servidor de terceiro (CDN) for comprometido ou sequestrado, o navegador executa o código adulterado com total confiança — um vetor clássico de ataque à cadeia de suprimentos.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> adicione <code>integrity="sha384-..."</code> e <code>crossorigin="anonymous"</code> aos <code>&lt;script&gt;</code>/<code>&lt;link&gt;</code> de terceiros, fixando o hash da versão esperada.</p>
+          <p class="finding-desc"><em>Fechado desde este scan: as fontes passaram a ser auto-hospedadas (ver README, "Postura de segurança e privacidade") — zero requisição a terceiro, então SRI deixou de se aplicar aqui.</em></p>
+          <p class="finding-refs">Referências: <a href="https://developer.mozilla.org/docs/Web/Security/Subresource_Integrity" target="_blank" rel="noopener">MDN</a> · <a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener">OWASP Top 10</a></p>
+        </article>
+
+        <h2 class="laudo-cat-title">DNS / e-mail</h2>
+
+        <article class="finding-card">
+          <div class="finding-head"><span class="sev-badge sev-info">INFO</span><h3 class="finding-title">Domínio em hospedagem gerenciada (DNS/e-mail do provedor)</h3></div>
+          <p class="finding-meta">ID: <code>DNS_HOSPEDAGEM_GERENCIADA</code></p>
+          <p class="finding-desc"><code>paulo-marcos-lucio.github.io</code> está sob hospedagem gerenciada — o dono do site não controla o DNS do apex nem envia e-mail por esse nome.</p>
+          <p class="finding-desc"><strong>Impacto:</strong> checagens de SPF/DMARC/CAA/DNSSEC não se aplicam (ou não são acionáveis) aqui: elas pertencem ao provedor, não a você. Puladas para não gerar achado enganoso.</p>
+          <p class="finding-desc"><strong>Recomendação:</strong> para postura de e-mail/DNS, rode a Sentinela contra o seu domínio próprio (ex.: empresa.com.br), não contra a URL de páginas do provedor.</p>
+          <p class="finding-refs">Referências: <a href="https://dmarc.org/overview/" target="_blank" rel="noopener">dmarc.org</a></p>
+        </article>
+
+        <div class="laudo-methodology">
+          <h2>Metodologia e limites</h2>
+          <p>
+            Este relatório resulta de checagens <strong>não-intrusivas</strong> (salvo modo intrusivo
+            explicitamente autorizado) que observam o que o servidor expõe a um cliente comum. A nota de
+            higiene é um indicador transparente, <strong>não</strong> um escore CVSS formal, e a ausência de
+            achados não garante inexistência de vulnerabilidades — falhas de lógica, injeção e autorização
+            exigem teste manual dedicado.
+          </p>
+          <p>
+            Conduzido sob autorização e dentro do escopo acordado, em conformidade com a Lei 12.737/2012, a
+            Lei 14.155/2021, o Marco Civil da Internet (Lei 12.965/2014) e a LGPD (Lei 13.709/2018).
+          </p>
+          <p>
+            A CSP em <code>&lt;meta&gt;</code> e o descarte de <code>frame-ancestors</code> nessa forma têm
+            decisão registrada em texto visível na seção
+            <a href="../#ferramentas">"Comecei pelo meu próprio site"</a> — ver também o
+            <a href="../README.md">README</a>.
+          </p>
+        </div>
+
+        <div class="laudo-cta">
+          <a class="btn btn-primary" href="https://wa.me/5512991478991?text=Ol%C3%A1%20Paulo%2C%20vi%20o%20exemplo%20de%20laudo%20no%20seu%20site%20e%20quero%20um%20diagn%C3%B3stico%20de%20seguran%C3%A7a%20da%20minha%20aplica%C3%A7%C3%A3o." target="_blank" rel="noopener">Quero um laudo assim para o meu sistema</a>
+          <a class="btn btn-ghost" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">Rodar a Sentinela você mesmo ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <div>
+          <p class="footer-name">Paulo Marcos Lucio</p>
+          <p class="footer-tag">Segurança de Aplicações Web · AppSec · BR</p>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Rodapé">
+        <a href="https://wa.me/5512991478991" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/paulo-marcos-a07379174/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:contatopml26@gmail.com">Email</a>
+      </nav>
+      <p class="footer-meta">
+        © <span id="year">2026</span> Paulo Marcos Lucio · São Paulo, BR · Diagnóstico conduzido sob autorização e escopo definido
+      </p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

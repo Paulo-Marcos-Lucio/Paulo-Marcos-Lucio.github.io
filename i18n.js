@@ -52,6 +52,7 @@
     'svc1.title': 'Web vulnerability diagnosis',
     'svc1.desc': 'Analysis of the exposed surface: headers, TLS/certificate, cookies, CORS, HTTP methods, file exposure, and DNS/email security. Report with severity, evidence, and fix recommendations.',
     'svc1.tag3': 'executive report',
+    'svc1.laudoLink': 'See a real report',
     'svc2.title': 'Fix and hardening',
     'svc2.desc': 'From recommendation to execution: I implement (or guide your team through) CSP, HSTS, modern TLS, secure cookies, restrictive CORS, and removal of exposed sensitive routes and files.',
     'svc3.title': 'Retest and follow-up',

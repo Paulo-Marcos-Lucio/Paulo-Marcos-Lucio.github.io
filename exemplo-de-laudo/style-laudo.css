@@ -1,0 +1,87 @@
+/* ============================================================================
+   /exemplo-de-laudo/ — estilos específicos da página de laudo de exemplo.
+   Reaproveita paleta, tipografia e componentes do site (mesma origem, CSP
+   style-src 'self' cobre o @import) e só acrescenta o que a home não tem:
+   badges de severidade (5 níveis) e o cartão de achado.
+   ============================================================================ */
+
+@import url("../styles.css");
+
+:root {
+  --sev-critica: #f87171;
+  --sev-critica-soft: rgba(248, 113, 113, 0.12);
+  --sev-alta: #fb923c;
+  --sev-alta-soft: rgba(251, 146, 60, 0.12);
+  --sev-baixa: var(--link);
+  --sev-baixa-soft: rgba(56, 189, 248, 0.12);
+}
+
+.laudo-hero { padding-top: clamp(48px, 8vw, 84px); padding-bottom: 0; }
+.laudo-back { display: inline-flex; align-items: center; gap: 6px; color: var(--fg-3); font-size: 13.5px; text-decoration: none; margin-bottom: 22px; }
+.laudo-back:hover { color: var(--accent-strong); }
+
+.laudo-meta {
+  display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center;
+  font-family: var(--font-mono); font-size: 13px; color: var(--fg-3);
+  margin: 18px 0 28px; padding-bottom: 22px; border-bottom: 1px solid var(--border);
+}
+.laudo-meta strong { color: var(--fg-1); font-weight: 700; }
+.laudo-grade { font-family: var(--font-mono); font-weight: 800; font-size: 15px; color: var(--accent-strong); }
+
+.laudo-note {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--bg-3); border: 1px solid var(--border-strong); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 40px; font-size: 14px; color: var(--fg-3); line-height: 1.6;
+}
+.laudo-note .laudo-note-ico { flex: none; font-size: 18px; line-height: 1; }
+.laudo-note strong { color: var(--fg-2); }
+.laudo-note a { color: var(--link); }
+.laudo-note a:hover { color: var(--link-hover); }
+
+.laudo-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px; margin-bottom: 48px;
+}
+.laudo-summary-item {
+  background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 16px; text-align: center;
+}
+.laudo-summary-item .num { display: block; font-family: var(--font-mono); font-weight: 800; font-size: 22px; }
+.laudo-summary-item .lbl { display: block; font-size: 12px; color: var(--fg-3); margin-top: 4px; }
+.laudo-summary-item.is-critica .num { color: var(--sev-critica); }
+.laudo-summary-item.is-alta .num { color: var(--sev-alta); }
+.laudo-summary-item.is-media .num { color: var(--warn); }
+.laudo-summary-item.is-baixa .num { color: var(--sev-baixa); }
+.laudo-summary-item.is-info .num { color: var(--fg-3); }
+
+.laudo-cat-title {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+  color: var(--fg-4); margin: 40px 0 16px;
+}
+.laudo-cat-title:first-of-type { margin-top: 0; }
+
+.finding-card {
+  background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px 22px; margin-bottom: 14px;
+}
+.finding-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
+.finding-title { font-size: 15.5px; font-weight: 700; color: var(--fg-1); margin: 0; }
+.finding-meta { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-4); margin: 0 0 12px; }
+.finding-desc { font-size: 14px; color: var(--fg-2); line-height: 1.6; margin: 0 0 10px; }
+.finding-desc strong { color: var(--fg-1); }
+.finding-evid { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent-strong); background: var(--bg-1); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 0 0 10px; overflow-x: auto; }
+.finding-refs { font-size: 12.5px; color: var(--fg-4); }
+.finding-refs a { color: var(--link); }
+.finding-refs a:hover { color: var(--link-hover); }
+
+.sev-badge { font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.sev-critica { color: var(--sev-critica); background: var(--sev-critica-soft); border: 1px solid rgba(248, 113, 113, 0.35); }
+.sev-alta { color: var(--sev-alta); background: var(--sev-alta-soft); border: 1px solid rgba(251, 146, 60, 0.35); }
+.sev-media { color: var(--warn); background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); }
+.sev-baixa { color: var(--sev-baixa); background: var(--sev-baixa-soft); border: 1px solid rgba(56, 189, 248, 0.3); }
+.sev-info { color: var(--fg-3); background: var(--bg-3); border: 1px solid var(--border-strong); }
+
+.laudo-methodology { max-width: 74ch; color: var(--fg-3); font-size: 14px; line-height: 1.7; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--border); }
+.laudo-methodology h2 { font-size: 18px; color: var(--fg-1); margin-bottom: 12px; }
+
+.laudo-cta { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
