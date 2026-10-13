@@ -11,17 +11,18 @@ hardening, and LGPD compliance, for SMBs and fintechs.
 
 ## Stack
 
-Semantic HTML + custom CSS (no framework) + minimal JS (reveal-on-scroll,
-dynamic year, PT/EN language toggle). Deployed via GitHub Pages, `main`
-branch, repo root.
+Semantic HTML + custom CSS (no framework) + dependency-free, build-free JS
+(reveal-on-scroll, dynamic year, PT/EN language toggle, and the animated
+`<canvas>` background). Deployed via GitHub Pages, `main` branch, repo root.
 
 ## Structure
 
 - `index.html` — single page: hero, services, method, Sentinela, credibility, packages, contact
-- `styles.css` — dark theme, mobile-first, design tokens (teal/cyan security palette)
-- `script.js` — IntersectionObserver for reveal, binary rain on canvas, auto footer year
+- `styles.css` — "Cyber Death" dark theme, mobile-first, design tokens (red on near-black, measured WCAG contrast)
+- `script.js` — IntersectionObserver for reveal, spotlight on the package cards, auto footer year
+- `abismo.js` — the animated `<canvas>` background (the binary "abyss" behind the content)
 - `i18n.js` — client-side PT/EN language toggle (see below)
-- `fonts/` — Inter and JetBrains Mono **self-hosted** (SIL OFL 1.1, see `fonts/LICENSE-fontes.md`)
+- `fonts/` — Inter, JetBrains Mono, League Gothic, and Cormorant Garamond **self-hosted** (SIL OFL 1.1, see `fonts/LICENSE-fontes.md`)
 - `favicon.svg` / `apple-touch-icon.png` / `og-image.svg` / `og-image.png` — visual identity (shield)
 - `avatar.jpg` — profile photo, also self-hosted
 - `robots.txt` + `sitemap.xml` — basic SEO

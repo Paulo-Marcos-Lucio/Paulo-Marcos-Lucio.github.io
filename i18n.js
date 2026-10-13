@@ -40,7 +40,9 @@
     'hero.stat3Label': 'open source, tested, green CI',
     'hero.tagNetworking': 'Networking',
     'hero.badgeWarn': 'hosting limit',
-    'hero.scanTls': '🔒 TLS / Certificate',
+    'hero.scanTls': 'TLS / Certificate',
+    // legenda decorativa "de prancha" sob a criatura do fundo (aria-hidden)
+    'hero.prancha': 'Fig. I — Argos Panoptes, the hundred-eyed watcher',
 
     'provoke.eyebrow': 'Three questions',
     'provoke.title': 'Answer honestly — to yourself',
