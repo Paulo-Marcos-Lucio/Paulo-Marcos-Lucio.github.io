@@ -20,10 +20,11 @@ HTML semântico + CSS custom (sem framework) + JS sem dependências e sem build
 - `index.html` — single page: hero, serviços, método, Sentinela, credibilidade, pacotes, contato
 - `styles.css` — tema escuro "Cyber Death", mobile-first, design tokens (vermelho sobre quase-preto, contrastes WCAG medidos)
 - `script.js` — IntersectionObserver para reveal, spotlight dos cards de pacote, footer year auto
-- `abismo.js` — o fundo animado em `<canvas>` (o "abismo" de binário atrás do conteúdo)
+- `abismo.js` — **Argos, a máscara de cem olhos**: o fundo vivo em WebGL2 (o corpo é ASCII/binário com hachura de gravura; os olhos são nítidos e seguem o ponteiro; o cursor é uma lanterna que decodifica o binário em palavras). Fallback 2D sem WebGL2, quadro estático em `prefers-reduced-motion`, botão de pausa (WCAG 2.2.2), qualidade adaptativa e nenhuma requisição de rede
+- `mascara-n.png` / `mascara-m.png` — mapas de normal e de máscara do relevo, gerados de forma reproduzível por `arte/gerar_mascara.py` (Python + numpy)
 - `i18n.js` — troca de idioma PT/EN no cliente (ver abaixo)
 - `fonts/` — Inter, JetBrains Mono, League Gothic e Cormorant Garamond **auto-hospedadas** (SIL OFL 1.1, ver `fonts/LICENSE-fontes.md`)
-- `favicon.svg` / `apple-touch-icon.png` / `og-image.svg` / `og-image.png` — identidade visual (escudo)
+- `favicon.svg` / `apple-touch-icon.png` / `og-image.png` — identidade visual (sigilo: um olho dentro do escudo); a `og-image.png` é um quadro renderizado pelo próprio motor
 - `avatar.jpg` — foto de perfil, também auto-hospedada
 - `robots.txt` + `sitemap.xml` — SEO básico
 - `.well-known/security.txt` — canal de divulgação responsável (RFC 9116)
