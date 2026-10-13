@@ -78,7 +78,7 @@
   </script>
 </head>
 <body>
-  <canvas id="matrix" aria-hidden="true"></canvas>
+  <canvas id="abismo" aria-hidden="true"></canvas>
 
   <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
 
@@ -107,7 +107,7 @@
     <!-- ===================== HERO ===================== -->
     <section id="top" class="hero">
       <div class="container hero-grid">
-        <div>
+        <div class="hero-copy" data-abismo-veu>
           <p class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
             <span data-i18n="hero.eyebrow">Auto-scan do meu próprio site: começou em C·70, hoje é B·89 — a subida publicada, sem maquiar</span>
@@ -133,7 +133,7 @@
           </ul>
         </div>
 
-        <aside class="hero-card" aria-label="Amostra de diagnóstico" data-i18n-attrs="aria-label:hero.cardAriaLabel">
+        <aside class="hero-card" data-abismo-veu aria-label="Amostra de diagnóstico" data-i18n-attrs="aria-label:hero.cardAriaLabel">
           <div class="hero-card-glow" aria-hidden="true"></div>
           <div class="hero-card-head">
             <img class="avatar" src="avatar.jpg" alt="Avatar de Paulo Marcos Lucio" width="64" height="64" loading="eager" />
@@ -566,6 +566,13 @@
     </div>
   </footer>
 
+  <!-- Pausar as animações do fundo (WCAG 2.2.2 Pausar, Parar, Ocultar). Nasce
+       oculto: só aparece quando abismo.js de fato anima algo; texto/aria-label
+       são geridos por abismo.js nos dois idiomas. -->
+  <button type="button" class="abismo-pausa" data-abismo-pausa aria-pressed="false" hidden>
+    <span class="abismo-pausa-ico" aria-hidden="true"></span><span class="abismo-pausa-txt">Pausar animação</span>
+  </button>
+
   <!-- Botão flutuante de idioma: convida a trocar mostrando a bandeira do OUTRO idioma (não do atual) -->
   <button type="button" class="lang-fab" data-lang-fab aria-label="Read this page in English">
     <span class="lang-fab-flag" data-lang-fab-flag aria-hidden="true">🇺🇸</span>
@@ -580,6 +587,7 @@
   </a>
 
   <script src="i18n.js" defer></script>
+  <script src="abismo.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>
