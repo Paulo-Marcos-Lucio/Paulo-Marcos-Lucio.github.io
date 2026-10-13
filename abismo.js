@@ -61,6 +61,7 @@
       pausar: 'Pausar animação', retomar: 'Retomar animação',
       pausarAria: 'Pausar as animações do fundo', retomarAria: 'Retomar as animações do fundo',
       tituloOculto: '◉ ainda te vejo…',
+      camadas: ['SUPERFÍCIE', 'I · O LIMBO', 'II · A GARGANTA', 'III · O ERMO', 'IV · O ECLIPSE'],
       sussurro: 'AINDA ESTOU AQUI',
       // Ficção decorativa: aparecem quando a lanterna (o cursor) "decodifica" o binário.
       mensagens: ['MEMENTO MORI', 'NADA SE ESCONDE', 'EU VEJO O QUE ESTÁ EXPOSTO', 'SEU .ENV ESTÁ ABERTO?',
@@ -78,6 +79,7 @@
       pausar: 'Pause animation', retomar: 'Resume animation',
       pausarAria: 'Pause the background animations', retomarAria: 'Resume the background animations',
       tituloOculto: '◉ still watching you…',
+      camadas: ['SURFACE', 'I · THE LIMBO', 'II · THE GULLET', 'III · THE WASTE', 'IV · THE ECLIPSE'],
       sussurro: 'I AM STILL HERE',
       mensagens: ['MEMENTO MORI', 'NOTHING STAYS HIDDEN', 'I SEE WHAT IS EXPOSED', 'IS YOUR .ENV OPEN?',
         '0xDEADBEEF', '/ETC/SHADOW', 'ACCESS DENIED', 'IT NEVER SLEEPS', 'EVERY SECRET LEAKS',
@@ -214,8 +216,8 @@
       'float angDif(float a) { return mod(a + PI, 2.0 * PI) - PI; }',
       // meia-largura da célula medida na PERPENDICULAR de uma linha de ângulo a (raio, contorno)
       'float meiaCel(float a, vec2 cu) { return 0.5 * (cu.x * abs(sin(a)) + cu.y * abs(cos(a))); }',
-      'vec4 cena(vec2 p, vec2 cel) {',
-      '  vec4 c = fundoAbismo(p, cel);',
+      // Argos recebe o fundo já pintado (abismo + camada da descida) e desenha por cima
+      'vec4 cenaArgos(vec2 p, vec2 cel, vec4 c) {',
       '  float E = max(uEscala, 1.0);',
       '  vec2 u = (p - uAncora) / E;',
       '  vec2 cu = uCel / E;',
@@ -444,7 +446,787 @@
       '    }',
       '  }',
       '  return c;',
+      '}',
+      // ══ CAMADAS: início (gerado por abismo-build/ferramentas/camadas.py) ══
+      // ═══ CAMADAS DA DESCIDA ═══
+      // Abaixo do hero o site é uma descida: cada faixa de seções é uma camada do abismo, com o seu
+      // cenário (fixo na tela, com paralaxe própria) e as suas criaturas (presas às seções).
+      // I  — O Limbo dos Rostos: campo de rostos deitados de nariz em ponta, céu de rostos, sol rubro
+      // II — A Garganta: túnel de tentáculos que converge para uma luz, vórtice no alto, olhos no escuro
+      // III — O Ermo: planície morta, agulhas de sombra longa, chuva de meteoros em brasa
+      // IV — O Eclipse: céu em sangue e a multidão de cabeças voltadas para o sol negro
+      'float tomCelula(float t, vec2 cel) { return glifoMascara(t, cel); }',
+      'vec4 carne(float t, vec2 cel, float k) {',
+      '  t = clamp(t, 0.0, 1.0);',
+      '  return vec4(glifoMascara(t, cel), (0.16 + 0.84 * clamp(t / 0.55, 0.0, 1.0)) * k, 0.34 + 0.5 * t, 0.0);',
+      '}',
+      // ── I. O Limbo dos Rostos ──────────────────────────────────────────────────────
+      // Campo de rostos em perspectiva no referencial da TELA, usando o mesmo relevo esculpido da máscara
+      // do Argos (normal + cavidade): é o relevo que faz um rosto ler como rosto em 8x14 px.
+      // hz = horizonte (px) · D = profundidade (px) · z0/G = 1ª fileira e razão · W0 = largura (px) na z = 1
+      // L = direção da luz principal · cone > 0 = altura do nariz em cone espetado (Limbo), 0 = sem cone
+      // devolve a célula pintada em c e 1/0 em achou
+      'vec4 campoRostos(vec2 p, vec2 cel, vec4 c, float hz, float D, float z0, float G, float W0, vec3 L, float cone, out float achou) {',
+      '  achou = 0.0;',
+      '  float v = p.y - hz;',
+      '  if (v < 1.0) return c;',
+      '  float Lz = lanterna(p);',
+      '  float zc = D / v;',
+      '  float jEst = floor(log(max(zc, 1e-4) / z0) / log(G));',
+      '  for (int q = -5; q <= 1; q++) {',
+      '    float jj = jEst + float(q);',
+      '    if (jj < 0.0) continue;',
+      '    float zj = z0 * pow(G, jj);',
+      '    float yj = hz + D / zj;',
+      '    float wj = W0 / zj, hj = wj * 0.62;',
+      '    float passo = wj * 1.12;',
+      '    float desl = fract(jj * 0.618034);',
+      '    float i = floor(p.x / passo - desl + 0.5);',
+      '    float hi = hash11(i * 3.1 + jj * 7.3);',
+      '    float xc = (i + desl) * passo + (hi - 0.5) * passo * 0.2;',
+      '    float yc = yj + (hash11(i * 1.7 + jj) - 0.5) * hj * 0.25;',
+      '    vec2 m = vec2((p.x - xc) / wj * 2.6, (p.y - yc) / hj * 2.86 + 0.13);',
+      '    float neb = smoothstep(9.0, 0.5, zj);',
+      // o nariz em cone: sai da ponta do nariz e passa da testa, espetado contra o céu
+      '    if (cone > 0.0) {',
+      '      float alt = cone * (0.8 + 0.4 * hi);',
+      '      float topo = -1.25 - alt;',
+      '      float f = clamp((m.y - topo) / (0.32 - topo), 0.0, 1.0);',
+      '      float lw = 0.2 * f;',
+      '      if (abs(m.x) < lw && m.y > topo && m.y < 0.32) {',
+      '        float ex = 0.6 * uCel.x / wj * 2.6;',
+      '        float t;',
+      '        if (m.x < 0.0 && m.x < -lw + ex * 1.8) t = 0.62;              // quina acesa',
+      '        else t = m.x < 0.0 ? 0.3 : 0.03;',
+      '        t = t * (0.3 + 0.7 * neb) + 0.45 * Lz * step(m.x, 0.0);',
+      '        float g = (m.x < 0.0 && m.x < -lw + ex * 1.8) ? hachura(atan(-(alt + 1.57) * hj / 2.86, 0.2 * wj / 2.6)) : glifoMascara(t, cel);',
+      '        c = vec4(g, brilhoMascara(t) * (0.35 + 0.6 * neb), 0.34 + 0.55 * t, 0.0);',
+      '        achou = 1.0; return c;',
+      '      }',
+      '    }',
+      '    vec3 n; vec4 rv = relevo(m, n);',
+      '    if (rv.x < 0.0) {',
+      '      float oc = clamp(1.0 + rv.w * 22.0, 0.0, 1.0);',
+      '      float dif = pow(max(dot(n, normalize(L)), 0.0), 1.6);',
+      '      float rim = pow(clamp(1.0 - n.z, 0.0, 1.0), 1.6) * clamp(0.4 - n.y, 0.0, 1.0);',
+      '      float t = (0.08 * n.z + 0.55 * dif + 0.4 * rim + max(rv.w, 0.0) * 6.0) * oc * oc;',
+      '      t = t * (0.25 + 0.75 * neb) + 0.5 * Lz * n.z;',
+      '      float g = glifoMascara(t, cel);',
+      // os traços esculpidos do relevo (sobrancelha, pálpebra, nariz, boca): é o que faz ler "rosto"
+      '      if (rv.z > 0.5 && neb > 0.25) { g = rv.z < 1.5 ? G_LH : (rv.z < 2.5 ? G_LD2 : (rv.z < 3.5 ? G_LV : G_LD1)); t = max(t, 0.36); }',
+      '      c = vec4(g, brilhoMascara(t) * (0.35 + 0.55 * neb), 0.32 + 0.55 * t, 0.0);',
+      // contorno: a borda do rosto pega a luz (separa um rosto do de trás)
+      '      float mc = 0.6 * uCel.y / hj * 2.86;',
+      '      if (rv.x > -mc * 0.5 && n.y < 0.3) c = vec4(hachura(atan(n.y, n.x) + PI * 0.5), (0.3 + 0.5 * clamp(0.3 - n.y, 0.0, 1.0)) * (0.4 + 0.6 * neb), 0.6, 0.04);',
+      // olhos fechados: costura no escuro; sob a lanterna abrem em brasa
+      '      vec2 me = vec2(abs(m.x) - 0.40, m.y + 0.12) / vec2(0.21, 0.10);',
+      '      if (dot(me, me) < 1.0) {',
+      '        if (Lz > 0.3) c = vec4(Lz > 0.6 ? G_0 : G_o, 0.55 + 0.45 * Lz, 0.95, 0.35 * Lz);',
+      '        else c = vec4(G_LH, 0.2 + 0.35 * neb, 0.62, 0.0);',
+      '      }',
+      '      achou = 1.0; return c;',
+      '    }',
+      '  }',
+      '  return c;',
+      '}',
+      'vec4 camadaRostos(vec2 p, vec2 cel, vec4 c) {',
+      '  float S = min(uRes.x, uRes.y);',
+      '  float rol = uRolCam.x;',
+      '  float hz = clamp(uRes.y * 0.40 - rol * 0.04, uRes.y * 0.24, uRes.y * 0.46);',
+      '  float Lz = lanterna(p);',
+      '  vec2 sc = vec2(uRes.x * 0.07, uRes.y * 0.10);',
+      '  float rs = S * 0.05;',
+      '  vec2 dsv = p - sc; float ds = length(dsv);',
+      '  c.w = max(c.w, 0.75 * exp(-ds / (S * 0.18)));',
+      '  if (ds < S * 0.6) c.z = max(c.z, 0.74);',
+      '  if (p.y < hz) {',
+      // céu de rostos: cabeças comprimidas, mais densas no alto, afundando na névoa do horizonte
+      '    vec2 g = vec2(p.x + uTempo * 2.5, p.y * 1.25 + rol * 0.03) / (S * 0.075);',
+      '    vec2 gi = floor(g); vec2 gf = fract(g) - 0.5;',
+      '    vec2 m = (gf - (hash22(gi) - 0.5) * 0.25) / vec2(0.47, 0.42);',
+      '    float dm = length(m);',
+      '    float alto = smoothstep(hz, hz * 0.1, p.y);',
+      '    c.y *= 0.35;',
+      '    if (dm < 1.0) {',
+      '      float t = (0.05 + 0.24 * (1.0 - dm * dm) * (0.7 - 0.3 * m.y)) * alto;',
+      '      vec2 ol = vec2(abs(m.x) - 0.34, m.y + 0.02);',
+      '      if (length(ol / vec2(0.17, 0.12)) < 1.0) t *= 0.15;',
+      '      if (abs(m.x) < 0.2 && abs(m.y - 0.48) < 0.09) t *= 0.2;',
+      '      t += 0.3 * Lz * (1.0 - dm);',
+      '      c = vec4(glifoMascara(t, cel), 0.1 + 0.9 * t, 0.36 + 0.5 * t, c.w);',
+      '    }',
+      '  } else {',
+      '    float achou;',
+      '    c.y *= 0.2;',
+      '    c = campoRostos(p, cel, c, hz, uRes.y * 0.08, 0.13, 1.45, S * 0.062, vec3(-0.6, -0.55, 0.6), 1.3, achou);',
+      '    c.w = max(c.w, 0.3 * exp(-abs(p.y - hz) / (S * 0.05)));',
+      '    c.z = max(c.z, 0.6);',
+      '  }',
+      // o sol rubro: núcleo incandescente, anel e raios finos de gravura
+      '  if (ds < rs * 6.0) {',
+      '    float a = atan(dsv.y, dsv.x);',
+      '    float nR = 28.0;',
+      '    float k = floor(a / (2.0 * PI) * nR + 0.5);',
+      '    float aR = k / nR * 2.0 * PI;',
+      '    float comp = rs * (1.5 + 3.5 * hash11(k + 4.0)) * (mod(k, 2.0) < 0.5 ? 1.0 : 0.6);',
+      '    if (abs(sin(a - aR)) * ds < meiaCel(aR, uCel) * 0.8 && ds > rs * 1.12 && ds < comp)',
+      '      c = vec4(G_PONTO_MEIO, 0.3 + 0.6 * smoothstep(comp, rs, ds), 0.86, max(c.w, 0.4));',
+      '    if (ds < rs) c = vec4(ds < rs * 0.55 ? G_ARROBA : (ds < rs * 0.8 ? G_HASH : G_0), 1.0, 1.0 - 0.1 * ds / rs, 1.0);',
+      '    else if (ds < rs * 1.12) c = vec4(G_o, 0.9, 0.86, 1.0);',
+      '  }',
+      '  return c;',
+      '}',
+      // ── II. A Garganta ─────────────────────────────────────────────────────────────
+      // três cortinas de tentáculos pendurados (longe, meio, perto) abrem um túnel para uma brasa
+      // distante; cada tubo é escuro, recortado pela luz do fundo na borda que dá para o túnel
+      'vec4 camadaGarganta(vec2 p, vec2 cel, vec4 c) {',
+      '  float S = min(uRes.x, uRes.y);',
+      '  vec2 vp = vec2(uRes.x * 0.5, uRes.y * 0.66);',
+      '  float Lz = lanterna(p);',
+      '  float dv = length((p - vp) / vec2(1.25, 1.0)) / S;',
+      // o fundo do túnel: brasa em redemoinho, mais quente perto da luz
+      '  float brasa = exp(-dv * 2.6);',
+      '  c.w = max(c.w, 0.8 * brasa);',
+      '  c.z = max(c.z, 0.6 + 0.3 * brasa);',
+      '  float sw = fbm(vec2(atan(p.y - vp.y, p.x - vp.x) * 2.0, log(dv + 0.02) * 3.0 - uTempo * 0.08));',
+      '  c = vec4(sw > 0.55 ? hachura(atan(p.y - vp.y, p.x - vp.x) + PI * 0.5) : glifoMascara(0.1 * brasa, cel), (0.05 + 0.4 * brasa) * smoothstep(0.4, 0.7, sw), 0.62 + 0.3 * brasa, c.w);',
+      // a luz lá no fim, com três vultos parados dentro dela
+      '  vec2 dl = (p - vp) / uCel;',
+      '  if (abs(dl.y) < 1.6 && abs(dl.x) < 4.5) {',
+      '    bool vulto = abs(dl.y + 0.3) < 1.0 && (abs(dl.x + 1.0) < 0.5 || abs(dl.x) < 0.5 || abs(dl.x - 1.5) < 0.5);',
+      '    c = vulto ? vec4(G_PIPE, 0.12, 0.3, 0.6) : vec4(abs(dl.x) < 2.5 ? G_ARROBA : G_HASH, 1.0, 1.0, 1.0);',
+      '  }',
+      '  float rol = uRolCam.y;',
+      '  for (int L = 0; L < 3; L++) {',
+      '    float fL = float(L);',
+      '    float sp = S * (0.045 + 0.05 * fL);                     // perto = tubos mais grossos',
+      '    float abre = S * (0.08 + 0.26 * fL);                    // o túnel: cada cortina abre mais',
+      '    float y = p.y + rol * (0.05 + 0.08 * fL) + uTempo * (2.0 + fL);',
+      '    float i0 = floor(p.x / sp);',
+      '    for (int di = -1; di <= 1; di++) {',
+      '      float i = i0 + float(di);',
+      '      float h = hash11(i * 7.13 + fL * 31.0);',
+      '      if (h < 0.2) continue;',
+      '      float xc = (i + 0.5) * sp + sp * 0.55 * sin(y / (sp * (2.2 + 2.0 * h)) + h * 6.28 + uTempo * 0.15 * (1.0 + h))',
+      '               + (vp.x - (i + 0.5) * sp) * 0.12 * smoothstep(0.0, uRes.y, p.y);',
+      '      float w = sp * (0.2 + 0.16 * h) * (0.75 + 0.25 * sin(y / (sp * 1.3) + h * 9.0));',
+      '      float dx = p.x - xc;',
+      '      if (abs(dx) > w) continue;',
+      // o vão do túnel: nenhuma cortina passa por dentro da sua abertura
+      '      if (length((vec2(xc, p.y) - vp) / vec2(1.3, 1.0)) < abre * (0.85 + 0.3 * h)) continue;',
+      '      float nx = dx / w;',
+      '      float nz = sqrt(max(1.0 - nx * nx, 0.0));',
+      '      float lado = sign(vp.x - xc);',
+      '      float rim = pow(max(nx * lado, 0.0), 3.0);',
+      '      float t = (0.04 + 0.1 * nz + 0.55 * rim * (0.5 + 0.5 * brasa)) * (0.55 + 0.25 * fL) + 0.45 * Lz * nz;',
+      '      float anel = fract(y / (w * 1.1 + 2.0) + h * 3.0);',
+      '      float g = anel < 0.14 && t < 0.4 ? G_LH : glifoMascara(t, cel);',
+      '      if (nx * lado > 0.72) { g = G_LV; t = max(t, 0.42 * (0.6 + 0.4 * brasa)); }',
+      '      if (L == 2 && nx * lado < -0.3 && abs(fract(y / (w * 2.2) + h) - 0.5) < 0.1) g = G_o;   // ventosas',
+      '      c = vec4(g, 0.08 + 0.9 * clamp(t / 0.55, 0.0, 1.0), 0.32 + 0.45 * t + 0.1 * fL, c.w * (1.0 - nz));',
+      '    }',
+      '  }',
+      // o ralo no alto à esquerda: um olho de furacão em brasa
+      '  vec2 vo = vec2(uRes.x * 0.22, uRes.y * 0.14);',
+      '  vec2 dvo = p - vo;',
+      '  float rv = length(dvo / vec2(1.3, 1.0)) / S;',
+      '  if (rv < 0.26) {',
+      '    float av = atan(dvo.y, dvo.x);',
+      '    float sp2 = fract((av / (2.0 * PI)) * 4.0 + log(rv + 0.01) * 1.6 - uTempo * 0.06);',
+      '    float f = smoothstep(0.26, 0.05, rv);',
+      '    c.w = max(c.w, 0.6 * f);',
+      '    if (rv < 0.05) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '    else if (sp2 < 0.5) c = vec4(hachura(av + PI * 0.5 + 1.0), (0.15 + 0.55 * f) * (1.0 - sp2), 0.62 + 0.3 * f, c.w);',
+      '    if (rv > 0.05 && rv < 0.058) c = vec4(G_0, 0.85, 0.92, 0.8);',
+      '  }',
+      // olhos no escuro: pares vermelhos nas bordas, cada um pisca no seu tempo
+      '  vec2 ge = p / (S * 0.07);',
+      '  vec2 gi = floor(ge);',
+      '  float he = hash21(gi + 11.0);',
+      '  float borda = max(smoothstep(0.3, 0.05, p.x / uRes.x), smoothstep(0.7, 0.95, p.x / uRes.x));',
+      '  borda = max(borda, smoothstep(0.7, 0.95, p.y / uRes.y));',
+      '  if (he < 0.3 * borda) {',
+      '    vec2 cen = (gi + 0.5 + (hash22(gi) - 0.5) * 0.4) * S * 0.07;',
+      '    vec2 o = p - cen;',
+      '    float ab = step(0.05, fract(uTempo * (0.07 + 0.05 * he) + he * 9.0));',
+      '    float sep = uCel.x * (1.0 + floor(he * 6.0));',
+      '    if (abs(o.y) < uCel.y * 0.5 && (abs(o.x - sep) < uCel.x * 0.5 || abs(o.x + sep) < uCel.x * 0.5))',
+      '      c = vec4(ab > 0.5 ? G_BULLET : G_MENOS, 1.0, 0.76, 0.6);',
+      '  }',
+      '  return c;',
+      '}',
+      // ── III. O Ermo ────────────────────────────────────────────────────────────────
+      'vec4 camadaErmo(vec2 p, vec2 cel, vec4 c) {',
+      '  float S = min(uRes.x, uRes.y);',
+      '  float hz = uRes.y * 0.56 - clamp(uRolCam.z * 0.03, 0.0, uRes.y * 0.08);',
+      '  float Lz = lanterna(p);',
+      '  c.y *= 0.45;',
+      '  if (p.y < hz) {',
+      // céu de fumaça em faixas horizontais, sépia de brasa
+      '    float n = fbm(vec2(p.x / (S * 0.9) + uTempo * 0.006, p.y / (S * 0.16)));',
+      '    float t = smoothstep(0.42, 0.85, n) * (0.25 + 0.35 * smoothstep(hz, 0.0, p.y));',
+      '    if (t > 0.04) c = vec4(glifoMascara(t * 0.9 + 0.3 * Lz, cel), 0.08 + 0.4 * t, 0.62 + 0.25 * t, max(c.w, 0.25 * t));',
+      '    c.w = max(c.w, 0.18 * smoothstep(hz - S * 0.3, hz, p.y));',
+      '    c.z = max(c.z, 0.7);',
+      // chuva de meteoros: riscos em brasa descendo da direita para a esquerda
+      '    vec2 dir = normalize(vec2(-1.0, 0.42));',
+      '    vec2 perp = vec2(-dir.y, dir.x);',
+      '    for (int m = 0; m < 7; m++) {',
+      '      float fm = float(m);',
+      '      float hm = hash11(fm * 7.31 + 2.0);',
+      '      float per = 6.0 + 7.0 * hm;',
+      '      float ciclo = floor((uTempo + hm * per) / per);',
+      '      float fase = fract((uTempo + hm * per) / per);',
+      '      float hc = hash11(ciclo * 3.3 + fm);',
+      '      vec2 o0 = vec2(uRes.x * (0.45 + 0.6 * hc), -uRes.y * 0.05 + uRes.y * 0.25 * hash11(ciclo + fm * 5.0));',
+      '      vec2 cab = o0 + dir * fase * uRes.x * 0.7;',
+      '      vec2 q = p - cab;',
+      '      float along = -dot(q, dir);',
+      '      float lat = dot(q, perp);',
+      '      float cauda = S * (0.12 + 0.18 * hc);',
+      '      if (along > -uCel.x && along < cauda && abs(lat) < uCel.y * (0.6 + 0.6 * (1.0 - along / cauda))) {',
+      '        float k = 1.0 - along / cauda;',
+      '        float g = along < uCel.x ? G_ARROBA : (k > 0.7 ? G_HASH : (k > 0.4 ? G_ASTERISCO : (k > 0.2 ? G_DOIS_PONTOS : G_PONTO_MEIO)));',
+      '        float vida = smoothstep(0.0, 0.08, fase) * smoothstep(1.0, 0.8, fase);',
+      '        c = vec4(g, (0.3 + 0.7 * k) * vida, 0.82 + 0.16 * k, max(c.w, 0.6 * k * vida));',
+      '      }',
+      '    }',
+      '  } else {',
+      // a planície: chão liso, riscado rente, sumindo no escuro
+      '    float v = p.y - hz;',
+      '    float linha = fract(log(v + 4.0) * 7.0 - uRolCam.z * 0.0004);',
+      '    if (linha < 0.1) c = vec4(G_LH, 0.06 + 0.06 * smoothstep(0.0, uRes.y * 0.4, v), 0.45, c.w);',
+      '    else c.y *= 0.5;',
+      '  }',
+      // as agulhas: cones finos fincados no chão, cada uma arrastando uma sombra comprida em L
+      '  for (int k = 0; k < 4; k++) {',
+      '    float fk = float(k);',
+      '    float hk = hash11(fk * 9.7 + 1.0);',
+      '    float x0 = uRes.x * (0.06 + 0.13 * fk + 0.05 * hk);',
+      '    float esc = 1.0 + 0.9 * fk;                         // as da frente são maiores',
+      '    float base = hz + S * 0.035 * esc;',
+      '    float alt = S * (0.16 + 0.11 * fk + 0.05 * hk);',
+      '    float lb = S * 0.018 * esc;',
+      '    float yy = base - p.y;',
+      '    if (yy > 0.0 && yy < alt) {',
+      '      float lw = lb * pow(1.0 - yy / alt, 1.6);',
+      '      float dx = p.x - x0;',
+      '      if (abs(dx) < lw + uCel.x * 0.3) {',
+      '        float t = dx < 0.0 ? 0.28 + 0.2 * (1.0 - yy / alt) : 0.05;',
+      '        if (abs(abs(dx) - lw) < uCel.x * 0.6 && dx < 0.0) t = 0.55;',
+      '        c = vec4(glifoMascara(t + 0.4 * Lz, cel), 0.15 + 0.6 * t, 0.62 + 0.3 * t, 0.0);',
+      '      }',
+      '    }',
+      // sombra: corre para a esquerda rente ao chão e depois desce na direção de quem olha
+      '    float sx = x0 - S * 0.5 * esc;',
+      '    if (abs(p.y - base) < S * 0.008 * esc + uCel.y * 0.5 && p.x < x0 && p.x > sx) c.y *= 0.05;',
+      '    if (abs(p.x - sx) < S * 0.008 * esc + uCel.x * 0.5 && p.y > base && p.y < base + S * 0.3 * esc) c.y *= 0.05;',
+      '  }',
+      '  return c;',
+      '}',
+      // ── IV. O Eclipse ──────────────────────────────────────────────────────────────
+      'vec4 camadaEclipse(vec2 p, vec2 cel, vec4 c) {',
+      '  float S = min(uRes.x, uRes.y);',
+      '  float Lz = lanterna(p);',
+      // céu de sangue em retícula de cartaz
+      '  float ceu = smoothstep(uRes.y * 0.95, 0.0, p.y);',
+      '  c.w = max(c.w, 0.35 * ceu);',
+      '  c.z = max(c.z, 0.62);',
+      '  float tc = 0.05 + 0.2 * ceu;',
+      '  c = vec4(glifoMascara(tc * (0.7 + 0.6 * hash21(cel + floor(uTempo * 0.5))), cel), 0.06 + 0.22 * ceu, 0.6 + 0.12 * ceu, c.w);',
+      // a multidão: rostos apinhados virados para o alto, acesos pelo sol negro lá em cima
+      '  float topo = uRes.y * 0.70;',
+      '  if (p.y > topo) {',
+      '    float achou;',
+      '    c.y *= 0.25;',
+      '    c = campoRostos(p, cel, c, topo, uRes.y * 0.055, 0.16, 1.4, S * 0.075, vec3(0.0, -0.85, 0.5), 0.0, achou);',
+      '  }',
+      '  return c;',
+      '}',
+      // escolhe a camada da célula: a camada nova SOBE do fundo da tela, numa costura de brasas
+      'vec4 fundoCamadas(vec2 p, vec2 cel) {',
+      '  vec4 c = fundoAbismo(p, cel);',
+      '  float cam = uCamada.x;',
+      '  if (uCamada.z > 0.0) {',
+      '    float lim = (1.0 - uCamada.z) * (uRes.y + 220.0) - 110.0;',
+      '    float rr = (ruido(cel * 0.11 + 3.0) - 0.5) * 140.0 + (hash21(cel) - 0.5) * 30.0;',
+      '    float dd = p.y + rr - lim;',
+      '    if (dd > 0.0) cam = uCamada.y;',
+      '    if (abs(dd) < 9.0) return vec4(binario(cel, 6.0), 0.75, 0.86, 0.5);',
+      '  }',
+      '  if (cam < 0.5) return c;',
+      '  if (cam < 1.5) return camadaRostos(p, cel, c);',
+      '  if (cam < 2.5) return camadaGarganta(p, cel, c);',
+      '  if (cam < 3.5) return camadaErmo(p, cel, c);',
+      '  return camadaEclipse(p, cel, c);',
+      '}',
+      // ═══ CRIATURAS DO PURGATÓRIO ═══
+      // Cada criatura mora numa seção; o layout (JS) mede o DOM e passa âncora + escala. u = unidades
+      // da criatura. Os olhos de verdade (nítidos, que seguem você) são desenhados no passo 3; aqui
+      // fica o corpo de código e o poço escuro onde cada olho se encaixa.
+      'float capsulaN(vec2 u, vec2 a, vec2 b, float ra, float rb, out float nx, out float ang) {',
+      '  ang = atan(b.y - a.y, b.x - a.x);',
+      '  vec2 pa = u - a, ba = b - a;',
+      '  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);',
+      '  vec2 q = pa - ba * h;',
+      '  float r = mix(ra, rb, h);',
+      '  float d = length(q);',
+      '  nx = clamp(d / max(r, 1e-4), 0.0, 1.0) * sign(ba.x * pa.y - ba.y * pa.x);',
+      '  return d - r;',
+      '}',
+      // osso/carne em cilindro: claro no lado de cima, escuro embaixo; o fio da borda acende
+      // ang = direção do eixo (as bordas viram traço de gravura ao longo dele); ang < -8 = sem traço
+      'vec4 cilindro(float nx, float ang, vec2 cel, float k, float tinta) {',
+      '  float nz = sqrt(max(1.0 - nx * nx, 0.0));',
+      '  if (ang > -8.0 && nx < -0.7) return vec4(hachura(ang), 0.75 * k, tinta + 0.35, 0.05);',
+      '  if (ang > -8.0 && nx > 0.82) return vec4(hachura(ang), 0.3 * k, tinta + 0.1, 0.0);',
+      '  float t = (0.04 + 0.3 * nz * (0.65 - 0.35 * nx)) * k;',
+      '  return vec4(glifoMascara(t, cel), 0.12 + 0.75 * clamp(t / 0.55, 0.0, 1.0), tinta + 0.3 * t, 0.0);',
+      '}',
+      // 1 — O Vigia da Clareira: um olho imenso em dobras de carne sobre a pergunta, e dois braços
+      // de osso que saem das bordas da tela e cravam as garras em volta do título.  B.z = meia largura
+      // do cabeçalho (un), B.w = meia largura da tela (un)
+      'vec4 criVigia(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  float Lz = lanterna(p);',
+      '  vec2 e = u / vec2(0.62, 0.30);',
+      '  float de = length(e);',
+      '  if (de < 3.0) {',
+      '    float ang = atan(e.y, e.x);',
+      '    float rug = de + 0.07 * sin(ang * 7.0 + B.y * 6.0) + 0.05 * ruido(u * 5.0 + B.y);',
+      '    float anel = fract(rug * 2.1 + uTempo * 0.03);',
+      '    if (de > 1.05) {',
+      '      float vivoD = smoothstep(3.0, 1.2, de);',
+      '      float crista = smoothstep(0.0, 0.3, anel) * smoothstep(1.0, 0.5, anel);',
+      '      float t = (0.1 + 0.5 * crista * (0.75 - 0.25 * sin(ang))) * vivoD + 0.35 * Lz * crista;',
+      '      float g = anel < 0.16 ? hachura(ang + PI * 0.5) : glifoMascara(t, cel);',
+      '      c = vec4(g, (0.12 + 0.75 * t) * vivoD, 0.4 + 0.45 * t, max(c.w, 0.08 * vivoD));',
+      '    } else c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '  }',
+      '  float hw = B.z, bd = B.w;',
+      '  for (int s = 0; s < 2; s++) {',
+      '    float lado = s == 0 ? -1.0 : 1.0;',
+      '    vec2 v = vec2(u.x * lado, u.y);',
+      '    vec2 Sh = vec2(bd + 0.5, 2.8);',
+      '    vec2 El = vec2(max(bd - 0.45, hw + 0.55), 1.35 + 0.05 * sin(uTempo * 0.5 + lado));',
+      '    vec2 Wr = vec2(hw + 0.25, 0.3);',
+      '    float nx, ax; float d;',
+      '    d = capsulaN(v, Sh, El, 0.13, 0.10, nx, ax);',
+      '    if (d < 0.0) c = cilindro(nx, ax, cel, 1.0, 0.36);',
+      '    d = capsulaN(v, El, Wr, 0.10, 0.075, nx, ax);',
+      '    if (d < 0.0) c = cilindro(nx, ax, cel, 1.0, 0.36);',
+      '    if (length(v - El) < 0.15) c = cilindro(clamp(length(v - El) / 0.15, 0.0, 1.0), -9.0, cel, 1.2, 0.4);',
+      // mão: dorso + quatro dedos longos que se curvam para dentro e para baixo, com garra
+      '    if (length(v - Wr) < 0.17) c = cilindro(length(v - Wr) / 0.17, -9.0, cel, 1.1, 0.4);',
+      '    for (int f = 0; f < 4; f++) {',
+      '      float ff = float(f);',
+      '      vec2 d1 = normalize(vec2(-1.0, -0.75 + 0.32 * ff));',
+      '      vec2 b0 = Wr + d1 * 0.1;',
+      '      float l1 = 0.42 - 0.04 * abs(ff - 1.5);',
+      '      vec2 b1 = b0 + d1 * l1;',
+      '      vec2 d2 = normalize(d1 + vec2(0.15, 0.9 + 0.08 * sin(uTempo * 0.7 + ff + lado)));',
+      '      vec2 b2 = b1 + d2 * (0.34 - 0.03 * ff);',
+      '      d = capsulaN(v, b0, b1, 0.042, 0.035, nx, ax);',
+      '      if (d < 0.0) c = cilindro(nx, ax, cel, 1.0, 0.38);',
+      '      d = capsulaN(v, b1, b2, 0.035, 0.006, nx, ax);',
+      '      if (d < 0.0) { c = cilindro(nx, ax, cel, 1.3, 0.5); if (length(v - b2) < 0.09) c = vec4(G_ADAGA, 0.85, 0.95, 0.1); }',
+      '    }',
+      '  }',
+      '  return c;',
+      '}',
+      // 2 — A Lágrima: um bulbo de carne pendurado num caule, com um olho de fenda e tentáculos
+      // que balançam embaixo
+      'vec4 criLagrima(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  float Lz = lanterna(p);',
+      '  if (u.y < -0.45 && u.y > -7.0) {',
+      '    float xc = 0.06 * sin(u.y * 1.6 + uTempo * 0.45 + B.y) * min(-u.y, 3.0);',
+      '    if (abs(u.x - xc) < 0.06) c = vec4(binario(cel, 2.0), 0.3 * smoothstep(-7.0, -1.0, u.y), 0.5, c.w);',
+      '  }',
+      '  vec2 m = (u - vec2(0.0, 0.05)) / vec2(0.82, 0.68);',
+      '  float dm = length(m);',
+      '  if (dm < 1.0) {',
+      '    vec3 n = normalize(vec3(m, sqrt(max(1.0 - dm * dm, 0.0)) + 0.1));',
+      '    float t = 0.14 + 0.6 * max(dot(n, normalize(vec3(-0.5, -0.6, 0.6))), 0.0) + 0.4 * Lz * n.z;',
+      '    float veia = smoothstep(0.52, 0.5, abs(ruido(u * 4.0 + B.y * 3.0) - 0.5) + 0.48);',
+      '    c = carne(t, cel, 1.0);',
+      '    if (veia > 0.5 && t > 0.12) c = vec4(G_TIL, 0.75, 0.72, 0.0);',
+      '    if (dm > 0.88) c = vec4(hachura(atan(m.y * 0.68, m.x * 0.82) + PI * 0.5), 0.8, 0.8, 0.08);',
+      '    vec2 o = u / vec2(0.52, 0.27);',
+      '    if (length(o) < 1.0) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '    else if (length(o) < 1.25) c = vec4(hachura(atan(o.y, o.x) + PI * 0.5), 0.35, 0.5, 0.0);',
+      '  }',
+      '  for (int i = 0; i < 6; i++) {',
+      '    float fi = float(i);',
+      '    float x0 = -0.5 + 0.2 * fi;',
+      '    float y0 = 0.55 - 0.15 * abs(fi - 2.5) / 2.5;',
+      '    float len = 1.4 + 1.5 * hash11(fi * 3.7 + B.y);',
+      '    float yy = u.y - y0;',
+      '    if (yy > 0.0 && yy < len) {',
+      '      float xc = x0 + 0.16 * sin(yy * 2.3 - uTempo * 1.0 + fi * 1.3) * yy / len * 1.6;',
+      '      float w = 0.07 * (1.0 - yy / len) + 0.012;',
+      '      if (abs(u.x - xc) < w + 0.02) {',
+      '        float t = 0.4 + 0.35 * (1.0 - yy / len) + 0.3 * Lz;',
+      '        c = vec4(abs(u.x - xc) < w * 0.5 ? G_LV : G_PONTO_MEIO, 0.2 + 0.6 * t, 0.42 + 0.4 * t, 0.0);',
+      '      }',
+      '    }',
+      '  }',
+      '  return c;',
+      '}',
+      // 3 — A Boca: uma mandíbula que sai da borda esquerda da tela e respira, abrindo e fechando
+      'vec4 criBoca(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  if (u.x < -0.2 || u.x > 2.4 || abs(u.y) > 1.3) return c;',
+      '  float Lz = lanterna(p);',
+      '  float L = 1.75;',
+      '  float h = 0.3 + 0.13 * sin(uTempo * 0.55 + B.y) + 0.05 * sin(uTempo * 1.7);',
+      '  float xx = clamp(u.x / L, 0.0, 1.0);',
+      '  float arco = sqrt(max(1.0 - xx * xx, 0.0));',
+      '  float yU = -h * arco, yL = h * 0.85 * arco;',
+      '  float pele = sdElipse(u - vec2(0.0, 0.0), vec2(L + 0.45, h + 0.62));',
+      '  if (pele < 0.0) {',
+      '    float rug = ruido(vec2(u.x * 3.0, u.y * 9.0) + B.y);',
+      '    float t = 0.16 + 0.4 * smoothstep(-0.05, -0.45, pele) * rug + 0.3 * Lz;',
+      '    if (pele > -0.07) { c = vec4(hachura(atan(u.y, u.x * 0.3) + PI * 0.5), 0.7, 0.76, 0.06); return c; }',
+      '    c = vec4(rug > 0.6 ? G_LH : glifoMascara(t, cel), 0.15 + 0.6 * t, 0.36 + 0.4 * t, 0.0);',
+      // lábios
+      '    if (abs(u.y - yU) < 0.07 || abs(u.y - yL) < 0.07) c = vec4(G_LH, 0.9, 0.8, 0.12);',
+      '    if (u.y > yU && u.y < yL && u.x < L) {',
+      // goela: escuro, com o binário da língua lá no fundo
+      '      c = vec4(binario(cel, 3.0), 0.07 + 0.08 * smoothstep(0.0, L, u.x), 0.5, 0.0);',
+      '      float tw = 0.17;',
+      '      float i = floor(u.x / tw);',
+      '      float fx = fract(u.x / tw) - 0.5;',
+      '      float ch = (1.0 - (i * tw / L) * (i * tw / L) * 0.7);',
+      '      float lt = (0.2 + 0.12 * hash11(i + B.y * 9.0)) * ch;',
+      '      float lb = (0.16 + 0.1 * hash11(i * 3.0 + 2.0)) * ch;',
+      '      if (u.y - yU < lt * (1.0 - 2.0 * abs(fx)) && u.x < L * 0.93) c = vec4(abs(fx) < 0.12 ? G_LV : (fx < 0.0 ? G_LD2 : G_LD1), 0.85, 0.96, 0.05);',
+      '      if (yL - u.y < lb * (1.0 - 2.0 * abs(fx)) && u.x < L * 0.9) c = vec4(abs(fx) < 0.12 ? G_LV : (fx < 0.0 ? G_LD1 : G_LD2), 0.8, 0.94, 0.05);',
+      '    }',
+      '  }',
+      // baba de sangue escorrendo do lábio de baixo
+      '  for (int k = 0; k < 2; k++) {',
+      '    float x0 = 0.5 + 0.55 * float(k);',
+      '    float yb = h * 0.85 * sqrt(max(1.0 - (x0 / L) * (x0 / L), 0.0));',
+      '    float len = 0.25 + 0.35 * (0.5 + 0.5 * sin(uTempo * 0.4 + float(k) * 2.0));',
+      '    if (abs(u.x - x0) < 0.035 && u.y > yb && u.y < yb + len) c = vec4(u.y > yb + len - 0.08 ? G_BULLET : G_LV, 0.9, 0.74, 0.2);',
+      '  }',
+      '  return c;',
+      '}',
+      // 4 — A Espinha: uma centopeia de vértebras deitada ao lado do método; cada segmento tem um
+      // olho (um por passo do engajamento) e as patas não param de andar
+      'float espinhaY(float x) { return 0.32 * sin(x * 1.5 + 0.6); }',
+      'vec4 criEspinha(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  if (abs(u.x) > 2.3 || abs(u.y) > 1.3) return c;',
+      '  float Lz = lanterna(p);',
+      '  float k0 = floor((u.x + 1.5) / 0.6 + 0.5);',
+      '  for (int dk = -1; dk <= 1; dk++) {',
+      '    float k = clamp(k0 + float(dk), 0.0, 5.0);',
+      '    vec2 sc = vec2(-1.5 + 0.6 * k, espinhaY(-1.5 + 0.6 * k));',
+      '    vec2 q = u - sc;',
+      // patas: dois pares por segmento, juntas dobradas, passo alternado
+      '    for (int s = 0; s < 2; s++) {',
+      '      float lado = s == 0 ? -1.0 : 1.0;',
+      '      float fase = sin(uTempo * 2.4 + k * 1.3 + lado);',
+      '      vec2 j0 = vec2(0.0, lado * 0.16);',
+      '      vec2 j1 = j0 + vec2(0.18 * fase, lado * 0.32);',
+      '      vec2 j2 = j1 + vec2(-0.12 + 0.08 * fase, lado * 0.28);',
+      '      float nx, ax;',
+      '      if (capsulaN(q, j0, j1, 0.022, 0.018, nx, ax) < 0.0 || capsulaN(q, j1, j2, 0.018, 0.004, nx, ax) < 0.0)',
+      '        c = vec4(hachura(atan(j1.y - j0.y, j1.x - j0.x)), 0.42 + 0.3 * Lz, 0.5, 0.0);',
+      '    }',
+      '  }',
+      '  for (int dk = -1; dk <= 1; dk++) {',
+      '    float k = clamp(k0 + float(dk), 0.0, 5.0);',
+      '    vec2 sc = vec2(-1.5 + 0.6 * k, espinhaY(-1.5 + 0.6 * k));',
+      '    vec2 q = (u - sc) / vec2(k < 0.5 ? 0.26 : 0.31, k < 0.5 ? 0.22 : 0.24);',
+      '    float dq = length(q);',
+      '    if (dq < 1.0) {',
+      '      vec3 n = normalize(vec3(q, sqrt(max(1.0 - dq * dq, 0.0))));',
+      '      float t = 0.08 + 0.55 * max(dot(n, normalize(vec3(-0.4, -0.7, 0.6))), 0.0) + 0.35 * Lz * n.z;',
+      '      c = carne(t, cel, 1.0);',
+      '      if (dq > 0.82) c = vec4(hachura(atan(q.y, q.x) + PI * 0.5), 0.75, 0.78, 0.06);   // o aro da vértebra',
+      '      if (k > 0.5 && length(q / vec2(0.62, 0.42)) < 1.0) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);   // órbita',
+      '      if (k < 0.5) {',
+      // cabeça: duas pinças em gancho
+      '        for (int s = 0; s < 2; s++) {',
+      '          float lado = s == 0 ? -1.0 : 1.0;',
+      '          float nx, ax;',
+      '          vec2 a0 = sc + vec2(-0.18, lado * 0.1), a1 = sc + vec2(-0.42, lado * 0.16), a2 = sc + vec2(-0.5, lado * 0.02);',
+      '          if (capsulaN(u, a0, a1, 0.04, 0.03, nx, ax) < 0.0 || capsulaN(u, a1, a2, 0.03, 0.004, nx, ax) < 0.0) c = vec4(G_ADAGA, 0.8, 0.9, 0.05);',
+      '        }',
+      '      }',
+      '      break;',
+      '    }',
+      '  }',
+      // as pinças ficam fora do disco da cabeça: testa de novo
+      '  vec2 sc0 = vec2(-1.5, espinhaY(-1.5));',
+      '  for (int s = 0; s < 2; s++) {',
+      '    float lado = s == 0 ? -1.0 : 1.0;',
+      '    float nx, ax;',
+      '    float ab = 0.05 * sin(uTempo * 1.3);',
+      '    vec2 a0 = sc0 + vec2(-0.2, lado * 0.1), a1 = sc0 + vec2(-0.46, lado * (0.2 + ab)), a2 = sc0 + vec2(-0.56, lado * 0.03);',
+      '    if (capsulaN(u, a0, a1, 0.045, 0.03, nx, ax) < 0.0 || capsulaN(u, a1, a2, 0.03, 0.004, nx, ax) < 0.0) c = vec4(G_ADAGA, 0.8, 0.9, 0.05);',
+      '  }',
+      '  return c;',
+      '}',
+      // 5 — A Mariposa: asas de pó de código com ocelos que são olhos de verdade
+      'vec4 criMariposa(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  if (abs(u.x) > 2.0 || u.y < -1.5 || u.y > 1.6) return c;',
+      '  float Lz = lanterna(p);',
+      '  float bate = 0.94 + 0.06 * sin(uTempo * 1.7 + B.y);',
+      '  vec2 v = vec2(abs(u.x) / bate, u.y);',
+      // asa de cima e asa de baixo
+      '  vec2 w1 = rot(0.45) * (v - vec2(0.92, -0.3));',
+      '  vec2 w2 = rot(-0.5) * (v - vec2(0.62, 0.5));',
+      '  float d1 = length(w1 / vec2(0.85, 0.52));',
+      '  float d2 = length(w2 / vec2(0.55, 0.38));',
+      '  float d = min(d1, d2);',
+      '  if (d < 1.0) {',
+      '    vec2 raiz = v - vec2(0.12, 0.0);',
+      '    float ar = atan(raiz.y, raiz.x);',
+      '    float nerv = abs(fract(ar * 3.2 / PI + 0.5) - 0.5);',
+      '    float po = fbm(v * 4.0 + B.y);',
+      '    float t = 0.16 + 0.45 * po * (1.0 - d * 0.5) + 0.3 * Lz;',
+      '    c = vec4(nerv < 0.06 ? hachura(ar) : glifoMascara(t, cel), 0.15 + 0.6 * t, 0.36 + 0.45 * t, 0.04);',
+      '    if (d > 0.86) {                                                  // a borda da asa, acesa',
+      '      vec2 w = d1 < d2 ? w1 / vec2(0.85, 0.52) : w2 / vec2(0.55, 0.38);',
+      '      c = vec4(hachura(atan(w.y, w.x) + PI * 0.5 + (d1 < d2 ? -0.45 : 0.5)), 0.8, 0.8, 0.08);',
+      '    }',
+      // ocelos: anéis concêntricos em volta do olho
+      '    float ro = length((v - vec2(0.98, -0.32)) / vec2(1.0, 0.8));',
+      '    if (ro < 0.48) {',
+      '      if (ro < 0.27) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '      else if (ro < 0.33) c = vec4(G_0, 0.85, 0.9, 0.3);',
+      '      else if (ro < 0.4) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '      else c = vec4(G_DOIS_PONTOS, 0.6, 0.75, 0.1);',
+      '    }',
+      '    float r2 = length(v - vec2(0.66, 0.55));',
+      '    if (r2 < 0.14) c = vec4(r2 < 0.07 ? G_BULLET : G_o, 0.7, 0.8, 0.1);',
+      '  }',
+      // corpo: tórax peludo, abdômen em anéis, cabeça e antenas plumosas
+      '  vec2 tq = u / vec2(0.15, 0.4);',
+      '  vec2 aq = (u - vec2(0.0, 0.68)) / vec2(0.11, 0.5);',
+      '  if (length(tq) < 1.0) c = vec4(hash21(cel + floor(uTempo)) < 0.5 ? G_LV : G_BARRA_QUEBRADA, 0.35 + 0.3 * Lz, 0.5, 0.0);',
+      '  if (length(aq) < 1.0) c = vec4(fract(aq.y * 3.0) < 0.25 ? G_LH : G_MEIOTOM3, 0.4, 0.55, 0.0);',
+      '  if (length(u - vec2(0.0, -0.5)) < 0.13) c = vec4(G_MEIOTOM4, 0.45, 0.5, 0.0);',
+      '  for (int s = 0; s < 2; s++) {',
+      '    float lado = s == 0 ? -1.0 : 1.0;',
+      '    float nx, ax;',
+      '    vec2 a0 = vec2(0.04 * lado, -0.58), a1 = vec2(0.3 * lado, -1.0), a2 = vec2(0.62 * lado, -1.18);',
+      '    if (capsulaN(u, a0, a1, 0.012, 0.012, nx, ax) < 0.0 || capsulaN(u, a1, a2, 0.012, 0.03, nx, ax) < 0.0) c = vec4(lado > 0.0 ? G_LD1 : G_LD2, 0.55, 0.65, 0.0);',
+      '  }',
+      '  return c;',
+      '}',
+      // 6 — O Ninho: uma massa de carne que brota da borda direita da tela, coberta de olhos
+      'const vec3 NINHO_0 = vec3(-0.55, -0.45, 0.20), NINHO_1 = vec3(-0.9, 0.05, 0.17), NINHO_2 = vec3(-0.4, 0.22, 0.24),',
+      '  NINHO_3 = vec3(-0.75, 0.62, 0.13), NINHO_4 = vec3(-0.2, -0.75, 0.12), NINHO_5 = vec3(-1.1, -0.42, 0.10), NINHO_6 = vec3(-0.22, 0.78, 0.14);',
+      'vec3 ninhoOlho(int i) {',
+      '  return i == 0 ? NINHO_0 : (i == 1 ? NINHO_1 : (i == 2 ? NINHO_2 : (i == 3 ? NINHO_3 : (i == 4 ? NINHO_4 : (i == 5 ? NINHO_5 : NINHO_6)))));',
+      '}',
+      'vec4 criNinho(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  if (u.x < -3.6 || u.y < -1.8 || u.y > 1.8) return c;',
+      '  float Lz = lanterna(p);',
+      // tentáculos que tateiam para dentro da página
+      '  for (int i = 0; i < 4; i++) {',
+      '    float fi = float(i);',
+      '    float y0 = -0.9 + 0.6 * fi;',
+      '    float x = -u.x - 0.9;',
+      '    float len = 1.3 + 0.9 * hash11(fi + B.y * 3.0);',
+      '    if (x > 0.0 && x < len) {',
+      '      float yc = y0 + 0.22 * sin(x * 3.0 - uTempo * 0.9 + fi * 1.7) * x / len;',
+      '      float w = 0.1 * (1.0 - x / len) + 0.012;',
+      '      if (abs(u.y - yc) < w) {',
+      '        float nx = (u.y - yc) / w;',
+      '        c = cilindro(nx, 0.0, cel, 0.9, 0.36);',
+      '        if (nx > 0.2 && abs(fract(x * 4.0) - 0.5) < 0.14) c = vec4(G_o, 0.6, 0.7, 0.0);',
+      '      }',
+      '    }',
+      '  }',
+      '  float rr = length((u - vec2(-0.45, 0.0)) / vec2(1.0, 1.15));',
+      '  float borda = 1.0 + 0.28 * (fbm(u * 1.7 + vec2(B.y, uTempo * 0.04)) - 0.5);',
+      '  if (rr < borda) {',
+      '    vec3 n = normalize(vec3(u.x + 0.45, u.y, 0.7));',
+      '    float bolha = ruido(u * 6.0 + B.y);',
+      '    float t = 0.07 + 0.38 * max(dot(n, normalize(vec3(-0.6, -0.5, 0.6))), 0.0) + 0.2 * bolha + 0.35 * Lz;',
+      '    c = carne(t, cel, 1.0);',
+      '    if (bolha > 0.72) c = vec4(G_o, 0.5, 0.6, 0.0);',
+      '    for (int i = 0; i < 7; i++) {',
+      '      vec3 o = ninhoOlho(i);',
+      '      vec2 q = (u - o.xy) / vec2(o.z, o.z * 0.5);',
+      '      float dq = length(q);',
+      '      if (dq < 1.15) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '      else if (dq < 1.5) c = vec4(hachura(atan(q.y, q.x) + PI * 0.5), 0.5, 0.6, 0.05);',
+      '    }',
+      '  }',
+      '  return c;',
+      '}',
+      // 7 — O Andarilho do Ermo: rosto pálido entre cabelos negros, capa até o chão e uma cruz de
+      // luz fraca no peito
+      'vec4 criAndarilho(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  if (abs(u.x) > 2.2 || u.y < -1.0) return c;',
+      '  float Lz = lanterna(p);',
+      // capa: ombros largos que descem até sumir
+      '  if (u.y > 0.5) {',
+      '    float w = 0.42 + 0.78 * smoothstep(0.45, 1.3, u.y) + 0.05 * (u.y - 1.3);',
+      '    float dx = abs(u.x) - w;',
+      '    if (dx < 0.0) {',
+      '      float t = 0.04 + 0.05 * ruido(u * 3.0 + B.y);',
+      '      c = vec4(glifoMascara(t + 0.25 * Lz, cel), 0.08 + 0.3 * Lz, 0.4, 0.0);',
+      '      if (dx > -0.08) c = vec4(G_LV, 0.35 * smoothstep(9.0, 1.0, u.y), 0.66, 0.05);',
+      '      float pulso = 0.5 + 0.5 * sin(uTempo * 0.9 + B.y);',
+      '      bool cruz = (abs(u.x) < 0.07 && u.y > 1.15 && u.y < 6.0) || (abs(u.y - 2.15) < 0.07 && abs(u.x) < 0.8);',
+      '      if (cruz) c = vec4(abs(u.x) < 0.07 ? G_LV : G_LH, 0.4 + 0.25 * pulso, 0.74, 0.25 + 0.2 * pulso);',
+      '    }',
+      '  }',
+      // cabeça: cabelo em cortina e franja irregular sobre a testa
+      '  vec2 h = (u - vec2(0.0, -0.08)) / vec2(0.5, 0.62);',
+      '  vec2 f = u / vec2(0.34, 0.45);',
+      '  float dh = length(h), df = length(f);',
+      '  if (dh < 1.0 || df < 1.0) {',
+      '    float franja = -0.1 + 0.07 * sin(u.x * 38.0 + B.y) + 0.03 * sin(uTempo * 0.6 + u.x * 7.0);',
+      '    if (df < 1.0 && u.y > franja) {',
+      // rosto pálido iluminado pela esquerda; o lado direito afunda na sombra
+      '      float t = clamp(0.62 - 0.55 * (u.x / 0.34) - 0.25 * (u.y / 0.45), 0.05, 0.85) + 0.3 * Lz;',
+      '      c = vec4(glifoMascara(t, cel), 0.2 + 0.75 * clamp(t / 0.6, 0.0, 1.0), 0.88 + 0.1 * t, 0.06);',
+      '      vec2 ol = vec2(abs(u.x) - 0.13, u.y - 0.02);',
+      '      if (length(ol / vec2(0.1, 0.06)) < 1.0) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '      if (abs(u.x + 0.02) < 0.03 && u.y > 0.05 && u.y < 0.2) c = vec4(G_LV, 0.25, 0.5, 0.0);',
+      '      if (abs(u.y - 0.29) < 0.03 && abs(u.x) < 0.09) c = vec4(G_LH, 0.7, 0.74, 0.1);',
+      '    } else {',
+      '      float fio = fract(u.x * 18.0 + 0.2 * sin(u.y * 6.0 + uTempo * 0.5));',
+      '      c = vec4(fio < 0.4 ? G_LV : G_ESPACO, 0.12 + 0.1 * (1.0 - dh), 0.4, 0.0);',
+      '    }',
+      '  }',
+      '  if (abs(u.x) < 0.12 && u.y > 0.4 && u.y < 0.6) c = vec4(G_MEIOTOM1, 0.12, 0.4, 0.0);   // pescoço',
+      '  return c;',
+      '}',
+      // 8 — O fundo: o sol negro de coroa branca e a mão que se ergue de uma torre para tocá-lo; o olho
+      // mora na palma — é o último olhar do abismo, voltado para o botão de contato
+      'vec4 criEclipse(vec2 u, vec2 p, vec2 cel, vec4 c, vec4 B) {',
+      '  float r = length(u);',
+      '  float ang = atan(u.y, u.x);',
+      '  float cu = uCel.x / max(B.z, 1.0);',
+      '  if (r < 3.4) {',
+      '    c.w = max(c.w, 0.95 * exp(-(r - 1.0) * 1.3) * step(1.0, r));',
+      '    c.z = max(c.z, mix(1.0, 0.62, clamp((r - 1.0) / 2.0, 0.0, 1.0)));',
+      '    float nR = 64.0;',
+      '    float k = floor(ang / (2.0 * PI) * nR + 0.5);',
+      '    float aR = k / nR * 2.0 * PI;',
+      '    float comp = 1.25 + 1.6 * hash11(k + 9.0);',
+      '    if (abs(sin(ang - aR)) * r < cu * 0.6 && r > 1.12 && r < comp)',
+      '      c = vec4(G_PONTO_MEIO, 0.3 + 0.5 * smoothstep(comp, 1.1, r), 0.9, c.w);',
+      '    if (r < 1.0) c = vec4(G_ESPACO, 0.0, 0.1, 0.0);',
+      '    else if (r < 1.07) c = vec4(G_0, 1.0, 1.0, 1.0);',
+      '    else if (r < 1.16) c = vec4(G_o, 0.9, 0.96, 1.0);',
+      '  }',
+      // torre: sobe da multidão e afina até o punho
+      '  float topoMultidao = uRes.y * 0.74 + (ruido(cel * 0.2) - 0.5) * 30.0;',
+      '  if (u.y > 2.35 && p.y < topoMultidao) {',
+      '    float w = 0.2 + 0.07 * (u.y - 2.35) + 0.25 * smoothstep(5.0, 9.0, u.y);',
+      '    float dx = abs(u.x) - w;',
+      '    if (dx < 0.0) {',
+      '      c = vec4(glifoMascara(0.04, cel), 0.05, 0.4, 0.0);',
+      '      if (dx > -0.07) c = vec4(G_LV, 0.55 * exp(-(u.y - 2.35) * 0.22), 0.8, 0.1);',
+      '    }',
+      '  }',
+      // mão aberta: palma, quatro dedos esticados para o disco e o polegar
+      '  vec2 pm = (u - vec2(0.0, 1.95)) / vec2(0.42, 0.5);',
+      '  float dm = length(pm);',
+      '  float dedo = 9.0;',
+      '  for (int f = 0; f < 4; f++) {',
+      '    float ff = float(f);',
+      '    float x0 = -0.27 + 0.18 * ff;',
+      '    float topo = ff == 1.0 ? 1.02 : (ff == 2.0 ? 1.12 : (ff == 0.0 ? 1.3 : 1.42));',
+      '    dedo = min(dedo, sdCapsula(u, vec2(x0, 1.6), vec2(x0 * 1.25, topo), 0.065));',
+      '  }',
+      '  dedo = min(dedo, sdCapsula(u, vec2(0.36, 2.0), vec2(0.62, 1.58), 0.07));',
+      '  dedo = min(dedo, sdCapsula(u, vec2(0.0, 2.2), vec2(0.0, 2.5), 0.2));',
+      '  if (dm < 1.0 || dedo < 0.0) {',
+      '    float borda = dm < 1.0 ? smoothstep(0.82, 1.0, dm) : smoothstep(-0.03, 0.0, dedo);',
+      '    c = vec4(borda > 0.5 ? G_LV : glifoMascara(0.06, cel), 0.08 + 0.6 * borda, 0.5 + 0.4 * borda, 0.1 * borda);',
+      '    vec2 o = (u - vec2(0.0, 1.95)) / vec2(0.34, 0.17);',
+      '    if (length(o) < 1.0) c = vec4(G_ESPACO, 0.0, 0.2, 0.0);',
+      '  }',
+      '  return c;',
+      '}',
+      'vec4 criaturas(vec2 p, vec2 cel, vec4 c) {',
+      '  for (int i = 0; i < 6; i++) {',
+      '    if (i >= uNCri) break;',
+      '    vec4 A = uCriA[i], B = uCriB[i];',
+      '    if (B.x < 0.01) continue;',
+      '    vec2 u = (p - A.xy) / max(A.z, 1.0);',
+      '    vec4 antes = c;',
+      '    vec4 d;',
+      '    float tp = A.w;',
+      '    if (tp < 1.5) d = criVigia(u, p, cel, c, B);',
+      '    else if (tp < 2.5) d = criLagrima(u, p, cel, c, B);',
+      '    else if (tp < 3.5) d = criBoca(u, p, cel, c, B);',
+      '    else if (tp < 4.5) d = criEspinha(u, p, cel, c, B);',
+      '    else if (tp < 5.5) d = criMariposa(u, p, cel, c, B);',
+      '    else if (tp < 6.5) d = criNinho(u, p, cel, c, B);',
+      '    else if (tp < 7.5) d = criAndarilho(u, p, cel, c, B);',
+      '    else d = criEclipse(u, p, cel, c, B);',
+      // surgir: a criatura se materializa célula a célula, com uma franja de brasa
+      '    float lim = B.x * 1.25 - 0.1;',
+      '    float hh = hash21(cel * 1.71 + B.y * 13.0);',
+      // as criaturas são a figura, o cenário é o fundo: corpo um degrau mais aceso que a camada
+      '    if (d != antes) d.y = min(1.0, d.y * 1.45 + 0.04);',
+      '    if (hh < lim) c = d;',
+      '    else if (hh < lim + 0.08 && d != antes) c = vec4(binario(cel, 8.0), 0.7, 0.86, 0.3);',
+      '  }',
+      '  return c;',
+      '}',
+      // O sangue dos olhos corre em BARRAMENTO: trilhas de um fio só, verticais, que dobram a 45° como
+      // as de uma placa de circuito; pacotes claros descem por elas e uma gota pende da ponta
+      'vec4 sangue(vec2 p, vec2 cel, vec4 c) {',
+      '  for (int i = 0; i < 16; i++) {',
+      '    if (i >= uNSang) break;',
+      '    vec4 s = uSangA[i], sb = uSangB[i];',
+      '    if (sb.x < 0.02) continue;',
+      '    float y0 = s.y + s.z * 0.2;',
+      '    float maxL = sb.z;',
+      '    if (p.y < y0 - uCel.y || p.y > y0 + maxL + 60.0 || abs(p.x - s.x) > s.z * 1.1 + uCel.x * 6.0) continue;',
+      '    float cresce = min(maxL, max(0.0, uTempo - s.w) * 26.0);',
+      '    for (int k = 0; k < 4; k++) {',
+      '      float fk = float(k);',
+      '      float h = hash11(sb.y * 13.1 + fk * 7.7);',
+      '      float x0 = s.x + (fk / 3.0 - 0.5) * s.z * 1.05 + (h - 0.5) * s.z * 0.2;',
+      '      x0 = (floor(x0 / uCel.x) + 0.5) * uCel.x;',
+      '      float L = cresce * (0.4 + 0.6 * hash11(h * 31.0 + 1.0));',
+      '      float d1 = L * (0.2 + 0.35 * h);',
+      '      float nd = floor(1.0 + 3.0 * hash11(h * 5.3));',
+      '      float sx = (h < 0.5 ? -1.0 : 1.0);',
+      '      float x1 = x0 + sx * nd * uCel.x;',
+      '      float yD = y0 + d1, yD2 = yD + nd * uCel.y;',
+      '      float along = p.y - y0;',
+      '      bool vert1 = abs(p.x - x0) < uCel.x * 0.5 && p.y >= y0 && p.y < min(yD, y0 + L);',
+      '      float td = (p.y - yD) / max(nd * uCel.y, 1.0);',
+      '      bool diag = L > d1 && td >= 0.0 && td < 1.0 && abs(p.x - (x0 + sx * nd * uCel.x * (floor(td * nd) + 0.5) / nd)) < uCel.x * 0.5;',
+      '      bool vert2 = L > d1 + nd * uCel.y && abs(p.x - x1) < uCel.x * 0.5 && p.y >= yD2 && p.y < y0 + L;',
+      '      float pac = step(fract(along / (uCel.y * 7.0) - uTempo * 0.8 - h * 3.0), 0.15);',
+      '      float vivo = sb.x;',
+      '      if (vert1 || vert2) c = vec4(pac > 0.5 ? binario(cel, 5.0) : G_LV, (0.62 + 0.38 * pac) * vivo, 0.74 + 0.18 * pac, max(c.w, 0.2 * vivo));',
+      '      if (diag) c = vec4(sx > 0.0 ? G_LD2 : G_LD1, 0.7 * vivo, 0.76, max(c.w, 0.2 * vivo));',
+      // a gota: incha na ponta, cai e se perde
+      '      float xp = L > d1 + nd * uCel.y ? x1 : x0;',
+      '      float yp = y0 + L;',
+      '      if (L > uCel.y && abs(p.x - xp) < uCel.x * 0.5) {',
+      '        if (abs(p.y - yp) < uCel.y * 0.5) c = vec4(G_BULLET, 0.95 * vivo, 0.78, 0.35 * vivo);',
+      '        float queda = mod(uTempo * 0.5 + h * 7.0, 1.0);',
+      '        float yq = yp + queda * 140.0;',
+      '        if (abs(p.y - yq) < uCel.y * 0.5 && queda > 0.15) c = vec4(G_PONTO_MEIO, 0.8 * (1.0 - queda) * vivo, 0.76, 0.0);',
+      '      }',
+      '    }',
+      '  }',
+      '  return c;',
+      '}',
+      'vec4 cena(vec2 p, vec2 cel) {',
+      '  vec4 c = fundoCamadas(p, cel);',
+      // Argos só é calculado enquanto o hero está por perto (custo zero no resto da descida)
+      '  if (uEscala > 0.0 && (p.y - uAncora.y) / uEscala < 4.4) c = cenaArgos(p, cel, c);',
+      '  c = criaturas(p, cel, c);',
+      '  c = sangue(p, cel, c);',
+      '  return c;',
       '}'
+      // ══ CAMADAS: fim ══
     ].join('\n'),
 
     /* Composição: a máscara mora na coluna da direita (desktop) ou no topo (celular), com os
@@ -533,6 +1315,133 @@
       }
       // o sussurro do ócio sai da boca selada da máscara (a linha dos lábios, u.y ≈ 0,64)
       return { ancora: { x: ax, y: ay }, escala: esc, olhos: olhos, sussurro: { x: 0, y: 0.645 } };
+    },
+
+    /* Fronteiras das camadas (topo de cada seção, px do DOCUMENTO): ao passar por cada uma,
+       a camada seguinte sobe do fundo da tela. I rostos · II garganta · III ermo · IV eclipse */
+    camadas: function () {
+      var sels = ['.provoke-head', '#metodo', '#pro', '#pacotes'], ys = [];
+      for (var i = 0; i < sels.length; i++) {
+        var el = document.querySelector(sels[i]);
+        el = el && el.closest ? el.closest('section') : null;
+        if (!el) return [];
+        ys.push(el.getBoundingClientRect().top + window.scrollY);
+      }
+      return ys;
+    },
+
+    /* Criaturas do purgatório: cada uma mede a sua seção e se encaixa no espaço livre (margem,
+       sobra à direita do cabeçalho, vão entre seções) — nunca sobre o texto. Tela estreita fica
+       só com as que cabem. Unidades: escala px por unidade; olhos em unidades da criatura.
+       tipo: 1 vigia · 2 lágrima · 3 boca · 4 espinha · 5 mariposa · 6 ninho · 7 andarilho · 8 eclipse
+       gatilho = retângulo (documento) cuja entrada na tela faz a criatura surgir.
+       ext = caixa da criatura em unidades (para só mandar à GPU quem está na tela). */
+    criaturas: function (ctx) {
+      var W = ctx.W, H = ctx.H, largo = !ctx.estreito, lista = [];
+      function caixa(el) {
+        if (!el) return null;
+        var r = el.getBoundingClientRect();
+        if (!(r.width > 0 && r.height > 0)) return null;
+        return { x: r.left + window.scrollX, y: r.top + window.scrollY, w: r.width, h: r.height };
+      }
+      function q(sel) { return caixa(document.querySelector(sel)); }
+      function secao(sel) { var el = document.querySelector(sel); return caixa(el && el.closest ? el.closest('section') : null); }
+      function olho(x, y, rx, ry, tipo, sangra, comp) {
+        return { x: x, y: y, rx: rx, ry: ry, ang: 0, tipo: tipo, peso: 1, sangra: !!sangra, comp: comp || 0 };
+      }
+      var E, sobra;
+
+      // 1 — O Vigia: olho sobre "Responda com sinceridade", braços das bordas cravando o título
+      var ph = q('.provoke-head'), pg = q('.provoke-grid'), ps = secao('.provoke-head');
+      if (ph && ps) {
+        E = limitar((ph.y - ps.y) * 0.85, 46, 118);
+        var y1 = ph.y - 0.42 * E, hw = ph.w / 2 / E;
+        lista.push({ tipo: 1, x: ph.x + ph.w / 2, y: y1, escala: E, p1: hw, p2: W / 2 / E, gatilho: ps,
+          ext: [-W / 2 / E - 1, -1.2, W / 2 / E + 1, 3.1],
+          olhos: [olho(0, 0, 0.55, 0.24, 0, true, Math.max(160, (pg ? pg.y : ph.y + ph.h) - y1 + 40)),
+            olho(-(hw + 0.25), 0.3, 0.1, 0.045, 2), olho(hw + 0.25, 0.3, 0.1, 0.045, 2)] });
+      }
+
+      // 2 — A Lágrima: pendurada à direita do cabeçalho dos serviços (no celular, no canto)
+      var sh = q('#servicos .section-header'), sg = q('#servicos .svc-grid'), ss = secao('#servicos .section-header');
+      if (sh && sg && ss) {
+        sobra = sg.x + sg.w - (sh.x + sh.w);
+        var x2, y2;
+        if (largo && sobra > 200) { E = limitar(Math.min(sobra * 0.3, sh.h * 0.42), 46, 115); x2 = sh.x + sh.w + sobra * 0.55; y2 = sh.y + sh.h * 0.4; }
+        else { E = 30; x2 = W - 44; y2 = sh.y + 8; }
+        lista.push({ tipo: 2, x: x2, y: y2, escala: E, p1: 0, p2: 0, gatilho: ss, ext: [-1.3, -7.2, 1.3, 3.8],
+          olhos: [olho(0, 0, 0.42, 0.2, 1, true, Math.max(140, sg.y - y2 + 30))] });
+        // 3 — A Boca: mandíbula na margem esquerda, na altura dos cards
+        if (largo && sg.x > 110) {
+          E = limitar(sg.x * 0.78, 60, 170);
+          lista.push({ tipo: 3, x: 0, y: sg.y + sg.h * 0.5, escala: E, p1: 0, p2: 0, gatilho: ss, ext: [-0.3, -1.4, 2.5, 1.5], olhos: [] });
+        }
+      }
+
+      // 4 — A Espinha: ao lado do método; um olho por vértebra, um por passo
+      var mh = q('#metodo .section-header'), mst = q('#metodo .steps'), ms = secao('#metodo .section-header');
+      if (largo && mh && mst && ms) {
+        sobra = mst.x + mst.w - (mh.x + mh.w);
+        if (sobra > 240) {
+          E = limitar(Math.min(sobra * 0.27, mh.h * 0.42), 40, 105);
+          var ol4 = [];
+          for (var k = 1; k <= 5; k++) {
+            var xk = -1.5 + 0.6 * k;
+            ol4.push(olho(xk, 0.32 * Math.sin(xk * 1.5 + 0.6), 0.17, 0.075, 2, k === 2 || k === 4, 130));
+          }
+          lista.push({ tipo: 4, x: mh.x + mh.w + sobra * 0.52, y: mh.y + mh.h * 0.5, escala: E, p1: 0, p2: 0, gatilho: ms, ext: [-2.4, -1.4, 2.4, 1.5], olhos: ol4 });
+        }
+      }
+
+      // 5 — A Mariposa: ao lado do cabeçalho das ferramentas; os ocelos das asas olham
+      var th = q('#ferramentas .section-header'), tg = q('#ferramentas .suite-grid'), ts = secao('#ferramentas .section-header');
+      if (largo && th && tg && ts) {
+        sobra = tg.x + tg.w - (th.x + th.w);
+        if (sobra > 240) {
+          E = limitar(sobra * 0.24, 50, 110);
+          lista.push({ tipo: 5, x: th.x + th.w + sobra * 0.5, y: th.y + E * 1.6, escala: E, p1: 0, p2: 0, gatilho: ts, ext: [-2.1, -1.6, 2.1, 1.7],
+            olhos: [olho(-0.95, -0.32, 0.25, 0.12, 0, true, 170), olho(0.95, -0.32, 0.25, 0.12, 0, true, 170)] });
+        }
+      }
+
+      // 6 — O Ninho: massa de olhos brotando da borda direita, na Edição Pro
+      var rh = q('#pro .section-header'), rg = q('#pro .suite-grid'), rs = secao('#pro .section-header');
+      if (rh && rg && rs) {
+        var margemD = W - (rg.x + rg.w);
+        var x6 = W, y6 = rh.y + rh.h * 0.45;
+        if (largo && margemD > 110) E = limitar(margemD * 0.75, 60, 150);
+        else { E = 40; x6 = W + 12; y6 = rh.y - 18; }
+        var N6 = [[-0.55, -0.45, 0.20], [-0.9, 0.05, 0.17], [-0.4, 0.22, 0.24], [-0.75, 0.62, 0.13], [-0.2, -0.75, 0.12], [-1.1, -0.42, 0.10], [-0.22, 0.78, 0.14]];
+        var ol6 = [];
+        for (var n = 0; n < N6.length; n++) ol6.push(olho(N6[n][0], N6[n][1], N6[n][2], N6[n][2] * 0.45, n % 3 === 1 ? 1 : (n % 3 === 2 ? 2 : 0), n === 0 || n === 2 || n === 3, 150));
+        lista.push({ tipo: 6, x: x6, y: y6, escala: E, p1: 0, p2: 0, gatilho: rs, ext: [-3.7, -1.9, 0.3, 1.9], olhos: ol6 });
+      }
+
+      // 7 — O Andarilho do Ermo: ao lado de "Autoridade"; chora em barramento
+      var cr = document.querySelector('.cred'), cs = cr && cr.closest ? cr.closest('section') : null;
+      var chd = cs ? caixa(cs.querySelector('.section-header')) : null, crc = caixa(cr);
+      if (largo && chd && crc) {
+        sobra = crc.x + crc.w - (chd.x + chd.w);
+        if (sobra > 220) {
+          E = limitar(Math.min(sobra * 0.42, H * 0.2), 60, 150);
+          lista.push({ tipo: 7, x: chd.x + chd.w + sobra * 0.55, y: chd.y + E * 0.9, escala: E, p1: 0, p2: 0, gatilho: caixa(cs), ext: [-2.3, -1.1, 2.3, 9],
+            olhos: [olho(-0.13, 0.02, 0.085, 0.04, 2, true, 90), olho(0.13, 0.02, 0.085, 0.04, 2, true, 90)] });
+        }
+      }
+
+      // 8 — O fundo: o eclipse no vão entre os pacotes e o card do contato (opaco), e a mão que sobe para tocá-lo
+      var ct = q('#contato .cta-inner'), pk = document.querySelector('#pacotes .container');
+      var ult = pk ? caixa(pk.lastElementChild) : null, cts = secao('#contato .cta-title');
+      if (ct && ult && cts) {
+        var topo = ult.y + ult.h, vao = ct.y - topo;
+        var R = Math.min((vao - 14) / 3.61, 110);
+        if (R >= 18) {
+          var y8 = topo + 8 + 1.16 * R + Math.max(0, vao - 14 - 3.61 * R) * 0.5;
+          lista.push({ tipo: 8, x: W / 2, y: y8, escala: R, p1: R, p2: 0, gatilho: cts, ext: [-3.5, -3.5, 3.5, 60],
+            olhos: [olho(0, 1.95, 0.3, 0.14, 0, true, 300)] });
+        }
+      }
+      return lista;
     }
   };
   /* ══ CENA: fim ══ */
@@ -628,6 +1537,13 @@
     'uniform vec4 uSussurro;',
     'uniform sampler2D uTex0; uniform sampler2D uTex1; uniform vec4 uTexInfo;',
     'uniform float uSemente;',
+    // camadas da descida: x = camada de cima, y = a que sobe do fundo, z = quanto já subiu (0..1);
+    // uRolCam = px já descidos dentro de cada camada (paralaxe própria de cada cenário)
+    'uniform vec4 uCamada; uniform vec4 uRolCam;',
+    // criaturas visíveis: A = (x, y no viewport, escala px, tipo) · B = (presença, semente, p1, p2)
+    'uniform vec4 uCriA[6]; uniform vec4 uCriB[6]; uniform int uNCri;',
+    // olhos que sangram: A = (x, y, raio px, instante em que abriu) · B = (intensidade, semente, comprimento px, 0)
+    'uniform vec4 uSangA[16]; uniform vec4 uSangB[16]; uniform int uNSang;',
     'out vec4 saida;',
     '#define PI 3.14159265',
     'const float G_ESPACO = 0.0, G_EXCL = 1.0, G_ASPAS = 2.0, G_HASH = 3.0, G_PERCENT = 5.0, G_APOST = 7.0,',
@@ -941,7 +1857,11 @@
   var lay = null;             // resultado de CENA.layout (âncora em px do documento)
   var veus = [];              // [{el, x, y(doc), w, h}]
   var olhos = [];
-  var dadosOlhos = new Float32Array(64 * 12);
+  var MAX_OLHOS = 128;
+  var dadosOlhos = new Float32Array(MAX_OLHOS * 12);
+  var NUNCA = -1e9;          // instante "ainda não aconteceu" (o relógio começa em 0 no carregamento)
+  var cris = [];              // criaturas das camadas (CENA.criaturas), com presença viva
+  var fronteiras = [];        // topo (documento) de cada camada da descida
   var t0 = agora(), tUlt = 0, tQuadroUlt = 0, rafId = 0, rodando = false;
   var semente = Math.random() * 100;
   var erros = [];
@@ -1079,9 +1999,21 @@
     try {
       lay = CENA.layout({ W: W, H: H, heroi: rh, estreito: W < 920, toque: TOQUE });
     } catch (e) { erros.push('layout: ' + e.message); lay = null; }
+    // criaturas: a presença sobrevive à remedição (redimensionar não as faz surgir de novo)
+    var antigas = {};
+    for (var a = 0; a < cris.length; a++) antigas[cris[a].tipo] = cris[a];
+    try { cris = CENA.criaturas ? CENA.criaturas({ W: W, H: H, estreito: W < 920, toque: TOQUE }) : []; }
+    catch (e) { erros.push('criaturas: ' + e.message); cris = []; }
+    for (var c = 0; c < cris.length; c++) {
+      var velha = antigas[cris[c].tipo];
+      cris[c].pres = velha ? velha.pres : 0; cris[c].visto = velha ? velha.visto : false;
+      cris[c].tAbre = velha ? velha.tAbre : NUNCA;
+    }
+    try { fronteiras = CENA.camadas ? CENA.camadas() : []; } catch (e) { fronteiras = []; }
+    // véus: todos os da página; a cada quadro só os que estão na tela vão para a GPU (até 8)
     veus = [];
     var els = document.querySelectorAll('[data-abismo-veu]');
-    for (var i = 0; i < els.length && veus.length < 8; i++) {
+    for (var i = 0; i < els.length && veus.length < 48; i++) {
       var r = retanguloDoc(els[i]);
       if (r.w > 0 && r.h > 0) veus.push(r);
     }
@@ -1093,8 +2025,13 @@
     var antigos = olhos;
     olhos = [];
     if (!lay || !lay.olhos) return;
-    for (var i = 0; i < lay.olhos.length && i < 64; i++) {
-      var d = lay.olhos[i];
+    var lista = lay.olhos.slice(0, 64);
+    for (var c = 0; c < cris.length; c++) {
+      var oc = cris[c].olhos || [];
+      for (var k = 0; k < oc.length; k++) { oc[k].cri = c; lista.push(oc[k]); }
+    }
+    for (var i = 0; i < lista.length && i < MAX_OLHOS; i++) {
+      var d = lista[i];
       var a = antigos[i];
       olhos.push({
         ux: d.x, uy: d.y, rx: d.rx, ry: d.ry, ang: d.ang || 0, tipo: d.tipo || 0, peso: d.peso == null ? 0.6 : d.peso,
@@ -1103,7 +2040,9 @@
         sacX: 0, sacY: 0, proxSac: agora() + aleat(0.3, 2.0),
         proxPisca: agora() + aleat(2.0, 7.0), piscaIni: -99,
         atraso: aleat(0, 0.35) + (1 - (d.peso == null ? 0.6 : d.peso)) * 0.25,
-        semente: Math.random() * 10, cx: 0, cy: 0, vis: 1
+        semente: Math.random() * 10, cx: 0, cy: 0, vis: 1,
+        cri: d.cri == null ? -1 : d.cri, sangra: !!d.sangra, comp: d.comp || 0,
+        tAbriu: a && a.cri === d.cri ? a.tAbriu : NUNCA
       });
     }
   }
@@ -1136,8 +2075,11 @@
 
     for (var i = 0; i < olhos.length; i++) {
       var o = olhos[i];
-      o.cx = an.x + o.ux * esc; o.cy = an.y + o.uy * esc;
-      var rxPx = o.rx * esc;
+      var cr = o.cri >= 0 ? cris[o.cri] : null;
+      var e = cr ? cr.escala : esc;
+      if (cr) { o.cx = cr.x - window.scrollX + o.ux * e; o.cy = cr.y - window.scrollY + o.uy * e; }
+      else { o.cx = an.x + o.ux * esc; o.cy = an.y + o.uy * esc; }
+      var rxPx = o.rx * e;
       // alvo do olhar → deslocamento da pupila no referencial do olho
       var ox = 0, oy = 0;
       if (alvo) {
@@ -1165,6 +2107,12 @@
         var tc = t - despertar.t - atrasoCascata;
         alvoAbre = tc < 0 ? 0 : (tc < 0.35 ? 1.12 * (tc / 0.35) : (tc < 0.6 ? 1.12 - 0.12 * ((tc - 0.35) / 0.25) : 1));
       }
+      if (cr) {
+        // olho de criatura: só abre depois que ela termina de surgir, em cascata, e fica
+        // cravado em você (abre de novo do mesmo jeito se a página for remedida)
+        var tcr = cr.tAbre === NUNCA ? -1 : t - cr.tAbre - o.atraso * 0.8;
+        if (acordado) alvoAbre = (tcr < 0 ? 0 : (tcr < 0.35 ? 1.12 * (tcr / 0.35) : (tcr < 0.6 ? 1.12 - 0.12 * ((tcr - 0.35) / 0.25) : 1)));
+      }
       if (dormindo) alvoAbre = 0;
       if (furiaK > 0) alvoAbre = Math.max(alvoAbre, 1 + 0.18 * furiaK);
       if (o.tipo === 3) {
@@ -1184,6 +2132,7 @@
       var velAbre = dormindo ? 0.9 : (alvoAbre > o.abre ? 9 : 14);
       o.abre += (alvoAbre - o.abre) * (1 - Math.exp(-dt * velAbre));
       var abreFinal = o.abre * (1 - pisca);
+      if (o.sangra && o.tAbriu === NUNCA && o.abre > 0.6) o.tAbriu = t;
 
       // pupila: dilata no CTA e na fúria, contrai no susto
       var alvoDil = 0.34 + (foco ? 0.4 : 0) + furiaK * 0.5 - ((t - sobressalto) < 0.6 ? 0.25 : 0);
@@ -1192,11 +2141,12 @@
       // visibilidade: escurece sob véu de texto; some longe da tela
       var vis = dentroDeVeu(o.cx, o.cy) ? 0.28 : 1;
       if (o.tipo === 3) vis *= 0.85;
+      if (cr) vis *= limitar(cr.pres * 1.4 - 0.4, 0, 1);
       o.vis += (vis - o.vis) * (1 - Math.exp(-dt * 6));
 
       var b = i * 12;
       dadosOlhos[b] = o.cx; dadosOlhos[b + 1] = o.cy;
-      dadosOlhos[b + 2] = rxPx; dadosOlhos[b + 3] = o.ry * esc;
+      dadosOlhos[b + 2] = rxPx; dadosOlhos[b + 3] = o.ry * e;
       dadosOlhos[b + 4] = o.ang; dadosOlhos[b + 5] = abreFinal;
       dadosOlhos[b + 6] = o.pupX; dadosOlhos[b + 7] = o.pupY;
       dadosOlhos[b + 8] = o.dil; dadosOlhos[b + 9] = o.tipo;
@@ -1307,6 +2257,70 @@
     return n;
   }
 
+  /* Criaturas surgem quando a sua seção entra na tela (≥ 22% da altura) e não somem mais. */
+  function atualizarCriaturas(t, dt) {
+    var sy = window.scrollY;
+    for (var i = 0; i < cris.length; i++) {
+      var cr = cris[i], g = cr.gatilho;
+      if (!cr.visto && g) {
+        var dentro = Math.min(g.y + g.h, sy + H) - Math.max(g.y, sy);
+        if (dentro > H * 0.22 || dentro > g.h * 0.6) cr.visto = true;
+      }
+      if (cr.visto && cr.pres < 1) cr.pres = Math.min(1, cr.pres + dt / 1.7);
+      if (cr.pres >= 0.8 && cr.tAbre === NUNCA) cr.tAbre = t;
+    }
+  }
+
+  /* Qual camada está na tela: passar pela fronteira k faz a camada k subir do fundo ao longo
+     de 0,9 tela de rolagem. Devolve [de cima, a que sobe, quanto subiu]. */
+  var camadaBuf = [0, 0, 0], rolCam = new Float32Array(4);
+  function estadoCamadas() {
+    var sy = window.scrollY, ref = sy + H * 0.75;
+    camadaBuf[0] = 0; camadaBuf[1] = 0; camadaBuf[2] = 0;
+    if (window.__abismo && window.__abismo.camadaFixa != null) {   // depuração: uma camada só
+      camadaBuf[0] = camadaBuf[1] = window.__abismo.camadaFixa; return camadaBuf;
+    }
+    for (var k = 0; k < fronteiras.length; k++) {
+      var m = limitar((ref - fronteiras[k]) / (H * 0.9), 0, 1);
+      rolCam[k] = Math.max(0, sy + H - fronteiras[k]);
+      if (m >= 1) { camadaBuf[0] = k + 1; camadaBuf[1] = k + 1; continue; }
+      if (m > 0 && camadaBuf[2] === 0) { camadaBuf[1] = k + 1; camadaBuf[2] = m; }
+    }
+    if (camadaBuf[2] === 0) camadaBuf[1] = camadaBuf[0];
+    return camadaBuf;
+  }
+
+  var criA = new Float32Array(24), criB = new Float32Array(24), sangA = new Float32Array(64), sangB = new Float32Array(64);
+  function prepararCriaturas() {
+    var n = 0, sx = window.scrollX, sy = window.scrollY;
+    for (var i = 0; i < cris.length && n < 6; i++) {
+      var cr = cris[i];
+      cr.naTela = false;
+      if (cr.pres < 0.01) continue;
+      var x = cr.x - sx, y = cr.y - sy, e = cr.escala, ex = cr.ext;
+      if (x + ex[2] * e < -40 || x + ex[0] * e > W + 40 || y + ex[3] * e < -40 || y + ex[1] * e > H + 40) continue;
+      cr.naTela = true;
+      criA[n * 4] = x; criA[n * 4 + 1] = y; criA[n * 4 + 2] = e; criA[n * 4 + 3] = cr.tipo;
+      criB[n * 4] = cr.pres; criB[n * 4 + 1] = (cr.tipo * 0.618034) % 1; criB[n * 4 + 2] = cr.p1; criB[n * 4 + 3] = cr.p2;
+      n++;
+    }
+    return n;
+  }
+  function prepararSangue() {
+    var n = 0;
+    for (var i = 0; i < olhos.length && n < 16; i++) {
+      var o = olhos[i];
+      if (!o.sangra || o.tAbriu === NUNCA || o.cri < 0) continue;
+      var cr = cris[o.cri];
+      if (!cr || !cr.naTela) continue;
+      var rx = o.rx * cr.escala;
+      sangA[n * 4] = o.cx; sangA[n * 4 + 1] = o.cy; sangA[n * 4 + 2] = rx; sangA[n * 4 + 3] = o.tAbriu - t0;
+      sangB[n * 4] = cr.pres; sangB[n * 4 + 1] = o.semente; sangB[n * 4 + 2] = o.comp; sangB[n * 4 + 3] = 0;
+      n++;
+    }
+    return n;
+  }
+
   var quadrosDesenhados = 0;
   function desenharQuadro(t) {
     if (!gl || gl.isContextLost()) return;
@@ -1359,6 +2373,13 @@
     gl.uniform4f(pc.u('uSussurro'), an.x + sus.x * (lay ? lay.escala : 0), an.y + sus.y * (lay ? lay.escala : 0), intensSus, 0);
     gl.uniform4f(pc.u('uTexInfo'), T.texPronta[0], T.texPronta[1], 0, 0);
     u1(pc, 'uSemente', semente);
+    var cb = estadoCamadas();
+    gl.uniform4f(pc.u('uCamada'), cb[0], cb[1], cb[2], 0);
+    gl.uniform4fv(pc.u('uRolCam'), rolCam);
+    var nCri = prepararCriaturas();
+    gl.uniform4fv(pc.u('uCriA'), criA); gl.uniform4fv(pc.u('uCriB'), criB); gl.uniform1i(pc.u('uNCri'), nCri);
+    var nSang = prepararSangue();
+    gl.uniform4fv(pc.u('uSangA'), sangA); gl.uniform4fv(pc.u('uSangB'), sangB); gl.uniform1i(pc.u('uNSang'), nSang);
     gl.bindVertexArray(T.vaoTela);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
@@ -1439,6 +2460,7 @@
       glitch.desl = (Math.random() < 0.5 ? -1 : 1) * Math.floor(aleat(2, 10));
       glitch.prox = t + aleat(6, 15);
     }
+    atualizarCriaturas(t, dt);
     atualizarOlhos(t, dt);
     desenharQuadro(t);
   }
@@ -1515,6 +2537,8 @@
       o.proxPisca = t + 999; o.piscaIni = -99; o.proxSac = t + 999;
     }
     sobressalto = -99;
+    for (var c = 0; c < cris.length; c++) { cris[c].visto = true; cris[c].pres = 1; cris[c].tAbre = t - 30; }
+    for (var j = 0; j < olhos.length; j++) if (olhos[j].sangra) olhos[j].tAbriu = t - 30;
     atualizarOlhos(t, 2);   // dt grande: tudo converge de uma vez para o retrato
     desenharQuadro(t);
     ponteiro.presente = salvoPresente; foco = salvoFoco;
@@ -1568,7 +2592,14 @@
     }, { passive: true });
     document.addEventListener('pointerleave', function () { ponteiro.presente = false; }, { passive: true });
     document.documentElement.addEventListener('mouseleave', function () { ponteiro.presente = false; }, { passive: true });
-    window.addEventListener('scroll', function () { registrarInput(agora()); }, { passive: true });
+    var tmRolagem = 0;
+    window.addEventListener('scroll', function () {
+      registrarInput(agora());
+      if (gl && modo !== 'pleno') {
+        clearTimeout(tmRolagem);
+        tmRolagem = setTimeout(function () { if (gl && modo !== 'pleno') quadroEstatico(); }, 90);
+      }
+    }, { passive: true });
     document.addEventListener('pointerover', function (e) {
       var el = e.target && e.target.closest ? e.target.closest(SELETOR_FOCO) : null;
       if (el) foco = el;
@@ -1713,6 +2744,36 @@
     ligar();
   }
 
+  /* ───────────────────────────── sonda da descida ─────────────────────────────
+     DOM puro (vale também no fallback 2D): a marca desce pelo trilho na proporção da rolagem e
+     diz o nome da camada atual e uma "profundidade" — ficção de ambientação, não medida. */
+  var sonda = document.querySelector('.abismo-sonda');
+  var sondaMarca = sonda && sonda.querySelector('.sonda-marca');
+  var sondaCam = sonda && sonda.querySelector('.sonda-camada');
+  var sondaProf = sonda && sonda.querySelector('.sonda-prof');
+  var sondaPend = false;
+  function atualizarSonda() {
+    sondaPend = false;
+    if (!sonda || !sondaMarca) return;
+    var fr = fronteiras.length ? fronteiras : (CENA.camadas ? CENA.camadas() : []);
+    var alt = document.documentElement.scrollHeight - window.innerHeight;
+    var f = alt > 0 ? limitar(window.scrollY / alt, 0, 1) : 0;
+    var ref = window.scrollY + window.innerHeight * 0.5, cam = 0;
+    for (var k = 0; k < fr.length; k++) if (ref >= fr[k]) cam = k + 1;
+    sondaMarca.style.transform = 'translateY(' + (f * sonda.clientHeight).toFixed(1) + 'px)';
+    var nomes = TXT[idioma()].camadas;
+    if (sondaCam) sondaCam.textContent = nomes[Math.min(cam, nomes.length - 1)];
+    if (sondaProf) sondaProf.textContent = '−' + String(Math.round(window.scrollY * 0.66)).replace(/\B(?=(\d{3})+(?!\d))/g, idioma() === 'en' ? ',' : '.') + ' m';
+  }
+  function pedirSonda() { if (!sondaPend) { sondaPend = true; requestAnimationFrame(atualizarSonda); } }
+  if (sonda) {
+    sonda.removeAttribute('hidden');
+    window.addEventListener('scroll', pedirSonda, { passive: true });
+    window.addEventListener('resize', pedirSonda);
+    if (window.MutationObserver) new MutationObserver(pedirSonda).observe(html, { attributes: true, attributeFilter: ['data-lang'] });
+    pedirSonda();
+  }
+
   /* ───────────────────────────── console (para quem abre o DevTools) ───────────────────────────── */
   function recadoNoConsole() {
     try {
@@ -1784,7 +2845,10 @@
         olhos: olhos.length, acordado: despertar.iniciado, dormindo: dormindo,
         luz: +lant.luz.toFixed(2), furia: +furiaNivel(agora()).toFixed(2), idioma: idioma(), erros: erros.slice(0, 10),
         ancora: lay ? [Math.round(lay.ancora.x), Math.round(lay.ancora.y)] : null,
-        escala: lay ? Math.round(lay.escala) : 0
+        escala: lay ? Math.round(lay.escala) : 0,
+        camada: estadoCamadas().slice(), fronteiras: fronteiras.map(Math.round),
+        olhosCri: olhos.filter(function (o) { return o.cri >= 0; }).slice(0, 6).map(function (o) { return [o.cri, +o.abre.toFixed(2), +o.vis.toFixed(2), Math.round(o.cx), Math.round(o.cy)]; }),
+        criaturas: cris.map(function (c) { return { tipo: c.tipo, x: Math.round(c.x), y: Math.round(c.y), escala: Math.round(c.escala), pres: +c.pres.toFixed(2), naTela: !!c.naTela }; })
       };
     },
     pausar: function (v) { aplicarPausa(!!v); },
@@ -1801,7 +2865,13 @@
       }
       return +((performance.now() - a) / n).toFixed(2);
     },
-    furia: function () { furia.t = agora(); acordar(agora()); }
+    furia: function () { furia.t = agora(); acordar(agora()); },
+    camadaFixa: null,
+    // depuração/harness: todas as criaturas já surgidas e de olhos abertos
+    revelar: function () {
+      var t = agora();
+      for (var c = 0; c < cris.length; c++) { cris[c].visto = true; cris[c].pres = 1; cris[c].tAbre = t - 3; }
+    }
   };
 
   /* ───────────────────────────── partida ───────────────────────────── */

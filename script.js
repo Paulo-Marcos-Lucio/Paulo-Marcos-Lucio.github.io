@@ -59,5 +59,39 @@
     });
   }
 
-  /* A chuva de binários e a criatura do fundo moram em abismo.js. */
+  /* ---------- o olho costurado dos cards ----------
+     Cada card de ferramenta/pacote ganha um olho no canto (decorativo, aria-hidden): fechado em
+     costura; no hover/foco abre (CSS) e a pupila acompanha o ponteiro dentro do card. Mesmo
+     esquema do spotlight acima: o evento só guarda a posição, um rAF escreve uma vez por quadro. */
+  document.querySelectorAll('.suite-card, .work-card').forEach(function (card) {
+    var olho = document.createElement('span');
+    olho.className = 'olho-card';
+    olho.setAttribute('aria-hidden', 'true');
+    var globo = document.createElement('span');
+    globo.className = 'olho-globo';
+    var pupila = document.createElement('span');
+    pupila.className = 'olho-pupila';
+    globo.appendChild(pupila);
+    olho.appendChild(globo);
+    card.appendChild(olho);
+    if (prefersReduced || !window.matchMedia || !window.matchMedia('(hover: hover)').matches) return;
+
+    var pendente = false, px = 0, py = 0;
+    function mirar() {
+      pendente = false;
+      var r = olho.getBoundingClientRect();
+      var dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height / 2);
+      var d = Math.sqrt(dx * dx + dy * dy) || 1, k = d / (d + 60);
+      pupila.style.transform = 'translate(' + (dx / d * k * 8).toFixed(1) + 'px,' + (dy / d * k * 3.5).toFixed(1) + 'px)';
+    }
+    card.addEventListener('pointermove', function (e) {
+      px = e.clientX; py = e.clientY;
+      if (pendente) return;
+      pendente = true;
+      requestAnimationFrame(mirar);
+    });
+    card.addEventListener('pointerleave', function () { pupila.style.transform = ''; });
+  });
+
+  /* A chuva de binários, as camadas da descida e as criaturas moram em abismo.js. */
 })();

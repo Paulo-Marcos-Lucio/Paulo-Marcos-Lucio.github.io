@@ -313,7 +313,7 @@
     <!-- ===================== PROVOCAÇÃO ===================== -->
     <section class="section">
       <div class="container">
-        <header class="section-header provoke-head">
+        <header class="section-header provoke-head" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="provoke.eyebrow">Três perguntas</p>
           <h2 class="section-title" data-i18n="provoke.title">Responda com sinceridade — em silêncio</h2>
           <p class="section-lead" data-i18n="provoke.lead">Se você hesitou em qualquer uma delas, o diagnóstico responde as três. Com evidência, não com achismo.</p>
@@ -332,7 +332,7 @@
             <p data-i18n-html="provoke.card3">Qual foi a última vez que alguém <strong>provou</strong> — com data e evidência — que a sua aplicação está protegida?</p>
           </article>
         </div>
-        <div class="provoke-cta">
+        <div class="provoke-cta" data-abismo-veu>
           <a class="btn btn-primary" href="#ferramentas" data-i18n="provoke.cta">Ver a resposta num relatório real</a>
         </div>
       </div>
@@ -341,7 +341,7 @@
     <!-- ===================== SERVIÇOS ===================== -->
     <section id="servicos" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="services.eyebrow">Serviços</p>
           <h2 class="section-title" data-i18n="services.title">O que eu faço pela sua aplicação</h2>
           <p class="section-lead" data-i18n-html="services.lead">
@@ -380,7 +380,7 @@
     <!-- ===================== MÉTODO ===================== -->
     <section id="metodo" class="section">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="metodo.eyebrow">Método</p>
           <h2 class="section-title" data-i18n="metodo.title">Como um engajamento funciona</h2>
           <p class="section-lead" data-i18n-html="metodo.lead">
@@ -400,7 +400,7 @@
     <!-- ===================== FERRAMENTAS / SUÍTE ===================== -->
     <section id="ferramentas" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="tools.eyebrow">Ferramentas · Open source</p>
           <h2 class="section-title" data-i18n="tools.title">A suíte que eu uso — e que deixo aberta pra você auditar</h2>
           <p class="section-lead" data-i18n-html="tools.lead1">
@@ -501,7 +501,7 @@
     <!-- ===================== EDIÇÃO PRO ===================== -->
     <section id="pro" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="pro.eyebrow">Edição Pro</p>
           <h2 class="section-title" data-i18n-html="pro.title">O que <span class="gradient-text">está aberto continua aberto</span>. A Pro só acrescenta.</h2>
           <p class="section-lead" data-i18n-html="pro.lead">
@@ -581,7 +581,7 @@
     <!-- ===================== BAGAGEM ===================== -->
     <section class="section">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="cred.eyebrow">Autoridade</p>
           <h2 class="section-title" data-i18n="cred.title">Eu escrevi o código que o seu time vai ter que mudar</h2>
           <p class="section-lead" data-i18n-html="cred.lead">
@@ -616,7 +616,7 @@
     <!-- ===================== PACOTES ===================== -->
     <section id="pacotes" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="pacotes.eyebrow">Pacotes</p>
           <h2 class="section-title" data-i18n="pacotes.title">Escolha por onde começar</h2>
           <p class="section-lead" data-i18n-html="pacotes.lead">
@@ -682,7 +682,7 @@
 
     <!-- ===================== CONTATO / CTA ===================== -->
     <section id="contato" class="section section-cta">
-      <div class="container cta-inner">
+      <div class="container cta-inner" data-abismo-veu>
         <h2 class="cta-title" data-i18n="contato.title">Seu sistema web já foi olhado por um par técnico?</h2>
         <p class="cta-lead" data-i18n="contato.lead">
           Me conta em uma linha qual é a aplicação e o contexto — você já sai sabendo o próximo passo. Ainda medindo? Rode o Sentinela no seu domínio; se a nota vier abaixo de B, me manda o relatório e a conversa começa no seu achado, não no meu discurso.
@@ -723,6 +723,13 @@
   <!-- Pausar as animações do fundo (WCAG 2.2.2 Pausar, Parar, Ocultar). Nasce
        oculto: só aparece quando abismo.js de fato anima algo; texto/aria-label
        são geridos por abismo.js nos dois idiomas. -->
+  <!-- Sonda da descida: marca em que camada do abismo o visitante está. Decorativa (o nome das
+       camadas é ficção de ambientação); texto escrito por abismo.js nos dois idiomas. -->
+  <div class="abismo-sonda" aria-hidden="true" hidden>
+    <span class="sonda-trilho"></span>
+    <span class="sonda-marca"><span class="sonda-camada"></span><span class="sonda-prof"></span></span>
+  </div>
+
   <button type="button" class="abismo-pausa" data-abismo-pausa aria-pressed="false" hidden>
     <span class="abismo-pausa-ico" aria-hidden="true"></span><span class="abismo-pausa-txt">Pausar animação</span>
   </button>

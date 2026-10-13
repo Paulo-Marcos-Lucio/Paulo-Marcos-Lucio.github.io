@@ -19,8 +19,8 @@ HTML semântico + CSS custom (sem framework) + JS sem dependências e sem build
 
 - `index.html` — single page: hero, serviços, método, Sentinela, credibilidade, pacotes, contato
 - `styles.css` — tema escuro "Cyber Death", mobile-first, design tokens (vermelho sobre quase-preto, contrastes WCAG medidos)
-- `script.js` — IntersectionObserver para reveal, spotlight dos cards de pacote, footer year auto
-- `abismo.js` — **Argos, a máscara de cem olhos**: o fundo vivo em WebGL2 (o corpo é ASCII/binário com hachura de gravura; os olhos são nítidos e seguem o ponteiro; o cursor é uma lanterna que decodifica o binário em palavras). Fallback 2D sem WebGL2, quadro estático em `prefers-reduced-motion`, botão de pausa (WCAG 2.2.2), qualidade adaptativa e nenhuma requisição de rede
+- `script.js` — IntersectionObserver para reveal, spotlight dos cards de pacote, olho costurado dos cards (abre no hover e segue o ponteiro), footer year auto
+- `abismo.js` — **Argos, a máscara de cem olhos**: o fundo vivo em WebGL2 (o corpo é ASCII/binário com hachura de gravura; os olhos são nítidos e seguem o ponteiro; o cursor é uma lanterna que decodifica o binário em palavras). Fallback 2D sem WebGL2, quadro estático em `prefers-reduced-motion`, botão de pausa (WCAG 2.2.2), qualidade adaptativa e nenhuma requisição de rede. Abaixo do hero, a página é uma **descida em quatro camadas** (I o Limbo dos Rostos, II a Garganta de tentáculos, III o Ermo dos meteoros, IV o Eclipse e a Mão): cada camada sobe do fundo da tela ao rolar, e cada seção tem a sua criatura (o Vigia, a Lágrima, a Boca, a Espinha, a Mariposa, o Ninho, o Andarilho e a Mão do eclipse), com olhos que surgem, te seguem e sangram em barramento. A sonda na borda direita mostra em que camada você está..
 - `mascara-n.png` / `mascara-m.png` — mapas de normal e de máscara do relevo, gerados de forma reproduzível por `arte/gerar_mascara.py` (Python + numpy)
 - `i18n.js` — troca de idioma PT/EN no cliente (ver abaixo)
 - `fonts/` — Inter, JetBrains Mono, League Gothic e Cormorant Garamond **auto-hospedadas** (SIL OFL 1.1, ver `fonts/LICENSE-fontes.md`)
