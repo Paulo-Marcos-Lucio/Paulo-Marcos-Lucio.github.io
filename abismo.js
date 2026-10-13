@@ -127,7 +127,7 @@
      ═══════════════════════════════════════════════════════════════════════════ */
   var CENA = {
     // relevo esculpido offline (gerador/gerar_mascara.py): normal+altura e borda+traço+cavidade
-    texturas: { tex0: 'mascara-n.png', tex1: 'mascara-m.png' },
+    texturas: { tex0: 'mascara-n.png', tex1: 'mascara-m.png', tex2: 'rosto-n.png', tex3: 'rosto-m.png' },
 
     glsl: [
       // ── constantes: as MESMAS do gerador/gerar_mascara.py e do layout abaixo
@@ -532,7 +532,7 @@
       'vec4 camadaRostos(vec2 p, vec2 cel, vec4 c) {',
       '  float S = min(uRes.x, uRes.y);',
       '  float rol = uRolCam.x;',
-      '  float hz = clamp(uRes.y * 0.40 - rol * 0.04, uRes.y * 0.24, uRes.y * 0.46);',
+      '  float hz = uLimbo1.x;                          // a mesma conta do JS (geometriaLimbo)',
       '  float Lz = lanterna(p);',
       '  vec2 sc = vec2(uRes.x * 0.07, uRes.y * 0.10);',
       '  float rs = S * 0.05;',
@@ -558,7 +558,11 @@
       '  } else {',
       '    float achou;',
       '    c.y *= 0.2;',
-      '    c = campoRostos(p, cel, c, hz, uRes.y * 0.08, 0.13, 1.45, S * 0.062, vec3(-0.6, -0.55, 0.6), 1.3, achou);',
+      '    if (uTexInfo.z > 0.5) {',
+      // alta definição: a célula vira janela (glifo 255) e o passo de gravura pinta o rosto
+      '      vec4 fz;',
+      '      if (limboGeo(p, uLimbo1, uLimbo2, uTex2, 0.55 * uCel.x, fz).w > 0.5) c = vec4(255.0, 0.3, 0.6, 0.0);',
+      '    } else c = campoRostos(p, cel, c, hz, uRes.y * 0.08, 0.13, 1.45, S * 0.062, vec3(-0.6, -0.55, 0.6), 1.3, achou);',
       '    c.w = max(c.w, 0.3 * exp(-abs(p.y - hz) / (S * 0.05)));',
       '    c.z = max(c.z, 0.6);',
       '  }',
@@ -1080,9 +1084,12 @@
       '  vec2 h = (u - vec2(0.0, -0.08)) / vec2(0.5, 0.62);',
       '  vec2 f = u / vec2(0.34, 0.45);',
       '  float dh = length(h), df = length(f);',
-      '  if (dh < 1.0 || df < 1.0) {',
+      '  float folga = uTexInfo.z > 0.5 ? 0.7 * uCel.x / max(B.z, 1.0) : 0.0;   // B.z = escala: meia célula de folga',
+      '  if (dh < 1.0 + folga || df < 1.0) {',
       '    float franja = -0.1 + 0.07 * sin(u.x * 38.0 + B.y) + 0.03 * sin(uTempo * 0.6 + u.x * 7.0);',
-      '    if (df < 1.0 && u.y > franja) {',
+      '    if (uTexInfo.z > 0.5) {',
+      '      c = vec4(255.0, 0.3, 0.9, 0.0);                     // cabeça inteira em gravura (passo de alta definição)',
+      '    } else if (df < 1.0 && u.y > franja) {',
       // rosto pálido iluminado pela esquerda; o lado direito afunda na sombra
       '      float t = clamp(0.62 - 0.55 * (u.x / 0.34) - 0.25 * (u.y / 0.45), 0.05, 0.85) + 0.3 * Lz;',
       '      c = vec4(glifoMascara(t, cel), 0.2 + 0.75 * clamp(t / 0.6, 0.0, 1.0), 0.88 + 0.1 * t, 0.06);',
@@ -1423,8 +1430,8 @@
       if (largo && chd && crc) {
         sobra = crc.x + crc.w - (chd.x + chd.w);
         if (sobra > 220) {
-          E = limitar(Math.min(sobra * 0.42, H * 0.2), 60, 150);
-          lista.push({ tipo: 7, x: chd.x + chd.w + sobra * 0.55, y: chd.y + E * 0.9, escala: E, p1: 0, p2: 0, gatilho: caixa(cs), ext: [-2.3, -1.1, 2.3, 9],
+          E = limitar(Math.min(sobra * 0.5, H * 0.24), 60, 190);
+          lista.push({ tipo: 7, x: chd.x + chd.w + sobra * 0.55, y: chd.y + E * 0.9, escala: E, p1: E, p2: 0, gatilho: caixa(cs), ext: [-2.3, -1.1, 2.3, 9],
             olhos: [olho(-0.13, 0.02, 0.085, 0.04, 2, true, 90), olho(0.13, 0.02, 0.085, 0.04, 2, true, 90)] });
         }
       }
@@ -1536,6 +1543,8 @@
     'uniform highp sampler2D uMsg; uniform vec2 uMsgTam;',
     'uniform vec4 uSussurro;',
     'uniform sampler2D uTex0; uniform sampler2D uTex1; uniform vec4 uTexInfo;',
+    // relevo de alta definição dos rostos (rosto-n/rosto-m) e a geometria do campo do Limbo
+    'uniform sampler2D uTex2; uniform sampler2D uTex3; uniform vec4 uLimbo1; uniform vec4 uLimbo2;',
     'uniform float uSemente;',
     // camadas da descida: x = camada de cima, y = a que sobe do fundo, z = quanto já subiu (0..1);
     // uRolCam = px já descidos dentro de cada camada (paralaxe própria de cada cenário)
@@ -1636,6 +1645,173 @@
     ''
   ].join('\n');
 
+  /* Geometria do campo do Limbo: a MESMA no passo de células (decide em que células a gravura
+     entra — o glifo 255 é a "janela") e no passo de gravura (desenha o rosto pixel a pixel).
+     L1 = (horizonte px, profundidade px, z0, razão) · L2 = (meia-largura px na z = 1, nariz).
+     Devolve w: 0 nada · 1 rosto · 2 nariz em cone; xy = coordenada no relevo (rosto: x -1..1,
+     y -1,15..1,15 · cone: x -1..1 na largura, y 0..1 da base ao bico); z = profundidade;
+     f = (centro x px, meia-largura px, meia-altura px, semente). dilata (px) só no passo de
+     células: a célula vira janela se a borda passar perto do centro dela. */
+  var LIMBO_GEO = [
+    'vec4 limboGeo(vec2 p, vec4 L1, vec4 L2, sampler2D rn, float dilata, out vec4 f) {',
+    '  f = vec4(0.0);',
+    '  float v = p.y - L1.x;',
+    '  if (v < 1.0) return vec4(0.0);',
+    '  float jEst = floor(log(max(L1.y / v, 1e-4) / L1.z) / log(L1.w));',
+    '  for (int q = -5; q <= 1; q++) {',
+    '    float jj = jEst + float(q);',
+    '    if (jj < 0.0) continue;',
+    '    float zj = L1.z * pow(L1.w, jj);',
+    '    float yj = L1.x + L1.y / zj;',
+    '    float wj = L2.x / zj, hj = wj * 0.55;',
+    '    float passo = wj * 2.12;',
+    '    float desl = fract(jj * 0.618034);',
+    '    float i = floor(p.x / passo - desl + 0.5);',
+    '    float hi = hash11(i * 3.1 + jj * 7.3);',
+    '    float xc = (i + desl) * passo + (hi - 0.5) * passo * 0.12;',
+    '    float yc = yj + (hash11(i * 1.7 + jj) - 0.5) * hj * 0.3;',
+    '    f = vec4(xc, wj, hj, hi);',
+    '    if (L2.y > 0.0) {',
+    '      float yb = yc + 0.17 * hj / 1.15;',
+    '      float alt = L2.y * hj * (0.85 + 0.5 * hi);',
+    '      float hw = 0.075 * wj;',
+    '      float s = (yb - p.y) / alt;',
+    '      if (s >= 0.0 && s <= 1.0 && abs(p.x - xc) < hw * (1.0 - s) + dilata) return vec4((p.x - xc) / max(hw * (1.0 - s), 1e-3), s, zj, 2.0);',
+    '    }',
+    '    vec2 t = vec2((p.x - xc) / wj, (p.y - yc) / hj * 1.15);',
+    '    vec2 uv = vec2(t.x * 0.5 + 0.5, (t.y + 1.15) / 2.3);',
+    '    if (uv.x > 0.0 && uv.x < 1.0 && uv.y > 0.0 && uv.y < 1.0) {',
+    '      if (texture(rn, uv).b > 0.004 || (dilata > 0.0 && length(t / vec2(0.8, 1.04)) < 1.0 + dilata / wj)) return vec4(t, zj, 1.0);',
+    '    }',
+    '  }',
+    '  return vec4(0.0);',
+    '}',
+    ''
+  ].join('\n');
+
+  /* Passo de GRAVURA (alta definição): só pinta os pixels das células marcadas com o glifo 255
+     (rostos do Limbo e o rosto do Andarilho); tudo o mais segue em ASCII. É gravura de cédula:
+     linhas finas e claras que contornam a forma — o relevo empurra a linha (ela "sobe" pela
+     maçã, afunda no vinco), a luz engrossa a linha, a sombra a apaga. O cone do nariz é riscado
+     no sentido do comprimento, convergindo para o bico. */
+  var FS_HD = [
+    '#version 300 es',
+    'precision highp float;',
+    'uniform sampler2D uCena; uniform sampler2D uRN; uniform sampler2D uRM;',
+    'uniform vec2 uResPx; uniform vec2 uCelPx; uniform vec2 uGrade; uniform float uDpr; uniform float uTempo;',
+    'uniform vec3 uLanterna; uniform float uLuz; uniform vec3 uFundo;',
+    'uniform vec4 uLimbo1; uniform vec4 uLimbo2; uniform vec4 uAnd;',
+    'uniform vec4 uVeus[8]; uniform int uNVeus;',
+    'out vec4 saida;',
+    'float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }',
+    'float h21(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }',
+    LIMBO_GEO,
+    'vec3 paleta(float t) {',
+    '  vec3 c0 = vec3(0.090, 0.008, 0.016), c1 = vec3(0.340, 0.024, 0.055), c2 = vec3(0.700, 0.051, 0.137);',
+    '  vec3 c3 = vec3(1.000, 0.188, 0.260), c4 = vec3(1.000, 0.540, 0.470), c5 = vec3(1.000, 0.945, 0.918);',
+    '  if (t < 0.25) return mix(c0, c1, t / 0.25);',
+    '  if (t < 0.50) return mix(c1, c2, (t - 0.25) / 0.25);',
+    '  if (t < 0.72) return mix(c2, c3, (t - 0.50) / 0.22);',
+    '  if (t < 0.88) return mix(c3, c4, (t - 0.72) / 0.16);',
+    '  return mix(c4, c5, (t - 0.88) / 0.12);',
+    '}',
+    'float veuPx(vec2 p) {',
+    '  float v = 1.0;',
+    '  for (int i = 0; i < 8; i++) {',
+    '    if (i >= uNVeus) break;',
+    '    vec4 r = uVeus[i];',
+    '    vec2 d = abs(p - (r.xy + r.zw * 0.5)) - r.zw * 0.5;',
+    '    v = min(v, smoothstep(-4.0, 36.0, length(max(d, 0.0)) + min(max(d.x, d.y), 0.0)));',
+    '  }',
+    '  return v;',
+    '}',
+    // linha de buril: fase -> cobertura com antisserrilhado; larg 0..1 (metade do período)
+    'float buril(float fase, float larg) {',
+    '  float f = abs(fract(fase) - 0.5) * 2.0;',
+    '  float aa = clamp(fwidth(fase) * 1.6, 0.02, 0.5);',
+    '  return 1.0 - smoothstep(larg - aa, larg + aa, f);',
+    '}',
+    // tom de um ponto do relevo: luz principal, oclusão, cavidade, brilho e lanterna
+    'float tomRelevo(vec2 uv, vec3 L, float lz, out float h, out float fio) {',
+    '  vec4 a = texture(uRN, uv); vec4 b = texture(uRM, uv);',
+    '  vec2 nxy = a.xy * 2.0 - 1.0;',
+    '  vec3 n = normalize(vec3(nxy, sqrt(max(1.0 - dot(nxy, nxy), 0.02))));',
+    '  h = a.b; fio = b.b;',
+    '  float dif = max(dot(n, L), 0.0);',
+    '  float spec = pow(max(dot(n, normalize(L + vec3(0.0, 0.0, 1.0))), 0.0), 22.0);',
+    '  float cav = clamp(1.0 + (b.r - 0.5) * 3.2, 0.1, 1.3);',
+    '  float t = (0.03 + 0.92 * pow(dif, 1.35)) * b.g * cav + 0.35 * spec * b.g;',
+    '  return t + lz * (0.25 + 0.6 * n.z);',
+    '}',
+    'void main() {',
+    '  vec2 pd = vec2(gl_FragCoord.x, uResPx.y - gl_FragCoord.y);',
+    '  vec2 cel = floor(pd / uCelPx);',
+    '  vec4 c = texelFetch(uCena, ivec2(int(cel.x), int(uGrade.y - 1.0 - cel.y)), 0);',
+    '  if (floor(c.r * 255.0 + 0.5) < 254.5) discard;',
+    '  vec2 p = pd / uDpr;',
+    '  float lz = uLuz * exp(-pow(length(p - uLanterna.xy) / (uLanterna.z * 0.75), 2.0));',
+    '  vec3 col = uFundo;',
+    '  float h, fio;',
+    // o Andarilho: rosto de pé, luz pela esquerda, metade direita afundando na sombra
+    '  vec2 ua = (p - uAnd.xy) / max(uAnd.z, 1.0);',
+    '  vec2 ta = (ua - vec2(0.0, 0.062)) / 0.419;',
+    '  vec2 hc = (ua - vec2(0.0, -0.08)) / vec2(0.5, 0.62);',
+    '  if (uAnd.w > 0.01 && length(hc) < 1.12) {',
+    '    vec2 uv = vec2(ta.x * 0.5 + 0.5, (ta.y + 1.15) / 2.3);',
+    // franja irregular sobre a testa (a mesma conta do passo de células, semente 0,326)
+    '    float franja = -0.1 + 0.07 * sin(ua.x * 38.0 + 0.326) + 0.03 * sin(uTempo * 0.6 + ua.x * 7.0);',
+    '    bool rosto = abs(ta.x) < 1.0 && abs(ta.y) < 1.15 && texture(uRN, uv).b > 0.004 && ua.y > franja;',
+    '    if (!rosto && length(hc) < 1.0) {',
+    // cabelo: fios finos e escuros que caem em cortina, acesos de leve pela esquerda
+    '      float fase = ua.x * uAnd.z / (2.1 / uDpr * uDpr) * uDpr / 2.1 + 0.35 * sin(ua.y * 9.0 + uTempo * 0.5 + ua.x * 3.0);',
+    '      float luzC = clamp(0.35 - ua.x * 0.6 - ua.y * 0.25, 0.04, 0.5) * smoothstep(1.0, 0.75, length(hc));',
+    '      col += paleta(0.3 + 0.3 * luzC) * buril(fase, 0.35) * (0.25 + luzC);',
+    '    }',
+    '    if (rosto) {',
+    '      float t = tomRelevo(uv, normalize(vec3(-0.8, -0.25, 0.55)), lz, h, fio);',
+    '      t *= 1.0 - 0.55 * smoothstep(-0.1, 0.7, ta.x);',
+    '      float esp = 2.4 * uDpr;',
+    '      float fase = pd.y / esp + h * uAnd.z * 0.42 * 0.5 / (esp / uDpr) - ta.x * ta.x * 1.5;',
+    '      float lin = buril(fase, clamp(t * 0.95, 0.0, 0.95)) * (1.0 - 0.75 * fio);',
+    '      col += paleta(0.62 + 0.36 * clamp(t, 0.0, 1.0)) * lin * (0.35 + 0.75 * t);',
+    '    }',
+    '  } else {',
+    '    vec4 f;',
+    '    vec4 gr = limboGeo(p, uLimbo1, uLimbo2, uRN, 0.0, f);',
+    '    float neb = smoothstep(1.4, 0.1, gr.z);',
+    '    vec3 L = normalize(vec3(-0.55, -0.6, 0.6));',
+    '    float esp = 3.0 * uDpr;',
+    '    if (gr.w > 1.5) {',
+    // o cone: face esquerda ao sol, direita em breu, aresta acesa; riscado ao longo do comprimento
+    '      float u = gr.x;',
+    '      float t = u < 0.0 ? 0.42 + 0.45 * smoothstep(-0.2, -0.95, u) : 0.04 + 0.08 * (1.0 - u);',
+    '      t = t * (0.3 + 0.7 * neb) + lz * 0.6;',
+    '      float lin = buril(u * f.y * 0.075 * (1.0 - gr.y) * 2.0 / esp * uDpr, clamp(t, 0.0, 0.95));',
+    '      if (u < -0.88) lin = 1.0;',
+    '      col += paleta(0.5 + 0.45 * clamp(t, 0.0, 1.0)) * lin * (0.3 + 0.75 * t) * (0.3 + 0.7 * neb);',
+    '    } else if (gr.w > 0.5) {',
+    '      vec2 uv = vec2(gr.x * 0.5 + 0.5, (gr.y + 1.15) / 2.3);',
+    '      float t = tomRelevo(uv, L, lz, h, fio) * (0.25 + 0.75 * neb);',
+    // linhas horizontais de cédula, empurradas pelo relevo (sobem pela maçã, afundam no vinco)
+    '      float fase = pd.y / esp + h * f.z * 0.55 / (esp / uDpr) + gr.x * gr.x * 2.2 * (f.z / 60.0);',
+    '      float lin = buril(fase, clamp(t * 0.95, 0.0, 0.95)) * (1.0 - 0.7 * fio);',
+    // sob a lanterna os olhos do morto se entreabrem: uma brasa na fresta da pálpebra
+    '      vec2 e = vec2(abs(gr.x) - 0.31, gr.y + 0.105) / vec2(0.11, 0.025);',
+    '      float olho = (1.0 - smoothstep(0.7, 1.0, length(e))) * smoothstep(0.25, 0.6, lz);',
+    '      col += paleta(0.45 + 0.5 * clamp(t, 0.0, 1.0)) * lin * (0.3 + 0.8 * t) * (0.35 + 0.65 * neb);',
+    '      col = mix(col, vec3(1.0, 0.35, 0.22) * (0.6 + 0.4 * h21(floor(pd * 0.5) + floor(uTempo * 8.0))), olho);',
+    '    }',
+    '  }',
+    // mesmo acabamento do passo de tela: véu de contraste, vinheta, scanline e grão
+    '  col *= mix(0.05, 1.0, veuPx(p));',                    // gravura é mais clara que o ASCII: véu mais fundo
+    '  vec2 q = p / (uResPx / uDpr) - 0.5;',
+    '  col *= mix(0.42, 1.0, smoothstep(0.98, 0.22, length(q * vec2(1.0, 1.18))));',
+    '  col *= 1.0 - 0.055 * step(0.5, fract(gl_FragCoord.y * 0.5));',
+    '  col += (h21(pd + fract(uTempo * 7.31) * 113.0) - 0.5) * 0.022;',
+    '  saida = vec4(max(col, 0.0), 1.0);',
+    '}'
+  ].join('\n');
+
   var PRINCIPAL_CENA = [
     '',
     'vec4 aplicarSussurro(vec4 c, vec2 cel) {',
@@ -1711,9 +1887,9 @@
     '  float g = floor(c.r * 255.0 + 0.5);',
     '  vec2 f = (pd - cel * uCelPx) / uCelPx;',
     '  vec2 tile = vec2(mod(g, 16.0), floor(g / 16.0));',
-    '  float cob = texture(uAtlas, (tile + f) / vec2(16.0, 9.0)).r;',
+    '  float cob = g > 250.0 ? 0.0 : texture(uAtlas, (tile + f) / vec2(16.0, 9.0)).r;',
     '  vec2 fq = clamp(f + vec2(uAberracao * uDpr / uCelPx.x, 0.0), 0.0, 1.0);',
-    '  float cobQ = texture(uAtlas, (tile + fq) / vec2(16.0, 9.0)).r;',
+    '  float cobQ = g > 250.0 ? 0.0 : texture(uAtlas, (tile + fq) / vec2(16.0, 9.0)).r;',
     '  vec2 p = pd / uDpr;',
     '  vec2 uvC = vec2(pd.x / uCelPx.x / uGrade.x, 1.0 - pd.y / uCelPx.y / uGrade.y);',
     '  vec4 suave = texture(uCena, uvC);',
@@ -2176,7 +2352,8 @@
       var rend = String(info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
       if (/swiftshader|llvmpipe|softpipe|software|basic render|warp/i.test(rend)) { qualidade = 3; erros.push('renderizador por software: ' + rend.slice(0, 80)); }
     } catch (e) { /* sem a extensão: segue na qualidade normal */ }
-    P.cena = programa(VS_TELA, CABECALHO_CENA + '\n' + CENA.glsl + '\n' + PRINCIPAL_CENA);
+    P.cena = programa(VS_TELA, CABECALHO_CENA + '\n' + LIMBO_GEO + '\n' + CENA.glsl + '\n' + PRINCIPAL_CENA);
+    P.hd = programa(VS_TELA, FS_HD);
     P.tela = programa(VS_TELA, FS_TELA);
     P.olho = programa(VS_OLHO, FS_OLHO);
 
@@ -2184,9 +2361,9 @@
     T.fb = gl.createFramebuffer();
     T.atlas = texturaVazia(gl.NEAREST);
     T.msg = texturaVazia(gl.NEAREST);
-    T.tex = [texturaVazia(gl.LINEAR), texturaVazia(gl.LINEAR)];
-    T.texPronta = [0, 0];
-    for (var k = 0; k < 2; k++) {
+    T.tex = [texturaVazia(gl.LINEAR), texturaVazia(gl.LINEAR), texturaVazia(gl.LINEAR), texturaVazia(gl.LINEAR)];
+    T.texPronta = [0, 0, 0, 0];
+    for (var k = 0; k < 4; k++) {
       gl.bindTexture(gl.TEXTURE_2D, T.tex[k]);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(4));
     }
@@ -2223,7 +2400,7 @@
   }
 
   function carregarTexturas() {
-    ['tex0', 'tex1'].forEach(function (nome, k) {
+    ['tex0', 'tex1', 'tex2', 'tex3'].forEach(function (nome, k) {
       var arq = CENA.texturas && CENA.texturas[nome];
       if (!arq) return;
       var img = new Image();
@@ -2290,6 +2467,17 @@
     return camadaBuf;
   }
 
+  /* Campo do Limbo: horizonte sobe devagar ao descer; rostos grandes e poucos na frente (é
+     onde a gravura mostra o detalhe). [horizonte, profundidade, z0, razão, meia-largura z=1, nariz] */
+  var limboBuf = [0, 0, 0, 0, 0, 0];
+  function geometriaLimbo() {
+    var S = Math.min(W, H), rol = rolCam[0] || 0;
+    limboBuf[0] = limitar(H * 0.40 - rol * 0.04, H * 0.22, H * 0.46);
+    limboBuf[1] = H * 0.06; limboBuf[2] = 0.11; limboBuf[3] = 1.5;
+    limboBuf[4] = S * (W < 600 ? 0.05 : 0.036); limboBuf[5] = 1.5;
+    return limboBuf;
+  }
+
   var criA = new Float32Array(24), criB = new Float32Array(24), sangA = new Float32Array(64), sangB = new Float32Array(64);
   function prepararCriaturas() {
     var n = 0, sx = window.scrollX, sy = window.scrollY;
@@ -2349,7 +2537,10 @@
     gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, T.msg);
     gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, T.tex[0]);
     gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, T.tex[1]);
+    gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, T.tex[2]);
+    gl.activeTexture(gl.TEXTURE6); gl.bindTexture(gl.TEXTURE_2D, T.tex[3]);
     gl.uniform1i(pc.u('uMsg'), 2); gl.uniform1i(pc.u('uTex0'), 3); gl.uniform1i(pc.u('uTex1'), 4);
+    gl.uniform1i(pc.u('uTex2'), 5); gl.uniform1i(pc.u('uTex3'), 6);
     u2(pc, 'uRes', W, H); u2(pc, 'uCel', celCss[0], celCss[1]); u2(pc, 'uGrade', cols, linhas);
     u1(pc, 'uTempo', tempo);
     gl.uniform4f(pc.u('uPonteiro'), ponteiro.x, ponteiro.y, ponteiro.presente ? 1 : 0, ponteiro.vel);
@@ -2371,7 +2562,10 @@
     var sus = lay && lay.sussurro ? lay.sussurro : { x: 0, y: 1.4 };
     var intensSus = (!dormindo && ocio > 0 && ocio < 1) ? limitar(ocio * 2.2, 0, 1) : 0;
     gl.uniform4f(pc.u('uSussurro'), an.x + sus.x * (lay ? lay.escala : 0), an.y + sus.y * (lay ? lay.escala : 0), intensSus, 0);
-    gl.uniform4f(pc.u('uTexInfo'), T.texPronta[0], T.texPronta[1], 0, 0);
+    var hdPronto = T.texPronta[2] && T.texPronta[3] ? 1 : 0;
+    gl.uniform4f(pc.u('uTexInfo'), T.texPronta[0], T.texPronta[1], hdPronto, 0);
+    var lb = geometriaLimbo();
+    gl.uniform4f(pc.u('uLimbo1'), lb[0], lb[1], lb[2], lb[3]); gl.uniform4f(pc.u('uLimbo2'), lb[4], lb[5], 0, 0);
     u1(pc, 'uSemente', semente);
     var cb = estadoCamadas();
     gl.uniform4f(pc.u('uCamada'), cb[0], cb[1], cb[2], 0);
@@ -2398,6 +2592,28 @@
     gl.uniform3f(pt.u('uFundo'), 0.031, 0.016, 0.02);
     gl.uniform4fv(pt.u('uVeus'), veusBuf); gl.uniform1i(pt.u('uNVeus'), nVeus);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    // ── passo 2b: gravura dos rostos (só quando o Limbo ou o Andarilho estão na tela)
+    var and = null;
+    for (var a = 0; a < cris.length; a++) if (cris[a].tipo === 7 && cris[a].naTela) and = cris[a];
+    if (hdPronto && (cb[0] === 1 || cb[1] === 1 || and)) {
+      var ph = P.hd;
+      gl.useProgram(ph.p);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, T.cena);
+      gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, T.tex[2]);
+      gl.activeTexture(gl.TEXTURE6); gl.bindTexture(gl.TEXTURE_2D, T.tex[3]);
+      gl.uniform1i(ph.u('uCena'), 0); gl.uniform1i(ph.u('uRN'), 5); gl.uniform1i(ph.u('uRM'), 6);
+      u2(ph, 'uResPx', canvas.width, canvas.height); u2(ph, 'uCelPx', tw, th); u2(ph, 'uGrade', cols, linhas);
+      u1(ph, 'uDpr', dpr); u1(ph, 'uTempo', tempo);
+      gl.uniform3f(ph.u('uLanterna'), lant.x, lant.y, raioLant); u1(ph, 'uLuz', lant.luz);
+      gl.uniform3f(ph.u('uFundo'), 0.031, 0.016, 0.02);
+      gl.uniform4f(ph.u('uLimbo1'), lb[0], lb[1], lb[2], lb[3]); gl.uniform4f(ph.u('uLimbo2'), lb[4], lb[5], 0, 0);
+      if (and) gl.uniform4f(ph.u('uAnd'), and.x - window.scrollX, and.y - window.scrollY, and.escala, and.pres);
+      else gl.uniform4f(ph.u('uAnd'), 0, 0, 1, 0);
+      gl.uniform4fv(ph.u('uVeus'), veusBuf); gl.uniform1i(ph.u('uNVeus'), nVeus);
+      gl.bindVertexArray(T.vaoTela);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
 
     // ── passo 3: olhos
     if (olhos.length) {
@@ -2592,12 +2808,21 @@
     }, { passive: true });
     document.addEventListener('pointerleave', function () { ponteiro.presente = false; }, { passive: true });
     document.documentElement.addEventListener('mouseleave', function () { ponteiro.presente = false; }, { passive: true });
-    var tmRolagem = 0;
+    // Fundo parado (pausa / reduced-motion): a rolagem redesenha o quadro estático da nova
+    // profundidade — no máximo a cada 120 ms enquanto rola (a rolagem suave dispara eventos sem
+    // parar; só "esperar parar" deixava o fundo congelado na camada antiga) e uma última vez no fim.
+    var tmRolagem = 0, ultimoEstatico = 0;
+    function redesenharParado() {
+      if (!gl || modo === 'pleno') return;
+      ultimoEstatico = agora();
+      quadroEstatico();
+    }
     window.addEventListener('scroll', function () {
       registrarInput(agora());
       if (gl && modo !== 'pleno') {
         clearTimeout(tmRolagem);
-        tmRolagem = setTimeout(function () { if (gl && modo !== 'pleno') quadroEstatico(); }, 90);
+        tmRolagem = setTimeout(redesenharParado, 140);
+        if (agora() - ultimoEstatico > 0.12) requestAnimationFrame(redesenharParado);
       }
     }, { passive: true });
     document.addEventListener('pointerover', function (e) {
