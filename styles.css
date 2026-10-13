@@ -178,7 +178,20 @@ body {
 img { max-width: 100%; display: block; }
 a { color: var(--link); text-decoration: none; transition: color var(--t-fast) var(--ease); }
 a:hover { color: var(--link-hover); }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+/* foco: contorno de 2 px em --link (7,4:1 contra o fundo), afastado 3 px.
+   SEM border-radius aqui de propósito: a regra antiga forçava um raio e, no
+   Tab, os FABs redondos viravam retângulos — o contorno já acompanha o raio
+   do próprio elemento. */
+a:focus-visible, button:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+
+/* WCAG 1.4.1 (uso de cor): link no meio de texto corrido não pode depender só
+   da cor — o rosa do link e o cinza-rosado do texto têm luminância quase igual
+   (1,04:1, medido). Sublinhado fino, que acende no hover. */
+.hero-subtitle a, .section-lead a, .cred-note-cta a {
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 107, 120, 0.55);
+}
+.hero-subtitle a:hover, .section-lead a:hover, .cred-note-cta a:hover { text-decoration-color: currentColor; }
 
 h1, h2, h3, h4 { color: var(--fg-1); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0; }
 p { margin: 0; }
@@ -818,7 +831,9 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 8px 26px -10px rgba(227, 23, 46, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.14);
   animation: batimento 2.6s ease-in-out infinite;
 }
-.btn-wa:hover {
+.btn-wa:hover, .btn-wa:focus-visible {
+  /* a animação venceria a cascata e engoliria a sombra do hover: para aqui */
+  animation: none;
   transform: translateY(-1px); background: var(--cta-hover); color: var(--cta-fg);
   box-shadow: -2px 0 0 rgba(255, 59, 78, 0.6), 2px 0 0 rgba(110, 6, 16, 0.95), 0 14px 34px -10px rgba(227, 23, 46, 0.85);
 }
@@ -898,7 +913,12 @@ body > * { position: relative; z-index: 1; }
 }
 .suite-card:hover { transform: translateY(-4px); border-color: rgba(227, 23, 46, 0.45); box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 59, 78, 0.3); color: var(--fg-2); }
 .suite-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
-.suite-ico { width: 50px; height: 50px; padding: 12px; }
+.suite-ico { width: 50px; height: 50px; padding: 12px; transition: color var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease); }
+/* no hover/foco do card, a placa do ícone "acende" por dentro */
+.suite-card:hover .suite-ico, .suite-card:focus-visible .suite-ico {
+  color: #ff6b78;
+  box-shadow: inset 0 0 0 3px var(--bg-0), inset 0 0 0 4px rgba(255, 59, 78, 0.5), inset 0 0 22px rgba(227, 23, 46, 0.4), 0 0 18px -6px rgba(227, 23, 46, 0.8);
+}
 .suite-frente {
   font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--blood-hot); background: var(--accent-soft); border: 1px solid var(--accent-line); padding: 3px 9px; border-radius: var(--radius-sm);
