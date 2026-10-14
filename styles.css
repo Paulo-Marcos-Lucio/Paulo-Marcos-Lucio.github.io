@@ -798,7 +798,11 @@ body > * { position: relative; z-index: 1; }
 #abismo {
   position: fixed; inset: 0; width: 100%; height: 100%;
   z-index: 0; pointer-events: none; display: block;
+  /* nasce apagado: a GPU compila os shaders sem travar a página e o fundo acende (abismo.js
+     põe .abismo-aceso no primeiro quadro). Sem o motor, o fundo é a cor do body. */
+  opacity: 0; transition: opacity 1.2s var(--ease);
 }
+#abismo.abismo-aceso { opacity: 1; }
 
 /* ----- botão de pausa das animações (WCAG 2.2.2) -----
    Fixo à direita, logo ACIMA do FAB do WhatsApp (mesma margem + altura do
