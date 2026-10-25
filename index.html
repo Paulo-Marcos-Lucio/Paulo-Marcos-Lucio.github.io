@@ -256,34 +256,8 @@
   <main id="main">
     <!-- ===================== HERO ===================== -->
     <section id="top" class="hero">
-      <!-- A Consciencia (D2): campo neural em SVG. Sem WebGL, sem JS de animacao -> LCP rapido. -->
-      <svg class="hero-field" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-        <defs>
-          <radialGradient id="heroaura" cx="64%" cy="42%" r="46%"><stop offset="0" stop-color="#4FF3FF" stop-opacity=".16"/><stop offset=".5" stop-color="#8A5CFF" stop-opacity=".10"/><stop offset="1" stop-color="#8A5CFF" stop-opacity="0"/></radialGradient>
-          <radialGradient id="heroeye" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4FF3FF" stop-opacity=".9"/><stop offset=".35" stop-color="#4FF3FF" stop-opacity=".25"/><stop offset="1" stop-color="#4FF3FF" stop-opacity="0"/></radialGradient>
-        </defs>
-        <rect width="1440" height="900" fill="url(#heroaura)"/>
-        <g stroke="#4FF3FF" stroke-opacity=".22" stroke-width="1">
-          <line x1="920" y1="300" x2="1040" y2="230"/><line x1="1040" y1="230" x2="1160" y2="320"/><line x1="1160" y1="320" x2="1250" y2="210"/>
-          <line x1="920" y1="300" x2="1010" y2="430"/><line x1="1010" y1="430" x2="1160" y2="320"/><line x1="1010" y1="430" x2="1120" y2="540"/>
-          <line x1="1160" y1="320" x2="1290" y2="430"/><line x1="1120" y1="540" x2="1290" y2="430"/><line x1="1250" y1="210" x2="1360" y2="330"/>
-          <line x1="820" y1="430" x2="920" y2="300"/><line x1="820" y1="430" x2="1010" y2="430"/><line x1="1120" y1="540" x2="1240" y2="640"/>
-        </g>
-        <g stroke="#8A5CFF" stroke-opacity=".18" stroke-width="1">
-          <line x1="1250" y1="210" x2="1290" y2="430"/><line x1="1360" y1="330" x2="1290" y2="430"/><line x1="1240" y1="640" x2="1290" y2="430"/>
-        </g>
-        <circle class="hero-orb" cx="1080" cy="400" r="150" fill="url(#heroeye)"/>
-        <circle cx="1080" cy="400" r="86" fill="none" stroke="#4FF3FF" stroke-opacity=".5" stroke-width="1.2"/>
-        <circle cx="1080" cy="400" r="54" fill="none" stroke="#4FF3FF" stroke-opacity=".7" stroke-width="1"/>
-        <circle cx="1080" cy="400" r="16" fill="#4FF3FF" fill-opacity=".92"/>
-        <circle cx="1080" cy="400" r="7" fill="#eafeff"/>
-        <g fill="#4FF3FF">
-          <circle cx="920" cy="300" r="4"/><circle cx="1040" cy="230" r="3"/><circle cx="1160" cy="320" r="3.5"/><circle cx="1250" cy="210" r="2.5"/>
-          <circle cx="1010" cy="430" r="3.5"/><circle cx="1290" cy="430" r="3"/><circle cx="1120" cy="540" r="3"/><circle cx="820" cy="430" r="2.5"/>
-          <circle cx="1360" cy="330" r="2.5"/><circle cx="1240" cy="640" r="2.5"/>
-        </g>
-        <g fill="#A77DFF"><circle cx="1250" cy="210" r="2.5"/><circle cx="1360" cy="330" r="2.5"/></g>
-      </svg>
+      <!-- A Consciencia (D2): entidade VIVA em canvas 2D leve (hero.js) — rede neural com pulsos + binarios. -->
+      <canvas class="hero-field" aria-hidden="true"></canvas>
       <div class="hero-scan" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div class="hero-copy" data-abismo-veu>
@@ -771,5 +745,6 @@
 
   <script src="i18n.js" defer></script>
   <script src="script.js" defer></script>
+  <script src="hero.js" defer></script>
 </body>
 </html>
