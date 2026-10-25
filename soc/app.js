@@ -20,7 +20,7 @@ const TXT = {
   pt: {
     'soc.eyebrow': 'Centro de operações · dado real',
     'soc.titulo': 'A superfície, ao vivo', 'soc.titulo.velho': 'A superfície, na última leitura',
-    'soc.lead': 'Este painel não encena ataque nenhum. Tudo aqui é medido de verdade: o observatório que lê {n} alvos, agendado de hora em hora, o laudo do meu próprio site e as requisições que a sua visita acabou de fazer. Confira no DevTools.',
+    'soc.lead': 'Dado real, zero teatro: o observatório que lê {n} alvos, o laudo do meu site e as requisições que a sua visita acabou de fazer. Confira no DevTools.',
     'expo.eyebrow': 'Ferramentas · open source · com teste',
     'expo.titulo': 'A suíte, em operação',
     'expo.lead': 'Seis ferramentas: cinco frentes do OWASP Top 10 e a vigilância contínua. Cada módulo mostra o método trabalhando: os números são os do corpus público de cada ferramenta e os do laudo real deste site; os exemplos são demonstrações, e estão rotulados como tal.',
@@ -30,7 +30,7 @@ const TXT = {
   en: {
     'soc.eyebrow': 'Operations center · real data',
     'soc.titulo': 'The surface, live', 'soc.titulo.velho': 'The surface, as last read',
-    'soc.lead': 'This panel stages no attack at all. Everything here is actually measured: the observatory reading {n} targets on an hourly schedule, the report on my own site, and the requests your visit just made. Check it in DevTools.',
+    'soc.lead': 'Real data, zero theater: the observatory reading {n} targets, the report on my site, and the requests your visit just made. Check it in DevTools.',
     'expo.eyebrow': 'Tools · open source · tested',
     'expo.titulo': 'The suite, in operation',
     'expo.lead': 'Six tools: five fronts of the OWASP Top 10 plus continuous surveillance. Each module shows the method at work: the numbers come from each tool’s public corpus and from this site’s real report; the examples are demonstrations, and are labeled as such.',

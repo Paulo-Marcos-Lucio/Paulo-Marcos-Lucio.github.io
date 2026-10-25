@@ -209,13 +209,13 @@ export function montar(raizes, ctx = {}) {
     const sd = O.sondas || {}, out = [], inteiro = (x) => F.n.format(Math.round(x));
     // letra SEMPRE pela régua, em cada quadro
     if (S.nota != null) out.push({ i: 0, v: S.nota, de: (RG && SU.nota_antes_valor) || S.nota, f: (x) => { const r = Math.round(x); return `${RG ? RG.find(([m]) => r >= m)?.[1] : S.grau}·${r}`; },
-      s: SU.nota_antes ? [[T.era(SU.nota_antes)], [T.dns]] : [] });
-    if (O.coletas != null) out.push({ i: 1, v: O.coletas, f: inteiro, s: [[T.hora(data(O.inicio, F.diaC))], O.coletas_por_dia != null && [T.dia(F.n.format(O.coletas_por_dia))]] });
+      s: SU.nota_antes ? [[T.era(SU.nota_antes)]] : [] });
+    if (O.coletas != null) out.push({ i: 1, v: O.coletas, f: inteiro, s: [O.coletas_por_dia != null && [T.dia(F.n.format(O.coletas_por_dia))]] });
     if (O.taxa_conclusiva != null) out.push({ i: 2, v: O.taxa_conclusiva, f: (x) => F.pct.format(x), s: [sd.inconclusivo != null && [T.inc(F.n.format(sd.inconclusivo))]] });
     if (O.instantaneos_de_mudanca != null) out.push({ i: 3, v: O.instantaneos_de_mudanca, f: inteiro, s: [[T.snap]] });
     for (const [i, o, c] of [[4, U.guardiao, 'recall'], [5, U.chaveiro, 'vetores']]) {
       const m = /^(\d+)\/(\d+)$/.exec(o?.[c]), fp = o?.falsos_positivos;
-      if (m) out.push({ i, v: +m[1], f: (x) => `${Math.round(x)}/${m[2]}`, s: [fp != null && [T.fp(fp), fp === 0 && 'vivo-up'], o.medido_em && [T.med(data(o.medido_em))]] });
+      if (m) out.push({ i, v: +m[1], f: (x) => `${Math.round(x)}/${m[2]}`, s: [fp != null && [T.fp(fp), fp === 0 && 'vivo-up']] });
     }
     return out;
   };

@@ -15,7 +15,7 @@ a{color:var(--holo)}
 :focus-visible{outline:2px solid var(--holo);outline-offset:3px}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .mono{font-family:var(--mono)}
-.container{max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.container{max-width:1560px;margin:0 auto;padding:0 clamp(18px,4vw,56px)}
 
 /* ---------- barra de controles do protótipo (não é parte do design final) ---------- */
 .proto-bar{position:sticky;top:0;z-index:50;display:flex;gap:10px;align-items:center;justify-content:flex-end;
@@ -64,18 +64,18 @@ a{color:var(--holo)}
 .voz{font-family:var(--voz);font-style:italic;font-weight:500;color:var(--holo)}
 
 /* ---------- seção SOC ---------- */
-.soc{padding-block:40px 64px}
-.soc-head{display:flex;flex-wrap:wrap;gap:18px 30px;align-items:flex-end;justify-content:space-between;margin:28px 0 22px}
+.soc{padding-block:56px 92px}
+.soc-head{display:flex;flex-wrap:wrap;gap:18px 30px;align-items:flex-end;justify-content:space-between;margin:44px 0 38px}
 .soc-eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--holo);margin:0 0 8px}
-.soc-titulo{font-family:var(--disp);font-weight:400;font-synthesis:none;font-size:clamp(40px,5.4vw,68px);line-height:.98;letter-spacing:.01em;text-transform:uppercase;margin:0}
-.soc-lead{max-width:46em;color:var(--ink-mid);margin:12px 0 0}
+.soc-titulo{font-family:var(--disp);font-weight:400;font-synthesis:none;font-size:clamp(46px,5.8vw,78px);line-height:.96;letter-spacing:.01em;text-transform:uppercase;margin:0}
+.soc-lead{max-width:40em;color:var(--ink-mid);font-size:17px;line-height:1.6;margin:16px 0 0}
 #soc-status{display:flex;flex-wrap:wrap;gap:10px}
-#soc-kpis{margin-bottom:18px}
-.soc-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:18px;align-items:stretch}
+#soc-kpis{margin-bottom:38px}
+.soc-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:30px;align-items:stretch}
 @media (max-width:980px){.soc-grid{grid-template-columns:minmax(0,1fr)}}
-#soc-conexao{margin-top:18px}
+#soc-conexao{margin-top:30px}
 /* reserva = altura montada medida (1440/980/760/375). Só vale vazio: some quando o módulo monta. */
-#soc-ticker:empty{min-height:40px} #soc-status:empty{min-height:35px} #soc-kpis:empty{min-height:170px}
+#soc-ticker:empty{min-height:40px} #soc-status:empty{min-height:35px} #soc-kpis:empty{min-height:214px}
 #soc-feed:empty,#soc-mapa:empty{min-height:1000px} #soc-conexao:empty{min-height:500px}
 @media (max-width:980px){#soc-kpis:empty{min-height:310px} #soc-feed:empty,#soc-mapa:empty{min-height:950px} #soc-conexao:empty{min-height:580px}}
 @media (max-width:760px){#soc-conexao:empty{min-height:860px}}
@@ -83,8 +83,8 @@ a{color:var(--holo)}
   #soc-feed:empty{min-height:1300px} #soc-mapa:empty{min-height:1250px} #soc-conexao:empty{min-height:1020px}}
 
 /* ---------- exposição da suíte ---------- */
-.expo{padding-block:24px 96px}
-.expo-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 16px}
+.expo{padding-block:56px 120px}
+.expo-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:36px 0 28px}
 .expo-tab{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--ink-mid);
   background:var(--void-1);border:1px solid var(--line-strong);border-radius:var(--raio);padding:10px 14px;min-height:44px;cursor:pointer;
   transition:color var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease),background var(--dur-micro) var(--ease)}
