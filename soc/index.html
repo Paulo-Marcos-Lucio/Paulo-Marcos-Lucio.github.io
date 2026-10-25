@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+<meta charset="utf-8" />
+<!-- MESMA CSP do site: o SOC inteiro cabe nela, sem relaxar nada e sem terceiros. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#05060A" />
+<meta name="color-scheme" content="dark" />
+<title>SOC ao vivo · Paulo Marcos Lucio · AppSec</title>
+<meta name="description" content="Centro de operações com dado REAL: o observatório que lê alvos públicos, o laudo do meu próprio site e as requisições da sua visita. Nenhum ataque encenado — confira no DevTools. Mais a suíte de seis ferramentas em operação." />
+<link rel="canonical" href="https://paulo-marcos-lucio.github.io/soc/" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Paulo Marcos Lucio" />
+<meta property="og:title" content="SOC ao vivo · a superfície, de verdade" />
+<meta property="og:description" content="Dado real, zero teatro: observatório, laudo do próprio site e as requisições da sua visita. Seis ferramentas open source em operação." />
+<meta property="og:url" content="https://paulo-marcos-lucio.github.io/soc/" />
+<meta property="og:locale" content="pt_BR" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<!-- fontes auto-hospedadas (as mesmas da landing); League Gothic e Mono acima da dobra -->
+<link rel="preload" href="../fonts/league-gothic-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../fonts/jetbrains-mono-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="../fonts/inter-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
+<!-- os 3 módulos do SOC chegam junto com o app.js: encurta a janela entre o 1º paint e a montagem (CLS) -->
+<link rel="modulepreload" href="dados-reais.js" />
+<link rel="modulepreload" href="soc-vivo.js" />
+<link rel="modulepreload" href="mapa.js" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="soc.css" />
+<link rel="stylesheet" href="soc-vivo.css" />
+<link rel="stylesheet" href="mapa.css" />
+<link rel="stylesheet" href="expo-sentinela.css" />
+<link rel="stylesheet" href="expo-guardiao.css" />
+<link rel="stylesheet" href="expo-chaveiro.css" />
+<link rel="stylesheet" href="expo-esteira.css" />
+<link rel="stylesheet" href="expo-laboratorio.css" />
+<link rel="stylesheet" href="expo-observatorio.css" />
+<script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="sr-only" href="#soc-titulo">Pular para o conteúdo</a>
+  <header class="soc-topbar">
+    <a class="soc-brand" href="../" aria-label="Voltar ao site de Paulo Marcos Lucio">Paulo Marcos Lucio</a>
+    <nav class="soc-topnav" aria-label="Seções">
+      <a href="#soc-titulo" data-t="nav.soc">A superfície</a>
+      <a href="#expo-titulo" data-t="nav.expo">A suíte</a>
+      <a href="../#contato" data-t="nav.contato">Contato</a>
+    </nav>
+    <div class="soc-topctl">
+      <div class="lang-switch" role="group" aria-label="Idioma / Language">
+        <button type="button" data-lang-btn="pt" aria-pressed="true">PT</button>
+        <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" data-pausa aria-pressed="false">Pausar animação</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="soc container" aria-labelledby="soc-titulo">
+      <div id="soc-ticker"></div>
+      <div class="soc-head">
+        <div>
+          <p class="soc-eyebrow" data-t="soc.eyebrow">Centro de operações · dado real</p>
+          <h1 class="soc-titulo" id="soc-titulo" data-t="soc.titulo">A superfície, ao vivo</h1>
+          <p class="soc-lead" data-t="soc.lead">Este painel não encena ataque nenhum. Tudo aqui é medido de verdade: o observatório que lê os alvos, agendado de hora em hora, o laudo do meu próprio site e as requisições que a sua visita acabou de fazer. Confira no DevTools.</p>
+        </div>
+        <div id="soc-status"></div>
+      </div>
+      <div id="soc-kpis"></div>
+      <div class="soc-grid">
+        <div id="soc-feed"></div>
+        <div id="soc-mapa"></div>
+      </div>
+      <div id="soc-conexao"></div>
+    </section>
+
+    <section class="expo container" aria-labelledby="expo-titulo">
+      <p class="soc-eyebrow" data-t="expo.eyebrow">Ferramentas · open source · com teste</p>
+      <h2 class="soc-titulo" id="expo-titulo" data-t="expo.titulo">A suíte, em operação</h2>
+      <p class="soc-lead" data-t="expo.lead">Seis ferramentas: cinco frentes do OWASP Top 10 e a vigilância contínua. Cada módulo mostra o método trabalhando: os números são os do corpus público de cada ferramenta e os do laudo real deste site; os exemplos são demonstrações, e estão rotulados como tal.</p>
+      <div class="expo-tabs" role="tablist" id="expo-tabs" aria-labelledby="expo-titulo"></div>
+      <div id="expo-palco"></div>
+    </section>
+  </main>
+</body>
+</html>

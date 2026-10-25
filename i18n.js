@@ -30,6 +30,7 @@
     'nav.pro': 'Pro Edition',
     'nav.pacotes': 'Packages',
     'nav.contato': 'Contact',
+    'nav.soc': 'Live SOC',
 
     'hero.eyebrow': 'Self-scan of my own site: started at C·70, now at B·89 — the climb published, no touch-ups',
     'hero.ctaWhatsapp': 'Message me on WhatsApp',
@@ -42,7 +43,7 @@
     'hero.badgeWarn': 'hosting limit',
     'hero.scanTls': 'TLS / Certificate',
     // legenda decorativa "de prancha" sob a criatura do fundo (aria-hidden)
-    'hero.prancha': 'Fig. I — Argos Panoptes, the hundred-eyed watcher',
+    'hero.prancha': 'Fig. I — the consciousness that reads the surface',
 
     'provoke.eyebrow': 'Three questions',
     'provoke.title': 'Answer honestly — to yourself',
@@ -228,7 +229,7 @@
     'proProject.feat4': 'Read-only, only under <strong>written authorization</strong> — the red line is code, not a promise',
 
     'suiteSub.desc': 'Sentinela is the only case where Pro means <strong>extra code</strong> (the active engine above). In the other four, the engine is <strong>identical to what you download</strong> — Pro adds <strong>scope and service</strong>: the whole organization instead of one target, the triage that separates real findings from noise, the fix I carry out, and the retest that proves it. Same honesty: nothing leaves the public side, and every addition says why it exists.',
-    'proSuite1.desc': '<strong>You run:</strong> the secrets search on the repository you point at. <strong>Pro adds:</strong> the <strong>entire organization</strong> and <strong>full Git history</strong> (not just HEAD), the triage that adjudicates each finding as real or false positive, and the <strong>per-provider rotation plan with a retest</strong> proving the credential is out of circulation — plus the LGPD evidence report.',
+    'proSuite1.desc': '<strong>You run:</strong> the secrets search on the repository — and its full Git history — you point at. <strong>Pro adds:</strong> the <strong>entire organization</strong> (every repo at once), the triage that adjudicates each finding as real or false positive, and the <strong>per-provider rotation plan with a retest</strong> proving the credential is out of circulation — plus the LGPD evidence report.',
     'proSuite2.desc': '<strong>You run:</strong> the audit of a single JWT token, 100% offline. <strong>Pro adds:</strong> an audit of your <strong>entire system’s issuer and verifier</strong>, analysis of the JWKS you hand me, <strong>FAPI / Open Finance Brasil compliance</strong> framing, and a dated report — from someone who’s written issuers and verifiers in regulated finance.',
     'proSuite3.desc': '<strong>You run:</strong> the audit of your GitHub Actions workflows. <strong>Pro adds:</strong> scanning the <strong>entire organization</strong> in one pass, <strong>verified remediation</strong> (I fix the workflow and the retest proves the hole closed), an OIDC trust-policy audit, and the executive report your regulator files away.',
     'proSuite4.desc': '<strong>You run:</strong> the open lab — 8 vulnerabilities, vulnerable→fixed, with tests. <strong>Pro adds:</strong> a <strong>live workshop</strong> with your team, mapping each lab flaw to the <strong>client’s real code</strong>, and a method transfer — the team understands the <em>why</em> behind each fix, not just the patch.',

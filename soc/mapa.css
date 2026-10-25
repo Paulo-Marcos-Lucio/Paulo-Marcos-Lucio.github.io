@@ -1,0 +1,126 @@
+/* mapa — "A rede que eu observo". Todo seletor leva o prefixo .mapa-; usa as bases de soc.css. */
+.mapa-raiz{container:mapa/inline-size}
+.mapa-raiz [hidden]{display:none!important}
+.mapa-raiz .painel-h{flex-wrap:wrap;row-gap:8px}
+.mapa-badges{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+
+/* palco: holograma sobre o vazio — faixa orbital em sinapse, luz fria sobre as Américas, linhas de varredura */
+.mapa-palco{position:relative;aspect-ratio:2.16;overflow:hidden;border-bottom:1px solid var(--line);
+  background:radial-gradient(55% 70% at 26% 58%,color-mix(in srgb,var(--holo) 8%,transparent),transparent 70%),
+    linear-gradient(180deg,color-mix(in srgb,var(--synapse) 12%,var(--void-0)),var(--void-0) 18%)}
+.mapa-palco::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(180deg,color-mix(in srgb,var(--holo) 5%,transparent) 0 1px,transparent 1px 4px)}
+.mapa-palco canvas{position:absolute;inset:0;width:100%;height:100%}
+
+.mapa-orb{position:absolute;z-index:2;left:var(--x);top:var(--y);transform:translateY(-50%);margin:0;max-width:calc(100% - var(--x) - 10px);
+  font:500 11px/1.4 var(--mono);color:var(--ink-mid)}
+.mapa-orb b{color:var(--holo);font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.mapa-orb small{display:block;font-size:11px;color:var(--ink-lo)}
+
+/* nós do mapa: botões reais, área de toque de 44px (quadrada) com o disco pequeno no meio; a cor é a CLASSE
+   (meu site / referência / você), nunca severidade — a nota 0–10 do observatório não tem faixa */
+.mapa-alvo{position:absolute;z-index:2;left:var(--x);top:var(--y);width:44px;height:44px;margin:-22px 0 0 -22px;padding:0;border:0;
+  background:none;color:var(--c);font:700 11px/1 var(--mono);cursor:pointer;display:grid;place-items:center}
+.mapa-pr,.mapa-voce{--c:var(--synapse-lift)}
+.mapa-rf,.mapa-grupo{--c:var(--holo)}
+.mapa-no{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--void-0);border:1.5px solid var(--c);
+  box-shadow:0 0 14px color-mix(in srgb,var(--c) 55%,transparent);transition:transform var(--dur-micro) var(--ease)}
+.mapa-grupo .mapa-no{width:22px;height:22px;border:0;color:var(--ink-hi);font-size:11px}
+.mapa-voce .mapa-no{width:10px;height:10px;border:0;background:var(--c)}
+.mapa-alvo:hover .mapa-no,.mapa-alvo[aria-current="true"] .mapa-no{transform:scale(1.15)}
+.mapa-alvo[aria-current="true"] .mapa-no{box-shadow:0 0 0 2px var(--void-0),0 0 0 3.5px var(--c),0 0 18px var(--c)}
+.mapa-alvo:focus-visible{outline:none}
+.mapa-alvo:focus-visible .mapa-no{box-shadow:var(--anel-foco)}
+/* o rótulo fica a 19px do centro do nó (o JS mede igual); --dx/--dy o deslizam para dentro do palco */
+.mapa-rot{position:absolute;left:calc(50% + 19px);top:50%;transform:translate(var(--dx,0px),calc(-50% + var(--dy,0px)));display:flex;flex-wrap:wrap;align-items:center;gap:2px 7px;
+  width:max-content;max-width:400px;padding:4px 8px;font:500 11px/1.35 var(--mono);color:var(--ink-hi);text-align:left;
+  background:color-mix(in srgb,var(--void-0) 84%,transparent);border:1px solid var(--line-strong);border-radius:2px}
+.mapa-alvo[data-lado="esq"] .mapa-rot{left:auto;right:calc(50% + 19px)}
+.mapa-alvo[data-lado="baixo"] .mapa-rot{left:50%;top:calc(50% + 19px);transform:translate(calc(-50% + var(--dx,0px)),var(--dy,0px))}
+.mapa-alvo[data-lado="cima"] .mapa-rot{left:50%;top:auto;bottom:calc(50% + 19px);transform:translate(calc(-50% + var(--dx,0px)),var(--dy,0px))}
+.mapa-alvo[aria-current="true"] .mapa-rot,.mapa-alvo:hover .mapa-rot{border-color:var(--c)}
+.mapa-quebra .mapa-rot{max-width:300px}
+.mapa-curto .mapa-x{display:none}
+.mapa-rot b{font-weight:600}
+.mapa-rot small{flex-basis:100%;font-size:11px;color:var(--ink-mid)}
+.mapa-n{color:var(--ink-hi);font-weight:700}
+.mapa-dl{color:var(--holo);font-weight:700}
+.mapa-tag{font-style:normal;color:var(--c);letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;border-radius:2px;padding:0 5px}
+.mapa-lim{font:700 11px/1.3 var(--mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);
+  border:1px solid currentColor;border-radius:2px;padding:1px 5px}
+
+/* ficha do ponto selecionado: encaixada sob o mapa, o feixe da seleção desce até o caret */
+.mapa-ficha{position:relative;padding:18px 18px 16px;border-bottom:1px solid var(--line)}
+.mapa-ficha::before{content:"";position:absolute;top:0;left:var(--cx,40px);width:12px;height:7px;transform:translateX(-50%);
+  background:var(--holo);clip-path:polygon(0 0,100% 0,50% 100%)}
+.mapa-membros{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.mapa-membro{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 12px;font:500 12px/1.2 var(--mono);color:var(--ink-mid);
+  background:var(--void-1);border:1px solid var(--line-strong);border-radius:var(--raio);cursor:pointer;
+  transition:border-color var(--dur-micro) var(--ease),color var(--dur-micro) var(--ease)}
+.mapa-membro:hover{color:var(--ink-hi);border-color:var(--holo)}
+.mapa-membro[aria-pressed="true"]{color:var(--ink-hi);border-color:var(--c);box-shadow:inset 0 -2px 0 var(--c)}
+.mapa-membro:focus-visible{outline:none;box-shadow:var(--anel-foco)}
+.mapa-f-topo{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.mapa-f-host{font:600 16px/1.3 var(--mono);color:var(--ink-hi);overflow-wrap:anywhere}
+.mapa-f-classe{font:500 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--c,var(--ink-mid));
+  border:1px solid color-mix(in srgb,currentColor 50%,transparent);border-radius:2px;padding:3px 7px}
+.mapa-f-grade{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 22px;align-items:start;margin:12px 0 2px}
+/* a nota em tinta normal: é postura 0–10, não severidade */
+.mapa-f-nota{margin:0;color:var(--ink-hi);font-family:var(--disp);font-weight:400;font-synthesis:none;line-height:.85}
+.mapa-f-nota b{font-weight:400;font-size:62px}
+.mapa-f-nota small{margin-left:3px;font-size:20px;color:var(--ink-lo)}
+.mapa-f-l{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin:0 0 7px;font:500 12.5px/1.55 var(--mono);color:var(--ink-mid)}
+.mapa-f-l b{color:var(--holo)}
+.mapa-f-l .mapa-neg{color:var(--ink-hi)}
+.mapa-sim{color:var(--holo)}
+.mapa-f-pq{margin:12px 0 0;padding:2px 0 2px 14px;border-left:2px solid var(--line-strong)}
+.mapa-f-pqt{margin:0 0 6px;font:600 15px/1.4 var(--sans);color:var(--ink-hi)}
+.mapa-f-lim{margin:8px 0 0;font:400 15px/1.55 var(--sans);color:var(--ink-hi)}
+.mapa-f-lim .mapa-lim{margin-right:6px;vertical-align:2px}
+.mapa-f-rg{margin:12px 0 0;font:500 12px/1.55 var(--mono);color:var(--ink-lo)}
+.mapa-f-rg b{color:var(--ink-mid);font-weight:600}
+
+/* rodapé: a voz, a legenda (cor + glifo + rótulo) e a alternância para a lista */
+.mapa-rodape{display:grid;gap:12px;padding:14px 18px 18px}
+.mapa-info{display:grid;gap:10px}
+.mapa-voz{margin:0;font-size:20px;line-height:1.2}
+.mapa-leg{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:0;list-style:none;font:500 11.5px/1.5 var(--mono);color:var(--ink-mid)}
+.mapa-leg li{display:block}
+.mapa-leg li>span{margin-right:6px;vertical-align:1px}
+.mapa-leg li>.chip{margin-left:4px}
+.mapa-sw{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--void-0);border:1.5px solid var(--c);
+  box-shadow:0 0 8px color-mix(in srgb,var(--c) 55%,transparent)}
+.mapa-vc{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--synapse-lift);box-shadow:0 0 0 3px color-mix(in srgb,var(--synapse-lift) 30%,transparent)}
+.mapa-pi{display:inline-block;width:24px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--holo))}
+.mapa-alterna{justify-self:start}
+.chip.mapa-inc{color:var(--sev-med);border-style:dashed}
+.chip.mapa-inc::before{content:"?"}
+.chip.mapa-pul{color:var(--ink-mid)}
+.chip.mapa-pul::before{content:"↷"}
+
+/* equivalente textual */
+.mapa-lista{padding:16px 18px 6px}
+.mapa-tabw{overflow-x:auto}
+.mapa-tabw:focus-visible{outline:2px solid var(--holo);outline-offset:2px}
+.mapa-tab{width:100%;min-width:38rem;border-collapse:collapse;font:500 12.5px/1.45 var(--mono);color:var(--ink-mid)}
+.mapa-tab caption{max-width:calc(100cqw - 36px);padding:0 0 10px;text-align:left;font:600 15px/1.4 var(--sans);color:var(--ink-hi)}
+.mapa-tab th,.mapa-tab td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.mapa-tab thead th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-lo);vertical-align:bottom}
+.mapa-tab tbody th{color:var(--ink-hi);font-weight:600;white-space:nowrap}
+.mapa-lista .mapa-f-l{margin-top:10px}
+
+.mapa-pausado .ao-vivo::before{animation-play-state:paused}
+.mapa-reduzido .ao-vivo::before{animation:none}
+.mapa-reduzido .mapa-no,.mapa-reduzido .mapa-membro{transition:none}
+
+@container mapa (min-width:820px){
+  .mapa-det{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);column-gap:40px;align-items:start}
+  .mapa-f-topo,.mapa-f-rg{grid-column:1/-1}
+  .mapa-det>.mapa-f-pq,.mapa-det>.mapa-f-lim{grid-column:2;grid-row:2;margin-top:14px}
+}
+@container mapa (max-width:560px){
+  .mapa-palco{aspect-ratio:1.3}
+  .mapa-ficha,.mapa-rodape,.mapa-lista{padding-inline:14px}
+  .mapa-f-nota b{font-size:48px}
+  .mapa-f-grade{column-gap:16px}
+}

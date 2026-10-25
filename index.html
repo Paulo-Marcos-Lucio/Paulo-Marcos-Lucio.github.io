@@ -227,7 +227,6 @@
     </defs>
   </svg>
 
-  <canvas id="abismo" aria-hidden="true"></canvas>
 
   <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
 
@@ -237,14 +236,16 @@
         <span class="brand-mark" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-argos"/></svg></span>
         <span class="brand-name">Paulo Marcos Lucio</span>
       </a>
-      <nav class="nav" aria-label="Principal">
+      <nav class="nav" id="nav-primary" aria-label="Principal">
         <a href="#servicos" data-i18n="nav.servicos">Serviços</a>
         <a href="#ferramentas" data-i18n="nav.ferramentas">Ferramentas</a>
+        <a href="soc/" data-i18n="nav.soc">SOC ao vivo</a>
         <a href="#pro" data-i18n="nav.pro">Edição Pro</a>
         <a href="#pacotes" data-i18n="nav.pacotes">Pacotes</a>
         <a href="#contato" data-i18n="nav.contato">Contato</a>
         <a class="nav-cta" href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-primary" aria-label="Menu"><span class="nav-toggle-bars" aria-hidden="true"></span></button>
       <div class="lang-switch" role="group" aria-label="Idioma do site / Site language">
         <button type="button" class="lang-btn is-active" data-lang-btn="pt" aria-pressed="true"><span class="lang-flag" aria-hidden="true">🇧🇷</span>PT</button>
         <button type="button" class="lang-btn" data-lang-btn="en" aria-pressed="false"><span class="lang-flag" aria-hidden="true">🇺🇸</span>EN</button>
@@ -255,6 +256,35 @@
   <main id="main">
     <!-- ===================== HERO ===================== -->
     <section id="top" class="hero">
+      <!-- A Consciencia (D2): campo neural em SVG. Sem WebGL, sem JS de animacao -> LCP rapido. -->
+      <svg class="hero-field" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="heroaura" cx="64%" cy="42%" r="46%"><stop offset="0" stop-color="#4FF3FF" stop-opacity=".16"/><stop offset=".5" stop-color="#8A5CFF" stop-opacity=".10"/><stop offset="1" stop-color="#8A5CFF" stop-opacity="0"/></radialGradient>
+          <radialGradient id="heroeye" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4FF3FF" stop-opacity=".9"/><stop offset=".35" stop-color="#4FF3FF" stop-opacity=".25"/><stop offset="1" stop-color="#4FF3FF" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="1440" height="900" fill="url(#heroaura)"/>
+        <g stroke="#4FF3FF" stroke-opacity=".22" stroke-width="1">
+          <line x1="920" y1="300" x2="1040" y2="230"/><line x1="1040" y1="230" x2="1160" y2="320"/><line x1="1160" y1="320" x2="1250" y2="210"/>
+          <line x1="920" y1="300" x2="1010" y2="430"/><line x1="1010" y1="430" x2="1160" y2="320"/><line x1="1010" y1="430" x2="1120" y2="540"/>
+          <line x1="1160" y1="320" x2="1290" y2="430"/><line x1="1120" y1="540" x2="1290" y2="430"/><line x1="1250" y1="210" x2="1360" y2="330"/>
+          <line x1="820" y1="430" x2="920" y2="300"/><line x1="820" y1="430" x2="1010" y2="430"/><line x1="1120" y1="540" x2="1240" y2="640"/>
+        </g>
+        <g stroke="#8A5CFF" stroke-opacity=".18" stroke-width="1">
+          <line x1="1250" y1="210" x2="1290" y2="430"/><line x1="1360" y1="330" x2="1290" y2="430"/><line x1="1240" y1="640" x2="1290" y2="430"/>
+        </g>
+        <circle class="hero-orb" cx="1080" cy="400" r="150" fill="url(#heroeye)"/>
+        <circle cx="1080" cy="400" r="86" fill="none" stroke="#4FF3FF" stroke-opacity=".5" stroke-width="1.2"/>
+        <circle cx="1080" cy="400" r="54" fill="none" stroke="#4FF3FF" stroke-opacity=".7" stroke-width="1"/>
+        <circle cx="1080" cy="400" r="16" fill="#4FF3FF" fill-opacity=".92"/>
+        <circle cx="1080" cy="400" r="7" fill="#eafeff"/>
+        <g fill="#4FF3FF">
+          <circle cx="920" cy="300" r="4"/><circle cx="1040" cy="230" r="3"/><circle cx="1160" cy="320" r="3.5"/><circle cx="1250" cy="210" r="2.5"/>
+          <circle cx="1010" cy="430" r="3.5"/><circle cx="1290" cy="430" r="3"/><circle cx="1120" cy="540" r="3"/><circle cx="820" cy="430" r="2.5"/>
+          <circle cx="1360" cy="330" r="2.5"/><circle cx="1240" cy="640" r="2.5"/>
+        </g>
+        <g fill="#A77DFF"><circle cx="1250" cy="210" r="2.5"/><circle cx="1360" cy="330" r="2.5"/></g>
+      </svg>
+      <div class="hero-scan" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div class="hero-copy" data-abismo-veu>
           <p class="eyebrow">
@@ -285,7 +315,7 @@
         <!-- Legenda "de prancha", como em catálogo de museu, sob a figura da
              criatura (abismo.js desenha a cabeça/olhos no vazio logo acima
              dela). Puramente decorativa: aria-hidden, sem afirmação factual. -->
-        <p class="hero-prancha" aria-hidden="true" data-i18n="hero.prancha">Fig. I — Argos Panóptes, o vigia de cem olhos</p>
+        <p class="hero-prancha" aria-hidden="true" data-i18n="hero.prancha">Fig. I — a consciência que lê a superfície</p>
 
         <aside class="hero-card" data-abismo-veu aria-label="Amostra de diagnóstico" data-i18n-attrs="aria-label:hero.cardAriaLabel">
           <div class="hero-card-glow" aria-hidden="true"></div>
@@ -410,7 +440,7 @@
             Não acredite na minha palavra: publiquei o <a href="https://github.com/Paulo-Marcos-Lucio/guardiao/blob/main/BENCHMARK.md" target="_blank" rel="noopener"><strong>benchmark honesto</strong></a> contra esses três incumbentes — versões e commits fixados, reproduzível, e <strong>diz onde eles são mais enxutos que eu</strong>. Quem só mostra onde ganha está te escondendo alguma coisa.
           </p>
           <ul class="hero-stats" aria-label="Números medidos em corpus público, reproduzíveis em dois comandos" data-i18n-attrs="aria-label:tools.statsAriaLabel">
-            <li><strong>17/17 · 20/20</strong><span data-i18n="tools.stat1Label">regras e recall no corpus da Esteira · 0 falso-positivo</span></li>
+            <li><strong>22/22 · 25/25</strong><span data-i18n="tools.stat1Label">regras e recall no corpus da Esteira · 0 falso-positivo</span></li>
             <li><strong>22/22</strong><span data-i18n="tools.stat2Label">vetores JWT no corpus do Chaveiro · 0 falso-positivo</span></li>
             <li><strong data-i18n="tools.stat3Num">7,1 s → &lt;0,01 s</strong><span data-i18n="tools.stat3Label">travamento de CI por ReDoS, medido e corrigido</span></li>
           </ul>
@@ -548,7 +578,7 @@
           <div class="suite-card suite-card-pro">
             <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-cofre"/></svg></span><span class="suite-frente" data-i18n="proSuite1.frente">Segredos</span></div>
             <h3>Guardião · Pro</h3>
-            <p data-i18n-html="proSuite1.desc"><strong>Você roda:</strong> a busca de segredos no repositório que aponta. <strong>A Pro acrescenta:</strong> a <strong>organização inteira</strong> e <strong>todo o histórico Git</strong> (não só o HEAD), a triagem que adjudica cada achado como real ou falso-positivo, e o <strong>plano de rotação por provedor com reteste</strong> que prova que a credencial saiu de circulação — mais o laudo de evidência LGPD.</p>
+            <p data-i18n-html="proSuite1.desc"><strong>Você roda:</strong> a busca de segredos no repositório — e em todo o histórico Git — que você aponta. <strong>A Pro acrescenta:</strong> a <strong>organização inteira</strong> (todos os repos de uma vez), a triagem que adjudica cada achado como real ou falso-positivo, e o <strong>plano de rotação por provedor com reteste</strong> que prova que a credencial saiu de circulação — mais o laudo de evidência LGPD.</p>
             <span class="suite-link" data-i18n="proSuite1.link">Pro = escopo + serviço</span>
           </div>
           <div class="suite-card suite-card-pro">
@@ -720,17 +750,9 @@
     </div>
   </footer>
 
-  <!-- Pausar as animações do fundo (WCAG 2.2.2 Pausar, Parar, Ocultar). Nasce
-       oculto: só aparece quando abismo.js de fato anima algo; texto/aria-label
-       são geridos por abismo.js nos dois idiomas. -->
-  <!-- Sonda da descida: marca em que camada do abismo o visitante está. Decorativa (o nome das
-       camadas é ficção de ambientação); texto escrito por abismo.js nos dois idiomas. -->
-  <div class="abismo-sonda" aria-hidden="true" hidden>
-    <span class="sonda-trilho"></span>
-    <span class="sonda-marca"><span class="sonda-camada"></span><span class="sonda-prof"></span></span>
-  </div>
-
-  <button type="button" class="abismo-pausa" data-abismo-pausa aria-pressed="false" hidden>
+  <!-- Pausar as animações contínuas (WCAG 2.2.2 Pausar, Parar, Ocultar).
+       script.js desoculta e alterna; o congelamento é CSS (:has). -->
+  <button type="button" class="abismo-pausa" data-abismo-pausa aria-pressed="false">
     <span class="abismo-pausa-ico" aria-hidden="true"></span><span class="abismo-pausa-txt">Pausar animação</span>
   </button>
 
@@ -748,7 +770,6 @@
   </a>
 
   <script src="i18n.js" defer></script>
-  <script src="abismo.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>

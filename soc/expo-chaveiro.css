@@ -1,0 +1,128 @@
+/* expo-chaveiro · autenticação (JWT) — todo seletor sob .xc-*; só tokens de tokens.css.
+   O cabeçalho (.mod-*) e a faixa Pro (.pro-*) são componentes COMUNS do soc.css — aqui só o miolo. */
+.xc-raiz{display:block}
+
+/* ---------- palco de demonstração ---------- */
+.xc-demo{position:relative;display:grid;gap:14px;padding:16px;border:1px solid var(--line-strong);background:var(--void-0)}
+.xc-demo::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--holo),transparent);opacity:.7}
+.xc-demo>.rotulo-demo{justify-self:start}
+
+/* ---------- specimen do token: 3 partes coloridas ---------- */
+.xc-espec{display:grid;gap:12px;padding:16px 16px 18px;background:var(--void-1);border:1px solid var(--line)}
+.xc-espec-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px}
+.xc-espec-t{margin:0;font:600 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid)}
+.xc-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-left:auto}
+.xc-sw{display:inline-flex;align-items:center;gap:7px;font:11px var(--mono);color:var(--ink-mid)}
+.xc-sw::before{content:"";width:10px;height:10px;border-radius:2px}
+.xc-sw-h::before{background:var(--holo);box-shadow:0 0 8px var(--holo-24)}
+.xc-sw-p::before{background:var(--synapse-lift)}
+.xc-sw-s::before{background:var(--ink-mid)}
+.xc-jwt{display:block;font:500 clamp(14px,1.5vw,16px)/1.75 var(--mono);word-break:break-all;overflow-wrap:anywhere}
+.xc-jh{color:var(--holo)}
+.xc-jp{color:var(--synapse-lift)}
+.xc-js{color:var(--ink-mid)}
+.xc-jd{color:var(--ink-lo);padding:0 2px;font-weight:700}
+.xc-jv0{color:var(--ink-lo);font-style:normal;padding-left:2px}
+.xc-js.xc-hot,.xc-jh.xc-hot{border-radius:2px;background:color-mix(in srgb,var(--holo) 18%,transparent);box-shadow:0 0 0 1px var(--holo)}
+.xc-aguarde{margin:0;font:13px/1.6 var(--mono);color:var(--ink-mid)}
+
+/* ---------- decodificado ---------- */
+.xc-dec{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.xc-dcard{min-width:0;padding:14px 16px;background:var(--void-1);border:1px solid var(--line);border-top:2px solid var(--line-strong)}
+.xc-d-h{border-top-color:var(--holo)}
+.xc-d-p{border-top-color:var(--synapse-lift)}
+.xc-dh{margin:0 0 10px;font:600 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid)}
+.xc-json{font:13px/1.7 var(--mono);color:var(--ink-mid);overflow-wrap:anywhere}
+.xc-kv{padding-left:16px}
+.xc-jbr{color:var(--ink-lo)}
+.xc-jc{color:var(--ink-lo)}
+.xc-jk{font-weight:600}
+.xc-ah{color:var(--holo)}
+.xc-ap{color:var(--synapse-lift)}
+.xc-jv{color:var(--ink-hi)}
+.xc-jn{color:var(--sev-ok)}
+.xc-kv.xc-hot{border-radius:3px;background:color-mix(in srgb,var(--sev-high) 15%,transparent);box-shadow:inset 2px 0 0 var(--sev-high);margin-left:-8px;padding-left:24px}
+
+/* ---------- barra de auditoria ---------- */
+.xc-barra{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.xc-cmd{padding:6px 9px;border:1px solid var(--line);background:var(--void-1);font:12px var(--mono);color:var(--ink-mid);overflow-wrap:anywhere}
+.xc-est{flex:1 1 220px;margin:0;display:flex;flex-wrap:wrap;gap:4px 12px;font:12.5px/1.4 var(--mono)}
+.xc-est-t{color:var(--ink-hi)}
+.xc-prog{display:flex;align-items:center;gap:10px;font:12px var(--mono);color:var(--ink-mid)}
+.xc-pbar{--p:0;position:relative;width:96px;height:4px;background:var(--line-strong)}
+.xc-pbar::before{content:"";position:absolute;inset:0;transform-origin:0 50%;transform:scaleX(var(--p));background:var(--holo);box-shadow:0 0 8px var(--holo-24);transition:transform var(--dur-micro) var(--ease)}
+.xc-escopo{margin:-2px 0 0;font:12px/1.5 var(--mono);color:var(--ink-mid)}
+.xc-escopo strong{color:var(--ink-hi)}
+
+/* ---------- bateria de achados ---------- */
+.xc-trilho{position:relative;border:1px solid var(--line);background:var(--void-1)}
+.xc-feixe{position:absolute;left:0;right:0;top:0;height:2px;opacity:0;pointer-events:none;background:var(--holo);box-shadow:0 0 14px 2px var(--holo-24);transition:transform 80ms linear}
+.xc-feixe.xc-on{opacity:.9}
+.xc-testes{margin:0;padding:0;list-style:none}
+.xc-linha{position:relative;padding:12px 14px;border-bottom:1px solid var(--line);opacity:.4;transition:opacity var(--dur-sec) var(--ease)}
+.xc-linha:last-child{border-bottom:0}
+.xc-linha.xc-lendo,.xc-linha.xc-feito{opacity:1}
+.xc-linha.xc-lendo{background:linear-gradient(90deg,var(--holo-12),transparent 70%)}
+.xc-linha.xc-sel{background:color-mix(in srgb,var(--holo) 7%,transparent)}
+.xc-lb{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;width:100%;min-height:44px;padding:2px 0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.xc-lb:disabled{cursor:default}
+.xc-lb:focus-visible{outline:none;box-shadow:var(--anel-foco);border-radius:var(--raio)}
+.xc-n{font:12px var(--mono);color:var(--ink-lo);min-width:2ch}
+.xc-l1{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;flex:1}
+.xc-vaz{color:var(--ink-lo);font:11px var(--mono);letter-spacing:.1em}
+.xc-linha .chip{display:none;min-width:7em;justify-content:center}
+.xc-linha.xc-feito .chip{display:inline-flex}
+.xc-linha.xc-feito .xc-vaz{display:none}
+.xc-nome{font:600 14px/1.4 var(--sans);color:var(--ink-hi)}
+.xc-cid{font:11.5px var(--mono);color:var(--ink-lo);letter-spacing:.02em;overflow-wrap:anywhere}
+.xc-loc{font:11px var(--mono);color:var(--ink-lo);letter-spacing:.03em}
+.xc-esp{margin-left:auto;font:11.5px var(--mono);color:var(--ink-lo)}
+.xc-linha.xc-feito .xc-esp{display:none}
+.xc-lb[aria-pressed="true"] .xc-nome{color:var(--holo)}
+.xc-x{display:none;margin:8px 0 0 calc(2ch + 12px);max-width:92ch;font-size:15px;line-height:1.5;color:var(--ink-mid)}
+.xc-linha.xc-feito .xc-x{display:block}
+.xc-code{font-family:var(--mono);color:var(--holo);overflow-wrap:anywhere}
+
+/* ---------- evidência do segredo (a quebra real no navegador) ---------- */
+.xc-evid{display:none}
+.xc-linha.xc-feito .xc-evid{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 2px calc(2ch + 12px)}
+.xc-etag{font:600 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-lo);border:1px dashed var(--line-strong);padding:3px 7px;border-radius:2px}
+.xc-etag.xc-hit{color:var(--holo);border-style:solid;border-color:var(--holo)}
+.xc-eval{font:12px var(--mono);color:var(--ink-mid);overflow-wrap:anywhere}
+.xc-evid .xc-jwt{flex:1 1 260px;font-size:13px;line-height:1.6}
+.xc-dict{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px}
+.xc-w{font:12px var(--mono);padding:4px 9px;border-radius:2px;border:1px solid var(--line-strong)}
+.xc-w-no{color:var(--ink-lo);border-style:dashed;text-decoration:line-through;text-decoration-color:var(--line-strong)}
+.xc-w-skip{color:var(--ink-mid)}
+.xc-w-hit{color:var(--void-0);background:var(--holo);border-color:var(--holo);font-weight:700;box-shadow:0 0 16px var(--holo-24)}
+.xc-dict-m{flex:1 1 100%;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.xc-real{font:11px var(--mono);color:var(--ink-mid);letter-spacing:.02em}
+
+/* ---------- PoCs: não são achados deste token — teste no SEU verificador (holo, sem severidade) ---------- */
+.xc-poc:empty{display:none}
+.xc-poc{display:grid;gap:10px;padding-top:2px}
+.xc-poc-t{margin:0;font:600 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid)}
+.xc-pgrade{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.xc-pcard{min-width:0;padding:12px 14px;background:var(--void-1);border:1px solid var(--line);border-left:2px solid var(--holo)}
+.xc-ptopo{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.xc-ptopo .chip{min-width:0}
+.xc-px{display:block;margin:8px 0 0;max-width:72ch}
+.xc-pevid{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 0}
+.xc-pcmd{margin:9px 0 0;font:12px/1.5 var(--mono);color:var(--ink-mid);overflow-wrap:anywhere}
+.xc-cmdrot{color:var(--ink-lo)}
+
+/* ---------- resultado ---------- */
+.xc-res:empty{display:none}
+.xc-res{display:grid;gap:10px;padding-top:4px}
+.xc-resumo{margin:0;font-size:16px;color:var(--ink-mid)}
+.xc-resumo strong,.xc-rec strong{color:var(--ink-hi);font-weight:600}
+.xc-rec{margin:0;padding:12px 14px;border-left:2px solid var(--holo);background:var(--void-1);font-size:15px;line-height:1.5;color:var(--ink-mid)}
+
+@media (max-width:980px){
+  .xc-dec,.xc-pgrade{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .xc-demo{padding:12px}
+  .xc-leg{margin-left:0}
+  .xc-x,.xc-linha.xc-feito .xc-evid{margin-left:0}
+}

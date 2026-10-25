@@ -1,0 +1,158 @@
+/* expo-laboratorio · correção (OWASP) — todo seletor sob .xl-*; só tokens de tokens.css */
+.xl-corpo{display:grid;gap:22px}
+.xl-cab{flex-wrap:wrap}
+.xl-painel .painel-id{overflow-wrap:anywhere}
+.xl-code,.xl-note code,.xl-cap code,.xl-rec code{font-family:var(--mono);color:var(--holo);overflow-wrap:anywhere}
+
+/* ---------- topo: tese + copy | números reais + GitHub ---------- */
+.xl-topo{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:20px 36px;align-items:center}
+.xl-tese{margin:0 0 10px;font-size:clamp(24px,2.5vw,33px);line-height:1.14}
+.xl-desc{margin:0;max-width:62ch;font-size:15px;color:var(--ink-mid)}
+.xl-desc strong,.xl-pro-p strong,.xl-rec strong{color:var(--ink-hi);font-weight:600}
+.xl-stack{margin:10px 0 0;font:12px var(--mono);color:var(--ink-lo);letter-spacing:.02em}
+.xl-stack-v{color:var(--ink-mid)}
+.xl-lado{display:grid;gap:12px;align-content:start}
+.xl-kpis{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-strong);border:1px solid var(--line-strong)}
+.xl-kpi{display:grid;gap:7px;padding:14px 16px 12px;background:var(--void-1)}
+.xl-kpi b{font:400 46px/.9 var(--disp);letter-spacing:.02em;color:var(--holo);text-shadow:0 0 18px var(--holo-24)}
+.xl-kpi span{font:600 11px/1.35 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid)}
+.xl-gh{justify-content:center}
+
+/* ---------- palco de demonstração ---------- */
+.xl-demo{position:relative;display:grid;gap:14px;padding:16px;border:1px solid var(--line-strong);background:var(--void-0)}
+.xl-demo::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--holo),transparent);opacity:.7}
+.xl-demo>.rotulo-demo{justify-self:start}
+
+/* ---------- seletor de falhas (aria-pressed) ---------- */
+.xl-sel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.xl-pick{display:grid;gap:7px;align-content:start;min-height:44px;padding:11px 12px;text-align:left;cursor:pointer;
+  border:1px solid var(--line-strong);background:var(--void-1);color:var(--ink-mid);
+  transition:border-color var(--dur-micro) var(--ease),background var(--dur-micro) var(--ease)}
+.xl-pick:hover{border-color:var(--holo)}
+.xl-pick:focus-visible{outline:none;box-shadow:var(--anel-foco)}
+.xl-pick-cat{font:700 11px/1 var(--mono);letter-spacing:.12em;color:var(--ink-lo)}
+.xl-pick-n{font:600 14.5px/1.2 var(--sans);color:var(--ink-hi)}
+.xl-pick .chip{align-self:start;justify-self:start}
+.xl-pick[aria-pressed="true"]{background:linear-gradient(180deg,var(--holo-12),transparent),var(--void-2);border-color:var(--holo)}
+.xl-pick[aria-pressed="true"] .xl-pick-cat{color:var(--holo)}
+
+/* ---------- barra de execução ---------- */
+.xl-barra{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.xl-run{min-width:176px;justify-content:center}
+.xl-st{flex:1 1 200px;margin:0;display:inline-flex;align-items:center;gap:9px;font:12.5px var(--mono);color:var(--ink-mid)}
+.xl-st-d{width:7px;height:7px;border-radius:50%;background:var(--ink-lo);flex:none}
+.xl-st-t{color:var(--ink-hi)}
+.xl-stage.xl-live .xl-st-d{background:var(--sev-ok);box-shadow:0 0 8px var(--sev-ok);animation:xl-pulse 2.4s var(--ease-io) infinite}
+@keyframes xl-pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.xl-prog{flex:none;width:120px;height:4px;background:var(--line-strong);overflow:hidden}
+.xl-pbar{display:block;height:100%;transform-origin:0 50%;transform:scaleX(var(--p,0));background:var(--holo);box-shadow:0 0 8px var(--holo-24);transition:transform 90ms linear}
+
+/* ---------- 3 etapas lado a lado ---------- */
+.xl-stage{display:grid;gap:14px}
+.xl-stage.xl-reduced *,.xl-stage.xl-reduced *::before{transition:none!important;animation:none!important}
+.xl-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:stretch}
+.xl-et{display:grid;gap:10px;align-content:start;padding:13px 14px;background:var(--void-1);border:1px solid var(--line);border-top:2px solid var(--line-strong)}
+.xl-et-vul{border-top-color:var(--ink-lo)}
+.xl-et-exp{position:relative;border-top-color:var(--sev-high)}
+.xl-et-fix{border-top-color:var(--sev-ok)}
+.xl-et-h{display:flex;align-items:center;gap:9px}
+.xl-et-n{display:inline-grid;place-items:center;width:22px;height:22px;font:700 12px/1 var(--mono);color:var(--void-0);background:var(--ink-mid);border-radius:50%}
+.xl-et-vul .xl-et-n{background:var(--ink-lo)}
+.xl-et-exp .xl-et-n{background:var(--sev-high)}
+.xl-et-fix .xl-et-n{background:var(--sev-ok)}
+.xl-et-t{font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid)}
+
+/* ---------- código ---------- */
+.xl-code-b{padding:11px 12px;background:var(--void-0);border:1px solid var(--line);font:500 12.5px/1.65 var(--mono);overflow-wrap:anywhere}
+.xl-cl{white-space:pre-wrap;word-break:break-word}
+.xl-kw{color:var(--synapse-lift)}
+.xl-s{color:var(--sev-ok)}
+.xl-cm{color:var(--ink-lo);font-style:italic}
+.xl-nu{color:var(--sev-low)}
+.xl-fn{color:var(--holo)}
+.xl-id{color:var(--ink-mid)}
+.xl-op{color:var(--ink-lo)}
+.xl-tt{color:var(--sev-high);background:color-mix(in srgb,var(--sev-high) 14%,transparent);border-radius:2px;padding:0 2px;font-weight:700}
+.xl-ph{color:var(--holo);font-weight:700}
+.xl-cap{margin:0;font-size:13.5px;line-height:1.45;color:var(--ink-mid)}
+
+/* ---------- coluna exploit: entrada → fio → saída montada → vazamento ---------- */
+.xl-entry{display:flex;flex-wrap:wrap;align-items:center;gap:7px 10px}
+.xl-entry-k{font:600 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-lo)}
+.xl-pay{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border:1px solid var(--holo);
+  background:color-mix(in srgb,var(--holo) 12%,transparent);box-shadow:0 0 14px var(--holo-24)}
+.xl-pay-k{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--holo)}
+.xl-pay-v{font:600 12.5px var(--mono);color:var(--ink-hi);word-break:break-all}
+.xl-wire{position:relative;height:28px;margin:-2px 0 -4px 14px}
+.xl-wire-l{position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(var(--holo),transparent)}
+.xl-pkt{position:absolute;left:-3px;top:-2px;width:8px;height:8px;border-radius:50%;background:var(--holo);
+  box-shadow:0 0 12px 2px var(--holo);opacity:0;transform:translateY(calc(var(--p,0) * 24px))}
+.xl-stage.xl-tr .xl-pkt{opacity:1}
+.xl-mont-h{font:600 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-lo)}
+.xl-mont{padding:11px 12px;background:var(--void-0);border:1px solid var(--line);font:500 12.5px/1.7 var(--mono);overflow-wrap:anywhere}
+.xl-mont-q,.xl-req,.xl-hash,.xl-json{display:block;word-break:break-all}
+.xl-mp{color:var(--ink-mid)}
+.xl-mi{color:var(--ink-lo);border-radius:2px;transition:color var(--dur-sec) var(--ease),background var(--dur-sec) var(--ease),box-shadow var(--dur-sec) var(--ease)}
+.xl-stage.xl-s-inj .xl-mi{color:var(--sev-high);background:color-mix(in srgb,var(--sev-high) 15%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--sev-high) 45%,transparent)}
+.xl-req-h{color:var(--ink-lo)}
+.xl-json{margin-top:6px}
+.xl-jk{color:var(--synapse-lift)}
+.xl-jv{color:var(--ink-mid)}
+.xl-hash .xl-op{color:var(--ink-mid)}
+
+.xl-leak{opacity:0;transform:translateY(4px);transition:opacity var(--dur-sec) var(--ease),transform var(--dur-sec) var(--ease);display:grid;gap:8px;justify-items:start}
+.xl-stage.xl-s-leak .xl-leak{opacity:1;transform:none}
+.xl-leak .chip{white-space:normal;text-align:left;line-height:1.3}
+.xl-rows{margin:0;padding:0;list-style:none;display:grid;gap:3px}
+.xl-rows li{display:flex;justify-content:space-between;gap:12px;font:12px var(--mono);color:var(--ink-mid);padding:3px 8px;background:var(--void-0);border-left:2px solid color-mix(in srgb,var(--sev-high) 55%,transparent)}
+.xl-rn{color:var(--ink-hi)}
+.xl-rp{color:var(--ink-lo)}
+
+/* ---------- coluna corrigido: payload inerte → teste verde ---------- */
+.xl-fixres{opacity:0;transition:opacity var(--dur-sec) var(--ease);display:grid;gap:8px}
+.xl-stage.xl-s-neu .xl-fixres{opacity:1}
+.xl-bind{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:9px 11px;background:var(--void-0);border:1px solid var(--line)}
+.xl-arrow{color:var(--ink-lo);font:600 13px var(--mono)}
+.xl-inert{font:500 12px var(--mono);color:var(--ink-mid);word-break:break-all}
+.xl-inert-b{display:block;padding:9px 11px;background:var(--void-0);border:1px solid var(--line)}
+.xl-bind-k{font:600 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-lo)}
+.xl-403{display:flex;align-items:baseline;gap:9px;padding:9px 12px;background:var(--void-0);border:1px solid var(--line);border-left:2px solid var(--holo)}
+.xl-403-c{font:400 32px/1 var(--disp);color:var(--holo);text-shadow:0 0 16px var(--holo-24)}
+.xl-403-t{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid)}
+.xl-green{opacity:0;transition:opacity var(--dur-sec) var(--ease);display:inline-flex;align-items:center;gap:8px;padding:8px 12px;
+  border:1px solid var(--sev-ok);background:color-mix(in srgb,var(--sev-ok) 12%,transparent)}
+.xl-stage.xl-s-grn .xl-green{opacity:1}
+.xl-chk{font:700 13px/1 var(--mono);color:var(--sev-ok)}
+.xl-green-v{font:700 13px var(--mono);color:var(--sev-ok)}
+.xl-green-t{font:600 11px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid)}
+
+.xl-note{margin:0;padding:11px 13px;border-left:2px solid var(--holo);background:var(--void-1);font-size:14px;line-height:1.5;color:var(--ink-mid)}
+.xl-rec{margin:0;font-size:15px;line-height:1.5;color:var(--ink-mid)}
+.xl-voz{margin:0;font-size:17px;color:var(--holo)}
+
+/* ---------- faixa Pro (copy do site) ---------- */
+.xl-pro{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:14px 32px;padding:18px 20px;
+  border:1px solid color-mix(in srgb,var(--synapse) 45%,var(--line));border-left:2px solid var(--synapse);
+  background:linear-gradient(90deg,var(--synapse-16),transparent 65%)}
+.xl-pro-t{margin:0 0 6px;font:400 30px/1 var(--disp);letter-spacing:.03em;text-transform:uppercase;color:var(--ink-hi)}
+.xl-pro-tag{display:inline-block;margin-bottom:10px;font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--synapse-lift)}
+.xl-pro-p{margin:0 0 8px;font-size:15px;color:var(--ink-mid)}
+.xl-pro-a{font:600 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--synapse-lift)}
+.xl-pro-l{display:grid;gap:8px 26px;margin:0;padding:0;list-style:none}
+.xl-pro-l li{position:relative;padding-left:20px;font-size:15px;color:var(--ink-hi)}
+.xl-pro-l li::before{content:"+";position:absolute;left:0;top:0;font:700 14px/1.55 var(--mono);color:var(--synapse-lift)}
+
+@media (max-width:980px){
+  .xl-topo,.xl-pro{grid-template-columns:minmax(0,1fr)}
+  .xl-sel{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .xl-steps{grid-template-columns:minmax(0,1fr)}
+  .xl-wire{height:24px}
+}
+@media (max-width:560px){
+  .xl-demo{padding:12px}
+  .xl-sel{grid-template-columns:minmax(0,1fr)}
+  .xl-kpi b{font-size:38px}
+  .xl-run{width:100%}
+}

@@ -4,6 +4,34 @@
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  /* ---------- nav mobile: hamburguer acessivel (aria-expanded, Esc, clique-fora, foco) ---------- */
+  var navToggle = document.querySelector('.nav-toggle');
+  var siteHeader = document.querySelector('.site-header');
+  var navPrimary = document.getElementById('nav-primary');
+  if (navToggle && siteHeader && navPrimary) {
+    function fecharNav(focar) {
+      siteHeader.removeAttribute('data-nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      if (focar) navToggle.focus();
+    }
+    function abrirNav() {
+      siteHeader.setAttribute('data-nav-open', '');
+      navToggle.setAttribute('aria-expanded', 'true');
+      var link = navPrimary.querySelector('a');
+      if (link) link.focus();
+    }
+    navToggle.addEventListener('click', function () {
+      if (navToggle.getAttribute('aria-expanded') === 'true') fecharNav(false); else abrirNav();
+    });
+    navPrimary.addEventListener('click', function (e) { if (e.target.closest('a')) fecharNav(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && siteHeader.hasAttribute('data-nav-open')) fecharNav(true);
+    });
+    document.addEventListener('click', function (e) {
+      if (siteHeader.hasAttribute('data-nav-open') && !e.target.closest('.site-header')) fecharNav(false);
+    });
+  }
+
   var prefersReduced =
     window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -93,5 +121,27 @@
     card.addEventListener('pointerleave', function () { pupila.style.transform = ''; });
   });
 
-  /* A chuva de binários, as camadas da descida e as criaturas moram em abismo.js. */
+  /* ---------- pausa global (WCAG 2.2.2): desoculta o botao e liga o toggle.
+     O congelamento das animacoes e CSS (html:has([data-abismo-pausa][aria-pressed=true])). ---------- */
+  var pausa = document.querySelector('[data-abismo-pausa]');
+  if (pausa) {
+    pausa.hidden = false;
+    var txtPausa = pausa.querySelector('.abismo-pausa-txt');
+    function rotularPausa(ativo) {
+      var en = document.documentElement.getAttribute('data-lang') === 'en';
+      var label = ativo ? (en ? 'Resume animation' : 'Retomar animação')
+                        : (en ? 'Pause animation' : 'Pausar animação');
+      if (txtPausa) txtPausa.textContent = label;
+      pausa.setAttribute('aria-label', label);
+    }
+    pausa.addEventListener('click', function () {
+      var ativo = pausa.getAttribute('aria-pressed') !== 'true';
+      pausa.setAttribute('aria-pressed', String(ativo));
+      rotularPausa(ativo);
+    });
+    rotularPausa(false);
+    new MutationObserver(function () {
+      rotularPausa(pausa.getAttribute('aria-pressed') === 'true');
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+  }
 })();

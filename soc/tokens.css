@@ -1,0 +1,44 @@
+/* Tokens da Consciência Holográfica — protótipo do SOC.
+   Contrastes medidos sobre --void-2 (#11141C, o fundo de painel): ver ANALISE.md §1. */
+@font-face{font-family:"Inter";src:url("../fonts/inter-variavel-latin.woff2") format("woff2");font-weight:400 800;font-display:swap}
+@font-face{font-family:"JetBrains Mono";src:url("../fonts/jetbrains-mono-variavel-latin.woff2") format("woff2");font-weight:400 800;font-display:swap}
+@font-face{font-family:"League Gothic";src:url("../fonts/league-gothic-variavel-latin.woff2") format("woff2");font-weight:400;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("../fonts/cormorant-garamond-500-italico-latin.woff2") format("woff2");font-style:italic;font-weight:500;font-display:swap}
+
+:root{
+  /* vazio (70%) */
+  --void-0:#05060A; --void-1:#0A0C12; --void-2:#11141C; --void-3:#161B26;
+  --line:#1B2230; --line-strong:#2A3346;
+  /* consciência (20%) */
+  --holo:#4FF3FF; --holo-12:rgba(79,243,255,.12); --holo-24:rgba(79,243,255,.24);
+  --synapse:#8A5CFF; --synapse-lift:#A77DFF; --synapse-16:rgba(138,92,255,.16);
+  /* sinal (10%) — severidade NUNCA só por cor: sempre rótulo + glifo (ver --g-*) */
+  --sev-crit:#FF3B4E;  --sev-crit-fill:#E3172E;   /* ◆ crítica */
+  --sev-high:#FF7A3D;                             /* ▲ alta    */
+  --sev-med:#FFB020;                              /* ● média   */
+  --sev-low:#7FB8FF;                              /* ▼ baixa   */
+  --sev-info:#AEB9C7;                             /* ◇ info    */
+  --sev-ok:#3DFFA0;                               /* ✓ ok      */
+  /* tinta fria */
+  --ink-hi:#E6EDF5; --ink-mid:#AEB9C7; --ink-lo:#7C8798;
+  /* tipografia por papel */
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;          /* leitura */
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; /* a máquina */
+  --disp:"League Gothic","Arial Narrow",Impact,sans-serif;                      /* impacto  */
+  --voz:"Cormorant Garamond",Garamond,"Times New Roman",serif;                  /* a entidade fala */
+  /* forma */
+  --chanfro:10px;
+  --raio:3px;
+  /* motion: a interface responde rápido; a entidade respira devagar */
+  --dur-micro:150ms; --dur-sec:500ms; --dur-resp:5s;
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-io:cubic-bezier(.4,0,.2,1);
+  /* gráficos: ÊNFASE, não arco-íris. A série que é o assunto usa --serie-foco; a que o visitante
+     destaca (hover/teclado) usa --serie-par; o resto recua para --serie-contexto. Identidade de cada
+     série vem de legenda + traço + tabela, nunca só de cor. Cores de severidade NUNCA pintam série. */
+  --serie-foco:var(--holo); --serie-par:var(--synapse-lift); --serie-contexto:var(--ink-lo);
+  /* identidade de alvo no gráfico do observatório: 6 alvos distintos que o visitante liga/desliga —
+     categórica (entidades distintas), não arco-íris decorativo; a ênfase continua sendo foco/par/contexto */
+  --alvo-0:#A86FFA; --alvo-1:#C841A5; --alvo-2:#AD9212; --alvo-3:#16AC88; --alvo-4:#4475F6; --alvo-5:#16A4C5;
+  /* foco: anel duplo sólido (void + holo) => >=3:1 contra qualquer superfície */
+  --anel-foco:0 0 0 2px var(--void-0),0 0 0 4px var(--holo);
+}
