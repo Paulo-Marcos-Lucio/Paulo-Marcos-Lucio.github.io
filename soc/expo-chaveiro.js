@@ -58,7 +58,7 @@ const TXT = {
     voz: 'Um token diz quem você é; a segurança mora em quem decide se ele fala a verdade.',
     proTag: 'Pro = escopo + serviço', proT: 'Chaveiro · Pro', voce: 'Você roda:', voceT: 'a auditoria de um token JWT, 100% offline.', acresc: 'A Pro acrescenta:',
     proL: ['a auditoria do emissor e do verificador do sistema inteiro', 'a análise do JWKS que você me entrega',
-      'o enquadramento de conformidade FAPI / Open Finance Brasil', 'o laudo datado — de quem escreveu emissor e verificador em finanças reguladas'],
+      'o enquadramento de conformidade FAPI / Open Finance Brasil', 'o laudo datado, com o perfil FAPI/Open Finance Brasil do Chaveiro Pro'],
   },
   en: {
     loc: 'en', nome: 'Chaveiro', frente: 'Authentication', tese: 'The token that lies.',
@@ -100,7 +100,7 @@ const TXT = {
     voz: 'A token says who you are; security lives in who decides whether it tells the truth.',
     proTag: 'Pro = scope + service', proT: 'Chaveiro · Pro', voce: 'You run:', voceT: 'the audit of a single JWT token, 100% offline.', acresc: 'Pro adds:',
     proL: ['an audit of your entire system’s issuer and verifier', 'analysis of the JWKS you hand me',
-      'FAPI / Open Finance Brasil compliance framing', 'a dated report — from someone who has written issuers and verifiers in regulated finance'],
+      'FAPI / Open Finance Brasil compliance framing', 'a dated report, with the Chaveiro Pro\'s FAPI/Open Finance Brasil profile'],
   },
 };
 

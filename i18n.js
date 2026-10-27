@@ -88,7 +88,7 @@
     'suite5.frente': 'Remediation',
     'suite6.frente': 'Surveillance',
     'suiteAll.title': 'All repositories',
-    'suiteAll.desc': 'Includes my reference suite for regulated financial systems (Pix, Open Finance, mTLS on ICP-Brasil) — the engineering rigor behind the AppSec lens.',
+    'suiteAll.desc': 'Includes the AppSec suite I built and calibrated (Sentinela, Guardião, Esteira, Chaveiro, OWASP Lab) — the engineering rigor behind the AppSec lens.',
     'suiteAll.link': 'View on GitHub',
 
     'project1.badge': 'Real proof · Sentinela',
@@ -144,9 +144,9 @@
     'pro.stat3Label': "written authorization only — it's a flag, not a promise",
 
     'cred.eyebrow': 'Authority',
-    'cred.title': "I wrote the code your team is going to have to change",
+    'cred.title': "The person who hands you the report is the one who fixes the code",
     'cred1.title': 'Secure development in practice',
-    'cred1.desc': "Java/Spring developer. I wrote reference implementations for Brazil's regulated financial systems — Pix, Open Finance, DICT, Open Insurance — with authentication, mTLS on ICP-Brasil, and FAPI. Public code, tested.",
+    'cred1.desc': "A developer who builds real tools: an AppSec suite in Python and an OWASP lab in Java/Spring — public, tested code with green CI. I fix the flaw alongside your team, I don't just point at it.",
     'cred2.title': 'My own open tooling',
     'cred2.desc': 'I build my own analysis tools — public, tested code that documents my technical judgment.',
     'cred3.title': 'Networking and Linux',
@@ -195,7 +195,7 @@
 
   var EN_HTML = {
     'terminal1.cspOk': 'CSP present (via &lt;meta&gt;)',
-    'hero.title': 'I wrote the reference implementations of Pix and Open Finance.<br />\n            <span class="gradient-text">Now I find what’s exposed in your system.</span>',
+    'hero.title': 'I built — and opened — the security tools I use.<br />\n            <span class="gradient-text">Now I find what’s exposed in your system.</span>',
     'hero.subtitle': 'Headers, TLS, cookies, CORS, DNS, forms, and injection (SQLi/XSS): I map the surface an attacker sees and hand you back a fix plan that fits inside your team’s sprint — <strong>because I’ve been the dev team</strong>. Open source, tested: <a href="#ferramentas">see the suite I use</a>.',
 
     'provoke.card1': 'If I open your site <strong>right now</strong>, how many security headers will I find <strong>missing</strong>?',
@@ -230,12 +230,12 @@
 
     'suiteSub.desc': 'Sentinela is the only case where Pro means <strong>extra code</strong> (the active engine above). In the other four, the engine is <strong>identical to what you download</strong> — Pro adds <strong>scope and service</strong>: the whole organization instead of one target, the triage that separates real findings from noise, the fix I carry out, and the retest that proves it. Same honesty: nothing leaves the public side, and every addition says why it exists.',
     'proSuite1.desc': '<strong>You run:</strong> the secrets search on the repository — and its full Git history — you point at. <strong>Pro adds:</strong> the <strong>entire organization</strong> (every repo at once), the triage that adjudicates each finding as real or false positive, and the <strong>per-provider rotation plan with a retest</strong> proving the credential is out of circulation — plus the LGPD evidence report.',
-    'proSuite2.desc': '<strong>You run:</strong> the audit of a single JWT token, 100% offline. <strong>Pro adds:</strong> an audit of your <strong>entire system’s issuer and verifier</strong>, analysis of the JWKS you hand me, <strong>FAPI / Open Finance Brasil compliance</strong> framing, and a dated report — from someone who’s written issuers and verifiers in regulated finance.',
+    'proSuite2.desc': '<strong>You run:</strong> the audit of a single JWT token, 100% offline. <strong>Pro adds:</strong> an audit of your <strong>entire system’s issuer and verifier</strong>, analysis of the JWKS you hand me, <strong>FAPI / Open Finance Brasil compliance</strong> framing (the Chaveiro Pro's profile), and a dated report.',
     'proSuite3.desc': '<strong>You run:</strong> the audit of your GitHub Actions workflows. <strong>Pro adds:</strong> scanning the <strong>entire organization</strong> in one pass, <strong>verified remediation</strong> (I fix the workflow and the retest proves the hole closed), an OIDC trust-policy audit, and the executive report your regulator files away.',
     'proSuite4.desc': '<strong>You run:</strong> the open lab — 8 vulnerabilities, vulnerable→fixed, with tests. <strong>Pro adds:</strong> a <strong>live workshop</strong> with your team, mapping each lab flaw to the <strong>client’s real code</strong>, and a method transfer — the team understands the <em>why</em> behind each fix, not just the patch.',
 
-    'cred.lead': 'I come from <strong>building systems where a security mistake isn’t an option</strong> — the reference implementations of Pix, Open Finance, and DICT. I bring that same bar to your diagnosis, and the fixes I recommend fit inside your team’s sprint.',
-    'credNote.p1': 'Want to check the engineering rigor yourself? My <strong>public suite of reference implementations</strong> for the regulated financial market (Spring Boot, hexagonal architecture, observability, CI) is all on GitHub.',
+    'cred.lead': 'I come from <strong>building tools where a false positive is the enemy</strong> — low-noise, adjudicated in the field. I bring that same bar to your diagnosis, and the fixes I recommend fit inside your team’s sprint.',
+    'credNote.p1': 'Want to check the engineering rigor yourself? My <strong>public AppSec tool suite</strong> (Python; plus an OWASP lab in Spring Boot with hexagonal architecture and CI) is all on GitHub.',
 
     'pacotes.lead': 'Always a <strong>fixed-scope package</strong>, defined scope, and <strong>retest included</strong>. No mandatory retainer and no sales call just to learn the price: you get a fixed-price proposal in the very first conversation. If it doesn’t fit your moment, I’ll tell you right away.',
     'work1.desc': 'The prioritized map of what’s exposed on your surface — with evidence. It’s the step that swaps “I think we’re secure” for <strong>dated evidence</strong>.',
