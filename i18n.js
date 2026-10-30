@@ -31,6 +31,7 @@
     'nav.pacotes': 'Packages',
     'nav.contato': 'Contact',
     'nav.soc': 'Live SOC',
+    'nav.demos': 'Dashboard demo',
 
     'hero.eyebrow': 'Self-scan of my own site: started at C·70, now at B·89 — the climb published, no touch-ups',
     'hero.ctaWhatsapp': 'Message me on WhatsApp',
@@ -90,6 +91,18 @@
     'suiteAll.title': 'All repositories',
     'suiteAll.desc': 'Includes the AppSec suite I built and calibrated (Sentinela, Guardião, Esteira, Chaveiro, OWASP Lab) — the engineering rigor behind the AppSec lens.',
     'suiteAll.link': 'View on GitHub',
+
+    'demos.eyebrow': 'Demo · fictional data',
+    'demos.title': 'Explore a dashboard I built, from the inside',
+    'demo1.frente': 'Observability',
+    'demo1.title': 'System health',
+    'demo1.desc': 'The eye with its eight parts, the vital signs, the correlations and the weekly rhythm. Simulate a crisis, a blind source or the dashboard going down and watch everything react.',
+    'demo1.link': 'Open the demo',
+    'demo2.frente': 'Security',
+    'demo2.title': 'Security / SSH',
+    'demo2.desc': 'Who tried to get in, who only touched the door, who was jailed and what reaches the site before the application, with a dossier for every address.',
+    'demo2.link': 'Open the demo',
+    'demos.note': 'Does your company see its own server like this? The same rigor goes into the diagnosis of your web application: what is exposed, what to fix first and the retest that proves the fix.',
 
     'project1.badge': 'Real proof · Sentinela',
     'project1.title': 'I started with my own site — found it, fixed it, retested it',
@@ -195,6 +208,7 @@
 
   var EN_HTML = {
     'terminal1.cspOk': 'CSP present (via &lt;meta&gt;)',
+    'demos.lead': 'The full page, scrollable and clickable: the eye that sums up eight parts of the system, the dossiers, the charts with a synchronized crosshair and the security dashboard with a dossier for every address that knocked on the door. <strong>The interface is the real one (in Portuguese); the numbers, addresses and events are sample data.</strong>',
     'hero.title': 'I built — and opened — the security tools I use.<br />\n            <span class="gradient-text">Now I find what’s exposed in your system.</span>',
     'hero.subtitle': 'Headers, TLS, cookies, CORS, DNS, forms, and injection (SQLi/XSS): I map the surface an attacker sees and hand you back a fix plan that fits inside your team’s sprint — <strong>because I’ve been the dev team</strong>. Open source, tested: <a href="#ferramentas">see the suite I use</a>.',
 
@@ -230,7 +244,7 @@
 
     'suiteSub.desc': 'Sentinela is the only case where Pro means <strong>extra code</strong> (the active engine above). In the other four, the engine is <strong>identical to what you download</strong> — Pro adds <strong>scope and service</strong>: the whole organization instead of one target, the triage that separates real findings from noise, the fix I carry out, and the retest that proves it. Same honesty: nothing leaves the public side, and every addition says why it exists.',
     'proSuite1.desc': '<strong>You run:</strong> the secrets search on the repository — and its full Git history — you point at. <strong>Pro adds:</strong> the <strong>entire organization</strong> (every repo at once), the triage that adjudicates each finding as real or false positive, and the <strong>per-provider rotation plan with a retest</strong> proving the credential is out of circulation — plus the LGPD evidence report.',
-    'proSuite2.desc': '<strong>You run:</strong> the audit of a single JWT token, 100% offline. <strong>Pro adds:</strong> an audit of your <strong>entire system’s issuer and verifier</strong>, analysis of the JWKS you hand me, <strong>FAPI / Open Finance Brasil compliance</strong> framing (the Chaveiro Pro's profile), and a dated report.',
+    'proSuite2.desc': '<strong>You run:</strong> the audit of a single JWT token, 100% offline. <strong>Pro adds:</strong> an audit of your <strong>entire system’s issuer and verifier</strong>, analysis of the JWKS you hand me, <strong>FAPI / Open Finance Brasil compliance</strong> framing (the Chaveiro Pro’s profile), and a dated report.',
     'proSuite3.desc': '<strong>You run:</strong> the audit of your GitHub Actions workflows. <strong>Pro adds:</strong> scanning the <strong>entire organization</strong> in one pass, <strong>verified remediation</strong> (I fix the workflow and the retest proves the hole closed), an OIDC trust-policy audit, and the executive report your regulator files away.',
     'proSuite4.desc': '<strong>You run:</strong> the open lab — 8 vulnerabilities, vulnerable→fixed, with tests. <strong>Pro adds:</strong> a <strong>live workshop</strong> with your team, mapping each lab flaw to the <strong>client’s real code</strong>, and a method transfer — the team understands the <em>why</em> behind each fix, not just the patch.',
 

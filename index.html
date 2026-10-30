@@ -240,6 +240,7 @@
         <a href="#servicos" data-i18n="nav.servicos">Serviços</a>
         <a href="#ferramentas" data-i18n="nav.ferramentas">Ferramentas</a>
         <a href="soc/" data-i18n="nav.soc">SOC ao vivo</a>
+        <a href="#demos" data-i18n="nav.demos">Demo do painel</a>
         <a href="#pro" data-i18n="nav.pro">Edição Pro</a>
         <a href="#pacotes" data-i18n="nav.pacotes">Pacotes</a>
         <a href="#contato" data-i18n="nav.contato">Contato</a>
@@ -499,6 +500,37 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEMOS DOS PAINÉIS ===================== -->
+    <!-- A interface real de um painel que eu construí, com dados fictícios
+         (demo/ é gerado por cybersec/demo-paineis: dados de exemplo e nomes de
+         sistema trocados por genéricos). Cada demo abre na sua aba. -->
+    <section id="demos" class="section">
+      <div class="container">
+        <header class="section-header" data-abismo-veu>
+          <p class="section-eyebrow" data-i18n="demos.eyebrow">Demonstração · dados fictícios</p>
+          <h2 class="section-title" data-i18n="demos.title">Explore por dentro um painel que eu construí</h2>
+          <p class="section-lead" data-i18n-html="demos.lead">
+            A página inteira, rolável e clicável: o olho que resume oito partes do sistema, os dossiês, os gráficos com a mira sincronizada e o painel de segurança com o dossiê de cada endereço que bateu na porta. <strong>A interface é a real; os números, os endereços e os eventos são de exemplo.</strong>
+          </p>
+        </header>
+        <div class="suite-grid">
+          <a class="suite-card" href="demo/observatorio/" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-olho"/></svg></span><span class="suite-frente" data-i18n="demo1.frente">Observabilidade</span></div>
+            <h3 data-i18n="demo1.title">Saúde do sistema</h3>
+            <p data-i18n="demo1.desc">O olho com as oito partes, os sinais vitais, as correlações e o ritmo da semana. Simule uma crise, uma fonte cega ou o painel fora do ar e veja tudo reagir.</p>
+            <span class="suite-link"><span data-i18n="demo1.link">Abrir a demonstração</span> <span class="arw">↗</span></span>
+          </a>
+          <a class="suite-card" href="demo/seguranca/" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-cadeado"/></svg></span><span class="suite-frente" data-i18n="demo2.frente">Segurança</span></div>
+            <h3 data-i18n="demo2.title">Segurança / SSH</h3>
+            <p data-i18n="demo2.desc">Quem tentou entrar, quem só encostou na porta, quem foi preso e o que chega no site antes da aplicação, com o dossiê de cada endereço.</p>
+            <span class="suite-link"><span data-i18n="demo2.link">Abrir a demonstração</span> <span class="arw">↗</span></span>
+          </a>
+        </div>
+        <p class="section-lead" data-i18n="demos.note">Sua empresa enxerga o próprio servidor assim? O mesmo rigor vai para o diagnóstico da sua aplicação web: o que está exposto, o que corrigir primeiro e o reteste que comprova a correção.</p>
       </div>
     </section>
 
