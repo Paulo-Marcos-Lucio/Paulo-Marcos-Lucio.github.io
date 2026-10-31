@@ -4,6 +4,34 @@
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+  /* ---------- nav mobile: hamburguer acessivel (aria-expanded, Esc, clique-fora, foco) ---------- */
+  var navToggle = document.querySelector('.nav-toggle');
+  var siteHeader = document.querySelector('.site-header');
+  var navPrimary = document.getElementById('nav-primary');
+  if (navToggle && siteHeader && navPrimary) {
+    function fecharNav(focar) {
+      siteHeader.removeAttribute('data-nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      if (focar) navToggle.focus();
+    }
+    function abrirNav() {
+      siteHeader.setAttribute('data-nav-open', '');
+      navToggle.setAttribute('aria-expanded', 'true');
+      var link = navPrimary.querySelector('a');
+      if (link) link.focus();
+    }
+    navToggle.addEventListener('click', function () {
+      if (navToggle.getAttribute('aria-expanded') === 'true') fecharNav(false); else abrirNav();
+    });
+    navPrimary.addEventListener('click', function (e) { if (e.target.closest('a')) fecharNav(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && siteHeader.hasAttribute('data-nav-open')) fecharNav(true);
+    });
+    document.addEventListener('click', function (e) {
+      if (siteHeader.hasAttribute('data-nav-open') && !e.target.closest('.site-header')) fecharNav(false);
+    });
+  }
+
   var prefersReduced =
     window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -59,89 +87,61 @@
     });
   }
 
-  /* ---------- chuva de binários (estilo Matrix) ---------- */
-  var canvas = document.getElementById('matrix');
-  if (!canvas || prefersReduced) return;
-  var ctx = canvas.getContext('2d', { alpha: true });
-  if (!ctx) return;
+  /* ---------- o olho costurado dos cards ----------
+     Cada card de ferramenta/pacote ganha um olho no canto (decorativo, aria-hidden): fechado em
+     costura; no hover/foco abre (CSS) e a pupila acompanha o ponteiro dentro do card. Mesmo
+     esquema do spotlight acima: o evento só guarda a posição, um rAF escreve uma vez por quadro. */
+  document.querySelectorAll('.suite-card, .work-card').forEach(function (card) {
+    var olho = document.createElement('span');
+    olho.className = 'olho-card';
+    olho.setAttribute('aria-hidden', 'true');
+    var globo = document.createElement('span');
+    globo.className = 'olho-globo';
+    var pupila = document.createElement('span');
+    pupila.className = 'olho-pupila';
+    globo.appendChild(pupila);
+    olho.appendChild(globo);
+    card.appendChild(olho);
+    if (prefersReduced || !window.matchMedia || !window.matchMedia('(hover: hover)').matches) return;
 
-  var DPR = Math.min(window.devicePixelRatio || 1, 2);
-  var W = 0, H = 0, cols = 0, fontSize = 16;
-  var drops = [], speeds = [];
-  var GLYPHS = '01';
-
-  function reset() {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    fontSize = W < 600 ? 13 : 16;
-    cols = Math.ceil(W / fontSize);
-    drops = new Array(cols);
-    speeds = new Array(cols);
-    for (var i = 0; i < cols; i++) {
-      drops[i] = (Math.random() * H) / fontSize; // já semeados na tela
-      speeds[i] = 0.4 + Math.random() * 0.7;
+    var pendente = false, px = 0, py = 0;
+    function mirar() {
+      pendente = false;
+      var r = olho.getBoundingClientRect();
+      var dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height / 2);
+      var d = Math.sqrt(dx * dx + dy * dy) || 1, k = d / (d + 60);
+      pupila.style.transform = 'translate(' + (dx / d * k * 8).toFixed(1) + 'px,' + (dy / d * k * 3.5).toFixed(1) + 'px)';
     }
-  }
-  reset();
+    card.addEventListener('pointermove', function (e) {
+      px = e.clientX; py = e.clientY;
+      if (pendente) return;
+      pendente = true;
+      requestAnimationFrame(mirar);
+    });
+    card.addEventListener('pointerleave', function () { pupila.style.transform = ''; });
+  });
 
-  var last = 0;
-  var FRAME_GAP = 1000 / 30; // ~30fps
-  var running = true;
-  var rafId = 0;
-
-  function draw(t) {
-    if (!running) return;
-    rafId = requestAnimationFrame(draw);
-    if (t - last < FRAME_GAP) return;
-    last = t;
-
-    // rastro: pinta o fundo do site com leve transparência (menor = rastros mais longos)
-    ctx.fillStyle = 'rgba(8, 11, 15, 0.10)';
-    ctx.fillRect(0, 0, W, H);
-    ctx.font = '600 ' + fontSize + 'px "JetBrains Mono", monospace';
-
-    for (var i = 0; i < cols; i++) {
-      var x = i * fontSize;
-      var y = drops[i] * fontSize;
-      var ch = GLYPHS.charAt((Math.random() * GLYPHS.length) | 0);
-
-      // Alfas contidos por CONTRASTE (WCAG 1.4.3): a chuva passa por trás de
-      // texto em --fg-3, e no alfa antigo (líder 0.95 / glifos até 0.85) o pior
-      // pixel derrubava esse texto a 1,08:1. Com estes valores o pior caso
-      // analítico sobe para 3,19:1. Chegar a 4,5:1 exigiria opacidade 0.14 no
-      // #matrix — ou seja, apagar o efeito; ver relatório.
-      if (Math.random() < 0.03) {
-        ctx.fillStyle = 'rgba(226, 236, 245, 0.45)'; // líder "piscando" claro
-      } else if (Math.random() < 0.07) {
-        ctx.fillStyle =
-          (Math.random() < 0.5 ? 'rgba(56, 189, 248, ' : 'rgba(129, 140, 248, ') +
-          (0.26 + Math.random() * 0.24) + ')'; // respingos sky/indigo
-      } else {
-        ctx.fillStyle = 'rgba(45, 212, 191, ' + (0.26 + Math.random() * 0.26) + ')'; // teal
-      }
-      ctx.fillText(ch, x, y);
-
-      drops[i] += speeds[i];
-      if (y > H && Math.random() > 0.975) {
-        drops[i] = Math.random() * -20;
-        speeds[i] = 0.4 + Math.random() * 0.7;
-      }
+  /* ---------- pausa global (WCAG 2.2.2): desoculta o botao e liga o toggle.
+     O congelamento das animacoes e CSS (html:has([data-abismo-pausa][aria-pressed=true])). ---------- */
+  var pausa = document.querySelector('[data-abismo-pausa]');
+  if (pausa) {
+    pausa.hidden = false;
+    var txtPausa = pausa.querySelector('.abismo-pausa-txt');
+    function rotularPausa(ativo) {
+      var en = document.documentElement.getAttribute('data-lang') === 'en';
+      var label = ativo ? (en ? 'Resume animation' : 'Retomar animação')
+                        : (en ? 'Pause animation' : 'Pausar animação');
+      if (txtPausa) txtPausa.textContent = label;
+      pausa.setAttribute('aria-label', label);
     }
+    pausa.addEventListener('click', function () {
+      var ativo = pausa.getAttribute('aria-pressed') !== 'true';
+      pausa.setAttribute('aria-pressed', String(ativo));
+      rotularPausa(ativo);
+    });
+    rotularPausa(false);
+    new MutationObserver(function () {
+      rotularPausa(pausa.getAttribute('aria-pressed') === 'true');
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
   }
-  rafId = requestAnimationFrame(draw);
-
-  var resizeTimer;
-  window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(reset, 160);
-  });
-  document.addEventListener('visibilitychange', function () {
-    running = !document.hidden;
-    if (running) { last = 0; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(draw); }
-  });
 })();

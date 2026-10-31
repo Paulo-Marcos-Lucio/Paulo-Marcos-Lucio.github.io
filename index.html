@@ -16,7 +16,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0f14" />
+  <meta name="theme-color" content="#080405" />
   <meta name="color-scheme" content="dark" />
 
   <!-- Título/description/OG/Twitter/JSON-LD abaixo estão em PT-BR "de fábrica";
@@ -59,8 +59,11 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
   <!-- Fontes auto-hospedadas: zero requisições a terceiros (LGPD art. 5º I / 33)
-       e nada de render-blocking de origem cruzada. Licenças em fonts/. -->
+       e nada de render-blocking de origem cruzada. Licenças em fonts/.
+       League Gothic tem preload porque desenha o h1, acima da dobra; a
+       Cormorant (só a legenda decorativa) entra quando chegar. -->
   <link rel="preload" href="fonts/inter-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/league-gothic-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/jetbrains-mono-variavel-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="styles.css" />
@@ -85,25 +88,173 @@
   </script>
 </head>
 <body>
-  <canvas id="matrix" aria-hidden="true"></canvas>
+  <!-- Sprite de ícones (traço único, currentColor, pontas redondas, hachura fina
+       de gravura). Inline de propósito: <use href="#…"> na mesma página não
+       faz requisição nenhuma, e a CSP (style-src 'self') segue intacta porque
+       nada aqui usa <style> nem style="" — só atributos de apresentação. -->
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" width="0" height="0" focusable="false" aria-hidden="true">
+    <defs>
+      <!-- ARGOS: o sigilo da marca — um olho dentro de um escudo -->
+      <symbol id="i-argos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.4 20 5.5v6.1c0 5.1-3.4 8.6-8 10.3-4.6-1.7-8-5.2-8-10.3V5.5z"/>
+        <path d="M6.3 12.3c1.6-2.5 3.5-3.8 5.7-3.8s4.1 1.3 5.7 3.8c-1.6 2.5-3.5 3.8-5.7 3.8s-4.1-1.3-5.7-3.8z"/>
+        <circle cx="12" cy="12.3" r="2"/>
+        <circle cx="12" cy="12.3" r=".75" fill="currentColor" stroke="none"/>
+        <path d="M12 5.4v1.5M8.4 6.6l.8 1.2M15.6 6.6l-.8 1.2" stroke-width="1.1"/>
+        <path d="M12 16.9c-.75 1-1.15 1.7-1.15 2.25a1.15 1.15 0 0 0 2.3 0c0-.55-.4-1.25-1.15-2.25z" stroke-width="1"/>
+      </symbol>
+      <!-- Diagnóstico: lupa -->
+      <symbol id="i-lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="10" cy="10" r="6.3"/>
+        <path d="M14.6 14.6 20.6 20.6"/>
+        <path d="M6.9 8.6a3.6 3.6 0 0 1 2.4-2.3"/>
+        <path d="M6.7 12.6l1.6-1.6M8.1 14l2.3-2.3M10.1 14.8l1.7-1.7" stroke-width="1" stroke-opacity=".55"/>
+      </symbol>
+      <!-- Correção e hardening: chave inglesa -->
+      <symbol id="i-chave-inglesa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.8 3.7a4.8 4.8 0 0 0-4.6 6.4l-6.3 6.3a2.1 2.1 0 0 0 3 3l6.3-6.3a4.8 4.8 0 0 0 6.4-4.6l-2.9 2.1-2.6-.6-.6-2.6z"/>
+        <path d="M6.2 16.5l1.3 1.3M8.2 14.5l.9.9" stroke-width="1" stroke-opacity=".55"/>
+      </symbol>
+      <!-- Reteste: ciclo -->
+      <symbol id="i-ciclo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19.5 12a7.5 7.5 0 0 1-12.9 5.2"/>
+        <path d="M4.5 12a7.5 7.5 0 0 1 12.9-5.2"/>
+        <path d="M17.7 3.3v3.7H14"/>
+        <path d="M6.3 20.7V17H10"/>
+        <circle cx="12" cy="12" r="1.3" stroke-width="1" stroke-opacity=".55"/>
+      </symbol>
+      <!-- LGPD: balança -->
+      <symbol id="i-balanca" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4.2v16.3M7.8 20.5h8.4M4.6 7.2h14.8"/>
+        <circle cx="12" cy="3.6" r=".9"/>
+        <path d="M4.6 7.2 2.2 13a2.6 2.6 0 0 0 4.8 0z"/>
+        <path d="M19.4 7.2 17 13a2.6 2.6 0 0 0 4.8 0z"/>
+        <path d="M10.4 18.6h3.2" stroke-width="1" stroke-opacity=".55"/>
+      </symbol>
+      <!-- Sentinela (perímetro): torre de vigia -->
+      <symbol id="i-torre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.8 21h14.4"/>
+        <path d="M7.3 21V11.2M16.7 21V11.2"/>
+        <path d="M5.8 11.2h12.4V5.6h-2.3v2h-2.4v-2h-3v2H8.1v-2H5.8z"/>
+        <path d="M10.4 21v-3.2a1.6 1.6 0 0 1 3.2 0V21"/>
+        <path d="M12 12.6v2.2"/>
+        <path d="M7.3 13.6h-1.2M17.9 13.6h-1.2M7.3 16.6h-1.2M17.9 16.6h-1.2" stroke-width="1" stroke-opacity=".55"/>
+      </symbol>
+      <!-- Guardião (segredos): cofre -->
+      <symbol id="i-cofre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3.4" y="3.8" width="17.2" height="15.4" rx="1.4"/>
+        <path d="M6.2 19.2v1.6M17.8 19.2v1.6"/>
+        <circle cx="12" cy="11.5" r="3.4"/>
+        <path d="M12 8.1v1.5M12 13.4v1.5M8.6 11.5h1.5M13.9 11.5h1.5"/>
+        <path d="M6 7.2v1.8M6 14v1.8"/>
+        <rect x="5.4" y="5.6" width="13.2" height="11.8" rx=".6" stroke-width="1" stroke-opacity=".5"/>
+      </symbol>
+      <!-- Chaveiro (autenticação): chave antiga -->
+      <symbol id="i-chave-antiga" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="6.6" cy="17.4" r="3.3"/>
+        <circle cx="6.6" cy="17.4" r="1.1" stroke-width="1" stroke-opacity=".6"/>
+        <path d="M8.9 15.1 19.8 4.2"/>
+        <path d="M17.2 6.8l2.6 2.6-1.4 1.4-1-1M14.8 9.2l1.9 1.9"/>
+      </symbol>
+      <!-- Esteira (cadeia de suprimentos): engrenagem -->
+      <symbol id="i-engrenagem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9.84 5.34 10.56 2.91h2.88l.72 2.43 1.02.42 2.23-1.2 2.03 2.03-1.2 2.23.42 1.02 2.43.72v2.88l-2.43.72-.42 1.02 1.2 2.23-2.03 2.03-2.23-1.2-1.02.42-.72 2.43h-2.88l-.72-2.43-1.02-.42-2.23 1.2-2.03-2.03 1.2-2.23-.42-1.02-2.43-.72v-2.88l2.43-.72.42-1.02-1.2-2.23 2.03-2.03 2.23 1.2z"/>
+        <circle cx="12" cy="12" r="3"/>
+        <circle cx="12" cy="12" r="5.2" stroke-width="1" stroke-opacity=".5" stroke-dasharray="1.2 1.6"/>
+      </symbol>
+      <!-- Laboratório: frasco -->
+      <symbol id="i-frasco" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9.3 3.3h5.4"/>
+        <path d="M10.4 3.3v5.4L4.9 18.4A1.7 1.7 0 0 0 6.4 21h11.2a1.7 1.7 0 0 0 1.5-2.6L13.6 8.7V3.3"/>
+        <path d="M7.5 15.2h9"/>
+        <path d="M8.4 18.6l1.5-1.5M11 19.1l2.2-2.2M14.2 18.9l1.6-1.6" stroke-width="1" stroke-opacity=".55"/>
+        <circle cx="11.2" cy="12.4" r=".7" stroke-width="1"/>
+      </symbol>
+      <!-- Observatório (vigilância): olho -->
+      <symbol id="i-olho" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2.4 12C5.3 7.6 8.5 5.6 12 5.6s6.7 2 9.6 6.4c-2.9 4.4-6.1 6.4-9.6 6.4S5.3 16.4 2.4 12z"/>
+        <circle cx="12" cy="12" r="3.5"/>
+        <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>
+        <path d="M12 2.6v1.4M6.6 3.9l.8 1.2M17.4 3.9l-.8 1.2M2.9 6.6l1.2.8M21.1 6.6l-1.2.8" stroke-width="1.1"/>
+      </symbol>
+      <!-- Todos os repositórios: caixa -->
+      <symbol id="i-caixa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.8 20.5 7.4v9.2L12 21.2 3.5 16.6V7.4z"/>
+        <path d="M3.5 7.4 12 12l8.5-4.6M12 12v9.2"/>
+        <path d="M7.8 5.1 16.2 9.7" stroke-width="1" stroke-opacity=".55"/>
+        <path d="M14.4 17.9l3.6-2M14.4 15.6l3.6-2" stroke-width="1" stroke-opacity=".45"/>
+      </symbol>
+      <!-- TLS: cadeado -->
+      <symbol id="i-cadeado" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4.8" y="10.4" width="14.4" height="10.4" rx="1.4"/>
+        <path d="M7.9 10.4V7.6a4.1 4.1 0 0 1 8.2 0v2.8"/>
+        <circle cx="12" cy="14.6" r="1.2"/>
+        <path d="M12 15.8v2"/>
+        <path d="M6.8 18.6h1.6M15.6 18.6h1.6" stroke-width="1" stroke-opacity=".55"/>
+      </symbol>
+      <!-- CSP: documento de política -->
+      <symbol id="i-documento" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.2 2.8H6.4a1.4 1.4 0 0 0-1.4 1.4v15.6a1.4 1.4 0 0 0 1.4 1.4h11.2a1.4 1.4 0 0 0 1.4-1.4V7.6z"/>
+        <path d="M14.2 2.8v4.8H19"/>
+        <path d="M8.2 11.4h7.6M8.2 14.4h7.6M8.2 17.4h4.4"/>
+      </symbol>
+      <!-- Cookies: biscoito mordido -->
+      <symbol id="i-biscoito" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.6 12.5A8.6 8.6 0 1 1 11.5 3.4a2.7 2.7 0 0 0 3.1 3.2 2.7 2.7 0 0 0 3.2 3.1 2.7 2.7 0 0 0 2.8 2.8z"/>
+        <circle cx="8.4" cy="9.6" r=".9" fill="currentColor" stroke="none"/>
+        <circle cx="12.6" cy="13" r=".9" fill="currentColor" stroke="none"/>
+        <circle cx="8.2" cy="15.4" r=".9" fill="currentColor" stroke="none"/>
+        <circle cx="15.6" cy="16.6" r=".9" fill="currentColor" stroke="none"/>
+      </symbol>
+      <!-- Clickjacking: moldura sobreposta + cursor -->
+      <symbol id="i-moldura" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.8" y="3.6" width="16" height="12.4" rx="1"/>
+        <rect x="5.8" y="6.6" width="10" height="6.4" stroke-width="1" stroke-opacity=".55" stroke-dasharray="1.6 1.4"/>
+        <path d="M14.2 13.4l6.6 2.4-2.8 1.2 2.5 2.5-1.3 1.3-2.5-2.5-1.2 2.8z"/>
+      </symbol>
+      <!-- Desenvolvimento seguro: escudo com código -->
+      <symbol id="i-escudo-codigo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.6 19.6 5.6v6c0 4.8-3.2 8.2-7.6 9.8-4.4-1.6-7.6-5-7.6-9.8v-6z"/>
+        <path d="M9.6 9.6 7.4 11.8l2.2 2.2M14.4 9.6l2.2 2.2-2.2 2.2M12.9 8.8l-1.8 6"/>
+      </symbol>
+      <!-- Ferramental próprio: caixa de ferramentas -->
+      <symbol id="i-maleta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.8" y="8" width="18.4" height="12" rx="1.4"/>
+        <path d="M8.8 8V5.4a.9.9 0 0 1 .9-.9h4.6a.9.9 0 0 1 .9.9V8"/>
+        <path d="M2.8 12.8h18.4"/>
+        <path d="M10.4 11.6v2.6h3.2v-2.6"/>
+        <path d="M5 17.6h3M16 17.6h3" stroke-width="1" stroke-opacity=".55"/>
+      </symbol>
+      <!-- Redes e Linux: terminal -->
+      <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.8" y="4.2" width="18.4" height="15.6" rx="1.4"/>
+        <path d="M2.8 7.6h18.4" stroke-width="1" stroke-opacity=".55"/>
+        <path d="M6.8 10.8l3 2.6-3 2.6M12.4 16h4.8"/>
+      </symbol>
+    </defs>
+  </svg>
+
 
   <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
 
   <header class="site-header" role="banner">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="Início — Paulo Marcos Lucio">
-        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <span class="brand-mark" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-argos"/></svg></span>
         <span class="brand-name">Paulo Marcos Lucio</span>
       </a>
-      <nav class="nav" aria-label="Principal">
+      <nav class="nav" id="nav-primary" aria-label="Principal">
         <a href="#servicos" data-i18n="nav.servicos">Serviços</a>
         <a href="#ferramentas" data-i18n="nav.ferramentas">Ferramentas</a>
         <a href="notas/index.html" data-i18n="nav.notas">Notas de campo</a>
+        <a href="soc/" data-i18n="nav.soc">SOC ao vivo</a>
+        <a href="#demos" data-i18n="nav.demos">Demo do painel</a>
         <a href="#pro" data-i18n="nav.pro">Edição Pro</a>
         <a href="#pacotes" data-i18n="nav.pacotes">Pacotes</a>
         <a href="#contato" data-i18n="nav.contato">Contato</a>
         <a class="nav-cta" href="https://github.com/Paulo-Marcos-Lucio" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-primary" aria-label="Menu"><span class="nav-toggle-bars" aria-hidden="true"></span></button>
       <div class="lang-switch" role="group" aria-label="Idioma do site / Site language">
         <button type="button" class="lang-btn is-active" data-lang-btn="pt" aria-pressed="true"><span class="lang-flag" aria-hidden="true">🇧🇷</span>PT</button>
         <button type="button" class="lang-btn" data-lang-btn="en" aria-pressed="false"><span class="lang-flag" aria-hidden="true">🇺🇸</span>EN</button>
@@ -114,14 +265,17 @@
   <main id="main">
     <!-- ===================== HERO ===================== -->
     <section id="top" class="hero">
+      <!-- A Consciencia (D2): entidade VIVA em canvas 2D leve (hero.js) — rede neural com pulsos + binarios. -->
+      <canvas class="hero-field" aria-hidden="true"></canvas>
+      <div class="hero-scan" aria-hidden="true"></div>
       <div class="container hero-grid">
-        <div>
+        <div class="hero-copy" data-abismo-veu>
           <p class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
             <span data-i18n="hero.eyebrow">Auto-scan do meu próprio site: começou em C·70, hoje é B·89 — a subida publicada, sem maquiar</span>
           </p>
           <h1 class="hero-title" data-i18n-html="hero.title">
-            Escrevi as implementações de referência do Pix e do Open Finance.<br />
+            Eu construí — e abri — as ferramentas de segurança que uso.<br />
             <span class="gradient-text">Agora eu acho o que está exposto no seu sistema.</span>
           </h1>
           <p class="hero-subtitle" data-i18n-html="hero.subtitle">
@@ -141,10 +295,15 @@
           </ul>
         </div>
 
-        <aside class="hero-card" aria-label="Amostra de diagnóstico" data-i18n-attrs="aria-label:hero.cardAriaLabel">
+        <!-- Legenda "de prancha", como em catálogo de museu, sob a figura da
+             criatura (abismo.js desenha a cabeça/olhos no vazio logo acima
+             dela). Puramente decorativa: aria-hidden, sem afirmação factual. -->
+        <p class="hero-prancha" aria-hidden="true" data-i18n="hero.prancha">Fig. I — a consciência que lê a superfície</p>
+
+        <aside class="hero-card" data-abismo-veu aria-label="Amostra de diagnóstico" data-i18n-attrs="aria-label:hero.cardAriaLabel">
           <div class="hero-card-glow" aria-hidden="true"></div>
           <div class="hero-card-head">
-            <img class="avatar" src="avatar.jpg" alt="Avatar de Paulo Marcos Lucio" width="64" height="64" loading="eager" />
+            <span class="avatar-moldura"><img class="avatar" src="avatar.jpg" alt="Avatar de Paulo Marcos Lucio" width="64" height="64" loading="eager" /></span>
             <div>
               <p class="hero-card-name">Paulo Marcos Lucio</p>
               <p class="hero-card-role">AppSec · Web Security</p>
@@ -155,10 +314,10 @@
             <span class="tag" data-i18n="hero.tagNetworking">Redes</span><span class="tag">Python</span><span class="tag">LGPD</span>
           </div>
           <div class="hero-card-scan" aria-hidden="true">
-            <div class="scan-line"><span class="lbl" data-i18n="hero.scanTls">🔒 TLS / Certificado</span> <span class="scan-badge b-ok">OK</span></div>
-            <div class="scan-line"><span class="lbl">📋 CSP (via &lt;meta&gt;)</span> <span class="scan-badge b-ok">OK</span></div>
-            <div class="scan-line"><span class="lbl">🍪 Cookies &amp; CORS</span> <span class="scan-badge b-ok">OK</span></div>
-            <div class="scan-line"><span class="lbl">🖼️ Clickjacking</span> <span class="scan-badge b-warn" data-i18n="hero.badgeWarn">limite do host</span></div>
+            <div class="scan-line"><span class="lbl"><svg class="ico" focusable="false"><use href="#i-cadeado"/></svg><span data-i18n="hero.scanTls">TLS / Certificado</span></span> <span class="scan-badge b-ok">OK</span></div>
+            <div class="scan-line"><span class="lbl"><svg class="ico" focusable="false"><use href="#i-documento"/></svg>CSP (via &lt;meta&gt;)</span> <span class="scan-badge b-ok">OK</span></div>
+            <div class="scan-line"><span class="lbl"><svg class="ico" focusable="false"><use href="#i-biscoito"/></svg>Cookies &amp; CORS</span> <span class="scan-badge b-ok">OK</span></div>
+            <div class="scan-line"><span class="lbl"><svg class="ico" focusable="false"><use href="#i-moldura"/></svg>Clickjacking</span> <span class="scan-badge b-warn" data-i18n="hero.badgeWarn">limite do host</span></div>
           </div>
         </aside>
       </div>
@@ -167,7 +326,7 @@
     <!-- ===================== PROVOCAÇÃO ===================== -->
     <section class="section">
       <div class="container">
-        <header class="section-header provoke-head">
+        <header class="section-header provoke-head" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="provoke.eyebrow">Três perguntas</p>
           <h2 class="section-title" data-i18n="provoke.title">Responda com sinceridade — em silêncio</h2>
           <p class="section-lead" data-i18n="provoke.lead">Se você hesitou em qualquer uma delas, o diagnóstico responde as três. Com evidência, não com achismo.</p>
@@ -186,7 +345,7 @@
             <p data-i18n-html="provoke.card3">Qual foi a última vez que alguém <strong>provou</strong> — com data e evidência — que a sua aplicação está protegida?</p>
           </article>
         </div>
-        <div class="provoke-cta">
+        <div class="provoke-cta" data-abismo-veu>
           <a class="btn btn-primary" href="#ferramentas" data-i18n="provoke.cta">Ver a resposta num relatório real</a>
         </div>
       </div>
@@ -195,7 +354,7 @@
     <!-- ===================== SERVIÇOS ===================== -->
     <section id="servicos" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="services.eyebrow">Serviços</p>
           <h2 class="section-title" data-i18n="services.title">O que eu faço pela sua aplicação</h2>
           <p class="section-lead" data-i18n-html="services.lead">
@@ -204,25 +363,25 @@
         </header>
         <div class="svc-grid">
           <article class="svc-card">
-            <span class="svc-icon" aria-hidden="true">🔍</span>
+            <span class="svc-icon" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-lupa"/></svg></span>
             <h3 data-i18n="svc1.title">Diagnóstico de vulnerabilidades web</h3>
             <p data-i18n="svc1.desc">Análise da superfície exposta: cabeçalhos, TLS/certificado, cookies, CORS, métodos HTTP, exposição de arquivos e segurança de DNS/e-mail. Relatório com severidade, evidência e recomendação de correção.</p>
             <div class="svc-tags"><span>OWASP Top 10</span><span>CWE</span><span data-i18n="svc1.tag3">relatório executivo</span></div>
           </article>
           <article class="svc-card">
-            <span class="svc-icon" aria-hidden="true">🛠️</span>
+            <span class="svc-icon" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-chave-inglesa"/></svg></span>
             <h3 data-i18n="svc2.title">Correção e hardening</h3>
             <p data-i18n="svc2.desc">Da recomendação à execução: implanto (ou oriento seu time) CSP, HSTS, TLS moderno, cookies seguros, CORS restritivo e remoção de rotas e arquivos sensíveis expostos.</p>
             <div class="svc-tags"><span>CSP</span><span>HSTS</span><span>TLS 1.2/1.3</span></div>
           </article>
           <article class="svc-card">
-            <span class="svc-icon" aria-hidden="true">🔁</span>
+            <span class="svc-icon" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-ciclo"/></svg></span>
             <h3 data-i18n="svc3.title">Reteste e acompanhamento</h3>
             <p data-i18n="svc3.desc">Depois da correção, uma nova varredura comprova a redução de risco. Varredura programada vira evidência contínua de gestão de vulnerabilidades — exatamente o que a LGPD espera.</p>
             <div class="svc-tags"><span data-i18n="svc3.tag1">reteste incluso</span><span data-i18n="svc3.tag2">recorrência</span></div>
           </article>
           <article class="svc-card">
-            <span class="svc-icon" aria-hidden="true">⚖️</span>
+            <span class="svc-icon" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-balanca"/></svg></span>
             <h3 data-i18n="svc4.title">Adequação à LGPD (art. 46)</h3>
             <p data-i18n="svc4.desc">Diagnóstico e documentação datada que ajudam sua empresa a demonstrar as medidas técnicas de segurança exigidas pela LGPD — fator que a ANPD pondera na dosimetria de eventuais sanções.</p>
             <div class="svc-tags"><span data-i18n="svc4.tag1">evidência datada</span><span data-i18n="svc4.tag2">medidas técnicas</span></div>
@@ -234,7 +393,7 @@
     <!-- ===================== MÉTODO ===================== -->
     <section id="metodo" class="section">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="metodo.eyebrow">Método</p>
           <h2 class="section-title" data-i18n="metodo.title">Como um engajamento funciona</h2>
           <p class="section-lead" data-i18n-html="metodo.lead">
@@ -254,7 +413,7 @@
     <!-- ===================== FERRAMENTAS / SUÍTE ===================== -->
     <section id="ferramentas" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="tools.eyebrow">Ferramentas · Open source</p>
           <h2 class="section-title" data-i18n="tools.title">A suíte que eu uso — e que deixo aberta pra você auditar</h2>
           <p class="section-lead" data-i18n-html="tools.lead1">
@@ -264,7 +423,7 @@
             Não acredite na minha palavra: publiquei o <a href="https://github.com/Paulo-Marcos-Lucio/guardiao/blob/main/BENCHMARK.md" target="_blank" rel="noopener"><strong>benchmark honesto</strong></a> contra esses três incumbentes — versões e commits fixados, reproduzível, e <strong>diz onde eles são mais enxutos que eu</strong>. Quem só mostra onde ganha está te escondendo alguma coisa.
           </p>
           <ul class="hero-stats" aria-label="Números medidos em corpus público, reproduzíveis em dois comandos" data-i18n-attrs="aria-label:tools.statsAriaLabel">
-            <li><strong>17/17 · 20/20</strong><span data-i18n="tools.stat1Label">regras e recall no corpus da Esteira · 0 falso-positivo</span></li>
+            <li><strong>22/22 · 25/25</strong><span data-i18n="tools.stat1Label">regras e recall no corpus da Esteira · 0 falso-positivo</span></li>
             <li><strong>22/22</strong><span data-i18n="tools.stat2Label">vetores JWT no corpus do Chaveiro · 0 falso-positivo</span></li>
             <li><strong data-i18n="tools.stat3Num">7,1 s → &lt;0,01 s</strong><span data-i18n="tools.stat3Label">travamento de CI por ReDoS, medido e corrigido</span></li>
           </ul>
@@ -272,45 +431,45 @@
 
         <div class="suite-grid">
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/sentinela" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🛡️</span><span class="suite-frente" data-i18n="suite1.frente">Perímetro</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-torre"/></svg></span><span class="suite-frente" data-i18n="suite1.frente">Perímetro</span></div>
             <h3>Sentinela</h3>
             <p data-i18n-html="suite1.desc">Diagnóstico não-intrusivo de configuração web — cabeçalhos, TLS, cookies, CORS, DNS <strong>e superfície de injeção</strong> (formulários, CSRF, reflexão de parâmetro) — mapeado ao OWASP Top 10:2025. A edição <strong>Pro</strong> acrescenta código: <strong>confirma</strong> SQLi/XSS com prova segura, só sob autorização.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/guardiao" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente" data-i18n="suite2.frente">Segredos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-cofre"/></svg></span><span class="suite-frente" data-i18n="suite2.frente">Segredos</span></div>
             <h3>Guardião</h3>
             <p data-i18n-html="suite2.desc">Scanner de segredos vazados no código <strong>e no histórico Git</strong> — entropia normalizada, baseline, SARIF e hook de pre-commit. Recall <strong>13/14</strong> no corpus, 0 falso-positivo.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/chaveiro" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🗝️</span><span class="suite-frente" data-i18n="suite3.frente">Autenticação</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-chave-antiga"/></svg></span><span class="suite-frente" data-i18n="suite3.frente">Autenticação</span></div>
             <h3>Chaveiro</h3>
             <p data-i18n-html="suite3.desc">Auditor de tokens JWT/JWS — <code>alg:none</code>, confusão de algoritmo, brute de segredo HMAC, <code>jku</code>/<code>kid</code> SSRF + validação de referência.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/esteira" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">⚙️</span><span class="suite-frente" data-i18n="suite4.frente">Cadeia de suprimentos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-engrenagem"/></svg></span><span class="suite-frente" data-i18n="suite4.frente">Cadeia de suprimentos</span></div>
             <h3>Esteira</h3>
             <p data-i18n-html="suite4.desc">Auditor de segurança de CI/CD (GitHub Actions) — script injection, actions não-fixadas por SHA, <code>pull_request_target</code>, permissões.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/laboratorio-owasp" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente" data-i18n="suite5.frente">Correção</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-frasco"/></svg></span><span class="suite-frente" data-i18n="suite5.frente">Correção</span></div>
             <h3>Laboratório OWASP</h3>
             <p data-i18n-html="suite5.desc"><strong>8 vulnerabilidades em 3 categorias</strong> do OWASP Top 10:2025 (A01, A04 e A05) — com destaque para <strong>injeção (A05: SQLi, XSS, command)</strong> — cada uma no par <strong>vulnerável → exploit → corrigido</strong>, com teste automatizado provando que o lado corrigido <strong>corrige de verdade</strong>. Em Spring Boot.</p>
             <span class="suite-link">Java · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card" href="https://github.com/Paulo-Marcos-Lucio/observatorio-da-superficie" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">👁️</span><span class="suite-frente" data-i18n="suite6.frente">Vigilância</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-olho"/></svg></span><span class="suite-frente" data-i18n="suite6.frente">Vigilância</span></div>
             <h3>Observatório da Superfície</h3>
             <p data-i18n-html="suite6.desc">Leitura passiva e contínua de cabeçalhos, TLS, DNS e Certificate Transparency num punhado de alvos próprios e de referência, <strong>guardada como série temporal</strong> — porque um relatório tirado num dia só diz como o alvo estava naquele dia; a mudança só aparece medindo todo dia e comparando. Roda sozinho no GitHub Actions, público.</p>
             <span class="suite-link">Python · MIT <span class="arw">↗</span></span>
           </a>
           <a class="suite-card suite-card-all" href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">📦</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-caixa"/></svg></span></div>
             <h3 data-i18n="suiteAll.title">Todos os repositórios</h3>
-            <p data-i18n="suiteAll.desc">Inclui minha suíte de referência de sistemas financeiros regulados (Pix, Open Finance, mTLS ICP-Brasil) — o rigor de engenharia por trás do olhar de AppSec.</p>
+            <p data-i18n="suiteAll.desc">Inclui a suíte de AppSec que eu construí e calibrei (Sentinela, Guardião, Esteira, Chaveiro, Laboratório OWASP) — o rigor de engenharia por trás do olhar de AppSec.</p>
             <span class="suite-link"><span data-i18n="suiteAll.link">Ver no GitHub</span> <span class="arw">↗</span></span>
           </a>
         </div>
@@ -352,10 +511,41 @@
       </div>
     </section>
 
+    <!-- ===================== DEMOS DOS PAINÉIS ===================== -->
+    <!-- A interface real de um painel que eu construí, com dados fictícios
+         (demo/ é gerado por cybersec/demo-paineis: dados de exemplo e nomes de
+         sistema trocados por genéricos). Cada demo abre na sua aba. -->
+    <section id="demos" class="section">
+      <div class="container">
+        <header class="section-header" data-abismo-veu>
+          <p class="section-eyebrow" data-i18n="demos.eyebrow">Demonstração · dados fictícios</p>
+          <h2 class="section-title" data-i18n="demos.title">Explore por dentro um painel que eu construí</h2>
+          <p class="section-lead" data-i18n-html="demos.lead">
+            A página inteira, rolável e clicável: o olho que resume oito partes do sistema, os dossiês, os gráficos com a mira sincronizada e o painel de segurança com o dossiê de cada endereço que bateu na porta. <strong>A interface é a real; os números, os endereços e os eventos são de exemplo.</strong>
+          </p>
+        </header>
+        <div class="suite-grid">
+          <a class="suite-card" href="demo/observatorio/" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-olho"/></svg></span><span class="suite-frente" data-i18n="demo1.frente">Observabilidade</span></div>
+            <h3 data-i18n="demo1.title">Saúde do sistema</h3>
+            <p data-i18n="demo1.desc">O olho com as oito partes, os sinais vitais, as correlações e o ritmo da semana. Simule uma crise, uma fonte cega ou o painel fora do ar e veja tudo reagir.</p>
+            <span class="suite-link"><span data-i18n="demo1.link">Abrir a demonstração</span> <span class="arw">↗</span></span>
+          </a>
+          <a class="suite-card" href="demo/seguranca/" target="_blank" rel="noopener">
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-cadeado"/></svg></span><span class="suite-frente" data-i18n="demo2.frente">Segurança</span></div>
+            <h3 data-i18n="demo2.title">Segurança / SSH</h3>
+            <p data-i18n="demo2.desc">Quem tentou entrar, quem só encostou na porta, quem foi preso e o que chega no site antes da aplicação, com o dossiê de cada endereço.</p>
+            <span class="suite-link"><span data-i18n="demo2.link">Abrir a demonstração</span> <span class="arw">↗</span></span>
+          </a>
+        </div>
+        <p class="section-lead" data-i18n="demos.note">Sua empresa enxerga o próprio servidor assim? O mesmo rigor vai para o diagnóstico da sua aplicação web: o que está exposto, o que corrigir primeiro e o reteste que comprova a correção.</p>
+      </div>
+    </section>
+
     <!-- ===================== EDIÇÃO PRO ===================== -->
     <section id="pro" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="pro.eyebrow">Edição Pro</p>
           <h2 class="section-title" data-i18n-html="pro.title">O que <span class="gradient-text">está aberto continua aberto</span>. A Pro só acrescenta.</h2>
           <p class="section-lead" data-i18n-html="pro.lead">
@@ -371,7 +561,7 @@
             </p>
             <ul class="project-feats">
               <li data-i18n-html="proProject.feat1">Confirma <strong>SQLi, XSS</strong> e mais cinco classes de injeção — não infere, prova</li>
-              <li data-i18n-html="proProject.feat2">Mapeia a <strong>aplicação inteira</strong>, página a página — não só a URL que você digitou</li>
+              <li data-i18n-html="proProject.feat2">Mapeia a <strong>superfície navegável</strong> — dezenas de páginas same-origin, rotas de SPA lidas do bundle e endpoints, não só a URL que você digitou</li>
               <li data-i18n-html="proProject.feat3">Confirma <strong>no ar</strong> se um endpoint da API exige autenticação de fato</li>
               <li data-i18n-html="proProject.feat4">Read-only, só sob <strong>autorização por escrito</strong> — a linha vermelha é código, não promessa</li>
             </ul>
@@ -385,7 +575,7 @@
             <div class="terminal-body">
               <div><span class="prompt">$</span> sentinela scan <span class="ok">laboratorio-owasp</span> --autorizado --profundo</div>
               <div class="muted" data-i18n="terminal2.comment">── alvo meu, vulnerável de propósito ──</div>
-              <div><span data-i18n="terminal2.surfaceLabel">superfície mapeada:</span> <span class="grade" data-i18n="terminal2.surfaceValue">aplicação inteira</span></div>
+              <div><span data-i18n="terminal2.surfaceLabel">superfície mapeada:</span> <span class="grade" data-i18n="terminal2.surfaceValue">páginas same-origin · rotas SPA · endpoints</span></div>
               <div class="muted" data-i18n="terminal2.a05">A05 · Injeção (confirmada)</div>
               <div><span class="crit" data-i18n="terminal2.crit">CRÍTICA</span> SQLI_CONFIRMADO · /busca?q <span class="muted" data-i18n="terminal2.sqliNote">(boolean+tempo)</span></div>
               <div><span class="warn" data-i18n="terminal2.high">ALTA</span> XSS_REFLETIDO_CONFIRMADO · /perfil?nome</div>
@@ -400,25 +590,25 @@
         </div>
         <div class="suite-grid">
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔑</span><span class="suite-frente" data-i18n="proSuite1.frente">Segredos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-cofre"/></svg></span><span class="suite-frente" data-i18n="proSuite1.frente">Segredos</span></div>
             <h3>Guardião · Pro</h3>
-            <p data-i18n-html="proSuite1.desc"><strong>Você roda:</strong> a busca de segredos no repositório que aponta. <strong>A Pro acrescenta:</strong> a <strong>organização inteira</strong> e <strong>todo o histórico Git</strong> (não só o HEAD), a triagem que adjudica cada achado como real ou falso-positivo, e o <strong>plano de rotação por provedor com reteste</strong> que prova que a credencial saiu de circulação — mais o laudo de evidência LGPD.</p>
+            <p data-i18n-html="proSuite1.desc"><strong>Você roda:</strong> a busca de segredos no repositório — e em todo o histórico Git — que você aponta. <strong>A Pro acrescenta:</strong> a <strong>organização inteira</strong> (todos os repos de uma vez), a triagem que adjudica cada achado como real ou falso-positivo, e o <strong>plano de rotação por provedor com reteste</strong> que prova que a credencial saiu de circulação — mais o laudo de evidência LGPD.</p>
             <span class="suite-link" data-i18n="proSuite1.link">Pro = escopo + serviço</span>
           </div>
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🎫</span><span class="suite-frente" data-i18n="proSuite2.frente">Autenticação</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-chave-antiga"/></svg></span><span class="suite-frente" data-i18n="proSuite2.frente">Autenticação</span></div>
             <h3>Chaveiro · Pro</h3>
-            <p data-i18n-html="proSuite2.desc"><strong>Você roda:</strong> a auditoria de um token JWT, 100% offline. <strong>A Pro acrescenta:</strong> a auditoria do <strong>emissor e do verificador do sistema inteiro</strong>, a análise do JWKS que você me entrega, o enquadramento de <strong>conformidade FAPI / Open Finance Brasil</strong> e o laudo datado — de quem escreveu emissor e verificador em finanças reguladas.</p>
+            <p data-i18n-html="proSuite2.desc"><strong>Você roda:</strong> a auditoria de um token JWT, 100% offline. <strong>A Pro acrescenta:</strong> a auditoria do <strong>emissor e do verificador do sistema inteiro</strong>, a análise do JWKS que você me entrega, o enquadramento de <strong>conformidade FAPI / Open Finance Brasil</strong> (o perfil do Chaveiro Pro) e o laudo datado.</p>
             <span class="suite-link" data-i18n="proSuite2.link">Pro = escopo + serviço</span>
           </div>
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🔗</span><span class="suite-frente" data-i18n="proSuite3.frente">Cadeia de suprimentos</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-engrenagem"/></svg></span><span class="suite-frente" data-i18n="proSuite3.frente">Cadeia de suprimentos</span></div>
             <h3>Esteira · Pro</h3>
             <p data-i18n-html="proSuite3.desc"><strong>Você roda:</strong> a auditoria dos seus workflows do GitHub Actions. <strong>A Pro acrescenta:</strong> a varredura da <strong>organização inteira</strong> numa tacada, a <strong>remediação verificada</strong> (eu corrijo o workflow e o reteste prova que o buraco fechou), a auditoria de trust policy OIDC e o relatório executivo que o regulador arquiva.</p>
             <span class="suite-link" data-i18n="proSuite3.link">Pro = escopo + serviço</span>
           </div>
           <div class="suite-card suite-card-pro">
-            <div class="suite-top"><span class="suite-ico" aria-hidden="true">🧪</span><span class="suite-frente" data-i18n="proSuite4.frente">Correção</span></div>
+            <div class="suite-top"><span class="suite-ico" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-frasco"/></svg></span><span class="suite-frente" data-i18n="proSuite4.frente">Correção</span></div>
             <h3 data-i18n="proSuite4.title">Laboratório · Pro</h3>
             <p data-i18n-html="proSuite4.desc"><strong>Você roda:</strong> o laboratório aberto — 8 vulnerabilidades vulnerável→corrigido, com teste. <strong>A Pro acrescenta:</strong> o <strong>workshop ao vivo</strong> com o seu time, mapeando cada falha do lab para o <strong>código real do cliente</strong>, e a transferência de método — o time entende o porquê de cada correção, não só o patch.</p>
             <span class="suite-link" data-i18n="proSuite4.link">Pro = serviço</span>
@@ -435,31 +625,31 @@
     <!-- ===================== BAGAGEM ===================== -->
     <section class="section">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="cred.eyebrow">Autoridade</p>
-          <h2 class="section-title" data-i18n="cred.title">Eu escrevi o código que o seu time vai ter que mudar</h2>
+          <h2 class="section-title" data-i18n="cred.title">Quem te entrega o laudo é quem conserta o código</h2>
           <p class="section-lead" data-i18n-html="cred.lead">
-            Venho de <strong>construir sistemas onde errar em segurança não é uma opção</strong> — as implementações de referência do Pix, do Open Finance e do DICT. Trago essa régua para o seu diagnóstico, e as correções que eu recomendo cabem no sprint do seu time.
+            Venho de <strong>construir ferramentas onde o falso-positivo é o inimigo</strong> — baixo ruído, adjudicado em campo. Trago essa régua para o seu diagnóstico, e as correções que eu recomendo cabem no sprint do seu time.
           </p>
         </header>
         <div class="cred">
           <div class="cred-list">
             <div class="cred-item">
-              <span class="ci" aria-hidden="true">🔐</span>
-              <div><h3 data-i18n="cred1.title">Desenvolvimento seguro na prática</h3><p data-i18n="cred1.desc">Desenvolvedor Java/Spring. Escrevi implementações de referência dos sistemas financeiros regulados brasileiros — Pix, Open Finance, DICT, Open Insurance — com autenticação, mTLS ICP-Brasil e FAPI. Código público, com teste.</p></div>
+              <span class="ci" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-escudo-codigo"/></svg></span>
+              <div><h3 data-i18n="cred1.title">Desenvolvimento seguro na prática</h3><p data-i18n="cred1.desc">Desenvolvedor que constrói ferramenta de verdade: uma suíte de AppSec em Python e um laboratório OWASP em Java/Spring — código público, testado, com CI verde. Eu conserto a falha junto do seu time, não só aponto.</p></div>
             </div>
             <div class="cred-item">
-              <span class="ci" aria-hidden="true">🧰</span>
+              <span class="ci" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-maleta"/></svg></span>
               <div><h3 data-i18n="cred2.title">Ferramental próprio, aberto</h3><p data-i18n="cred2.desc">Construo minhas próprias ferramentas de análise — código público e testado que documenta o meu critério técnico.</p></div>
             </div>
             <div class="cred-item">
-              <span class="ci" aria-hidden="true">🐧</span>
+              <span class="ci" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-terminal"/></svg></span>
               <div><h3 data-i18n="cred3.title">Redes e Linux</h3><p data-i18n="cred3.desc">Base sólida em redes, servidores e Linux — o terreno onde as aplicações web de fato rodam e se expõem.</p></div>
             </div>
           </div>
           <div class="cred-note">
             <p data-i18n-html="credNote.p1">
-              Quer conferir o rigor de engenharia? Minha <strong>suíte pública de implementações de referência</strong> do mercado financeiro regulado (Spring Boot, arquitetura hexagonal, observabilidade, CI) está toda no GitHub.
+              Quer conferir o rigor de engenharia? Minha <strong>suíte pública de ferramentas de AppSec</strong> (Python; e um laboratório OWASP em Spring Boot, arquitetura hexagonal, CI) está toda no GitHub.
             </p>
             <p class="cred-note-cta"><a href="https://github.com/Paulo-Marcos-Lucio?tab=repositories" target="_blank" rel="noopener" data-i18n="credNote.cta">Ver meus repositórios de engenharia ↗</a></p>
           </div>
@@ -470,7 +660,7 @@
     <!-- ===================== PACOTES ===================== -->
     <section id="pacotes" class="section section-alt">
       <div class="container">
-        <header class="section-header">
+        <header class="section-header" data-abismo-veu>
           <p class="section-eyebrow" data-i18n="pacotes.eyebrow">Pacotes</p>
           <h2 class="section-title" data-i18n="pacotes.title">Escolha por onde começar</h2>
           <p class="section-lead" data-i18n-html="pacotes.lead">
@@ -478,7 +668,7 @@
           </p>
         </header>
         <div class="work-grid">
-          <article class="work-card acc-teal">
+          <article class="work-card acc-brasa">
             <p class="work-tier" data-i18n="work1.tier">Entrada</p>
             <h3 class="work-title" data-i18n="work1.title">Diagnóstico</h3>
             <p class="work-desc" data-i18n-html="work1.desc">O mapa priorizado do que está exposto na sua superfície — com evidência. É o passo que troca o "acho que estamos seguros" por <strong>evidência datada</strong>.</p>
@@ -496,7 +686,7 @@
             </a>
           </article>
 
-          <article class="work-card work-card-featured acc-grad">
+          <article class="work-card work-card-featured acc-eclipse">
             <p class="work-tier" data-i18n="work2.tier">Recomendado</p>
             <h3 class="work-title" data-i18n="work2.title">Diagnóstico + Correção</h3>
             <p class="work-desc" data-i18n-html="work2.desc">Do problema à <strong>prova de que foi resolvido</strong>: eu encontro, eu corrijo — e comprovo com reteste. Você sai com a evidência na mão.</p>
@@ -513,7 +703,7 @@
             </a>
           </article>
 
-          <article class="work-card acc-sky">
+          <article class="work-card acc-sangue">
             <p class="work-tier" data-i18n="work3.tier">Contínuo</p>
             <h3 class="work-title" data-i18n="work3.title">Acompanhamento</h3>
             <p class="work-desc" data-i18n-html="work3.desc">Segurança que <strong>não expira num PDF</strong>: a cada release, uma nova varredura — e a evidência sempre pronta para a auditoria.</p>
@@ -536,7 +726,7 @@
 
     <!-- ===================== CONTATO / CTA ===================== -->
     <section id="contato" class="section section-cta">
-      <div class="container cta-inner">
+      <div class="container cta-inner" data-abismo-veu>
         <h2 class="cta-title" data-i18n="contato.title">Seu sistema web já foi olhado por um par técnico?</h2>
         <p class="cta-lead" data-i18n="contato.lead">
           Me conta em uma linha qual é a aplicação e o contexto — você já sai sabendo o próximo passo. Ainda medindo? Rode o Sentinela no seu domínio; se a nota vier abaixo de B, me manda o relatório e a conversa começa no seu achado, não no meu discurso.
@@ -556,7 +746,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <span class="brand-mark" aria-hidden="true">🛡</span>
+        <span class="brand-mark" aria-hidden="true"><svg class="ico" focusable="false"><use href="#i-argos"/></svg></span>
         <div>
           <p class="footer-name">Paulo Marcos Lucio</p>
           <p class="footer-tag" data-i18n="footer.tag">Segurança de Aplicações Web · AppSec · BR</p>
@@ -574,6 +764,12 @@
     </div>
   </footer>
 
+  <!-- Pausar as animações contínuas (WCAG 2.2.2 Pausar, Parar, Ocultar).
+       script.js desoculta e alterna; o congelamento é CSS (:has). -->
+  <button type="button" class="abismo-pausa" data-abismo-pausa aria-pressed="false">
+    <span class="abismo-pausa-ico" aria-hidden="true"></span><span class="abismo-pausa-txt">Pausar animação</span>
+  </button>
+
   <!-- Botão flutuante de idioma: convida a trocar mostrando a bandeira do OUTRO idioma (não do atual) -->
   <button type="button" class="lang-fab" data-lang-fab aria-label="Read this page in English">
     <span class="lang-fab-flag" data-lang-fab-flag aria-hidden="true">🇺🇸</span>
@@ -589,5 +785,6 @@
 
   <script src="i18n.js" defer></script>
   <script src="script.js" defer></script>
+  <script src="hero.js" defer></script>
 </body>
 </html>

@@ -11,17 +11,20 @@ hardening e adequação à LGPD, para PMEs e fintechs.
 
 ## Stack
 
-HTML semântico + CSS custom (sem framework) + JS mínimo (reveal-on-scroll, ano
-dinâmico). Deploy via GitHub Pages, branch `main`, raiz do repo.
+HTML semântico + CSS custom (sem framework) + JS sem dependências e sem build
+(reveal-on-scroll, ano dinâmico, troca de idioma e o fundo animado em
+`<canvas>`). Deploy via GitHub Pages, branch `main`, raiz do repo.
 
 ## Estrutura
 
 - `index.html` — single page: hero, serviços, método, Sentinela, credibilidade, pacotes, contato
-- `styles.css` — dark theme, mobile-first, design tokens (paleta de segurança teal/ciano)
-- `script.js` — IntersectionObserver para reveal, chuva de binários em canvas, footer year auto
+- `styles.css` — tema escuro "Cyber Death", mobile-first, design tokens (vermelho sobre quase-preto, contrastes WCAG medidos)
+- `script.js` — IntersectionObserver para reveal, spotlight dos cards de pacote, olho costurado dos cards (abre no hover e segue o ponteiro), footer year auto
+- `abismo.js` — **Argos, a máscara de cem olhos**: o fundo vivo em WebGL2 (o corpo é ASCII/binário com hachura de gravura; os olhos são nítidos e seguem o ponteiro; o cursor é uma lanterna que decodifica o binário em palavras). Fallback 2D sem WebGL2, quadro estático em `prefers-reduced-motion`, botão de pausa (WCAG 2.2.2), qualidade adaptativa e nenhuma requisição de rede. Abaixo do hero, a página é uma **descida em quatro camadas** (I o Limbo dos Rostos, II a Garganta de tentáculos, III o Ermo dos meteoros, IV o Eclipse e a Mão): cada camada sobe do fundo da tela ao rolar, e cada seção tem a sua criatura (o Vigia, a Lágrima, a Boca, a Espinha, a Mariposa, o Ninho, o Andarilho e a Mão do eclipse), com olhos que surgem, te seguem e sangram em barramento. A sonda na borda direita mostra em que camada você está..
+- `mascara-n.png` / `mascara-m.png` — mapas de normal e de máscara do relevo, gerados de forma reproduzível por `arte/gerar_mascara.py` (Python + numpy)
 - `i18n.js` — troca de idioma PT/EN no cliente (ver abaixo)
-- `fonts/` — Inter e JetBrains Mono **auto-hospedadas** (SIL OFL 1.1, ver `fonts/LICENSE-fontes.md`)
-- `favicon.svg` / `apple-touch-icon.png` / `og-image.svg` / `og-image.png` — identidade visual (escudo)
+- `fonts/` — Inter, JetBrains Mono, League Gothic e Cormorant Garamond **auto-hospedadas** (SIL OFL 1.1, ver `fonts/LICENSE-fontes.md`)
+- `favicon.svg` / `apple-touch-icon.png` / `og-image.png` — identidade visual (sigilo: um olho dentro do escudo); a `og-image.png` é um quadro renderizado pelo próprio motor
 - `avatar.jpg` — foto de perfil, também auto-hospedada
 - `robots.txt` + `sitemap.xml` — SEO básico
 - `.well-known/security.txt` — canal de divulgação responsável (RFC 9116)

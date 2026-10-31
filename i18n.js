@@ -34,6 +34,8 @@
     'nav.pro': 'Pro Edition',
     'nav.pacotes': 'Packages',
     'nav.contato': 'Contact',
+    'nav.soc': 'Live SOC',
+    'nav.demos': 'Dashboard demo',
 
     'hero.eyebrow': 'Self-scan of my own site: started at C·70, now at B·89 — the climb published, no touch-ups',
     'hero.ctaWhatsapp': 'Message me on WhatsApp',
@@ -44,7 +46,9 @@
     'hero.stat3Label': 'open source, tested, green CI',
     'hero.tagNetworking': 'Networking',
     'hero.badgeWarn': 'hosting limit',
-    'hero.scanTls': '🔒 TLS / Certificate',
+    'hero.scanTls': 'TLS / Certificate',
+    // legenda decorativa "de prancha" sob a criatura do fundo (aria-hidden)
+    'hero.prancha': 'Fig. I — the consciousness that reads the surface',
 
     'provoke.eyebrow': 'Three questions',
     'provoke.title': 'Answer honestly — to yourself',
@@ -89,8 +93,20 @@
     'suite5.frente': 'Remediation',
     'suite6.frente': 'Surveillance',
     'suiteAll.title': 'All repositories',
-    'suiteAll.desc': 'Includes my reference suite for regulated financial systems (Pix, Open Finance, mTLS on ICP-Brasil) — the engineering rigor behind the AppSec lens.',
+    'suiteAll.desc': 'Includes the AppSec suite I built and calibrated (Sentinela, Guardião, Esteira, Chaveiro, OWASP Lab) — the engineering rigor behind the AppSec lens.',
     'suiteAll.link': 'View on GitHub',
+
+    'demos.eyebrow': 'Demo · fictional data',
+    'demos.title': 'Explore a dashboard I built, from the inside',
+    'demo1.frente': 'Observability',
+    'demo1.title': 'System health',
+    'demo1.desc': 'The eye with its eight parts, the vital signs, the correlations and the weekly rhythm. Simulate a crisis, a blind source or the dashboard going down and watch everything react.',
+    'demo1.link': 'Open the demo',
+    'demo2.frente': 'Security',
+    'demo2.title': 'Security / SSH',
+    'demo2.desc': 'Who tried to get in, who only touched the door, who was jailed and what reaches the site before the application, with a dossier for every address.',
+    'demo2.link': 'Open the demo',
+    'demos.note': 'Does your company see its own server like this? The same rigor goes into the diagnosis of your web application: what is exposed, what to fix first and the retest that proves the fix.',
 
     'project1.badge': 'Real proof · Sentinela',
     'project1.title': 'I started with my own site — found it, fixed it, retested it',
@@ -118,7 +134,7 @@
     'terminal2.title': 'sentinela — Pro edition',
     'terminal2.comment': '── my own target, vulnerable on purpose ──',
     'terminal2.surfaceLabel': 'surface mapped:',
-    'terminal2.surfaceValue': 'entire application',
+    'terminal2.surfaceValue': 'same-origin pages · SPA routes · endpoints',
     'terminal2.a05': 'A05 · Injection (confirmed)',
     'terminal2.crit': 'CRITICAL',
     'terminal2.sqliNote': '(boolean+time)',
@@ -145,9 +161,9 @@
     'pro.stat3Label': "written authorization only — it's a flag, not a promise",
 
     'cred.eyebrow': 'Authority',
-    'cred.title': "I wrote the code your team is going to have to change",
+    'cred.title': "The person who hands you the report is the one who fixes the code",
     'cred1.title': 'Secure development in practice',
-    'cred1.desc': "Java/Spring developer. I wrote reference implementations for Brazil's regulated financial systems — Pix, Open Finance, DICT, Open Insurance — with authentication, mTLS on ICP-Brasil, and FAPI. Public code, tested.",
+    'cred1.desc': "A developer who builds real tools: an AppSec suite in Python and an OWASP lab in Java/Spring — public, tested code with green CI. I fix the flaw alongside your team, I don't just point at it.",
     'cred2.title': 'My own open tooling',
     'cred2.desc': 'I build my own analysis tools — public, tested code that documents my technical judgment.',
     'cred3.title': 'Networking and Linux',
@@ -200,7 +216,8 @@
 
   var EN_HTML = {
     'terminal1.cspOk': 'CSP present (via &lt;meta&gt;)',
-    'hero.title': 'I wrote the reference implementations of Pix and Open Finance.<br />\n            <span class="gradient-text">Now I find what’s exposed in your system.</span>',
+    'demos.lead': 'The full page, scrollable and clickable: the eye that sums up eight parts of the system, the dossiers, the charts with a synchronized crosshair and the security dashboard with a dossier for every address that knocked on the door. <strong>The interface is the real one (in Portuguese); the numbers, addresses and events are sample data.</strong>',
+    'hero.title': 'I built — and opened — the security tools I use.<br />\n            <span class="gradient-text">Now I find what’s exposed in your system.</span>',
     'hero.subtitle': 'Headers, TLS, cookies, CORS, DNS, forms, and injection (SQLi/XSS): I map the surface an attacker sees and hand you back a fix plan that fits inside your team’s sprint — <strong>because I’ve been the dev team</strong>. Open source, tested: <a href="#ferramentas">see the suite I use</a>.',
 
     'provoke.card1': 'If I open your site <strong>right now</strong>, how many security headers will I find <strong>missing</strong>?',
@@ -229,18 +246,18 @@
     'pro.lead': 'Nothing leaves the public side — what’s free today is yours, free, forever. Pro never takes away: it <strong>adds</strong>, and always says why. In <strong>Sentinela</strong>, it adds code — the active engine that <strong>confirms</strong> the flaw (it sends requests against the target; that’s why it only runs with written authorization, not as a binary anyone can download). In the other tools the engine is identical to the one you download: what Pro adds is the <strong>service</strong> — triage, fix, and dated report. Detection is free; <strong>fixing is work, and work is what I sell</strong>.',
     'proProject.desc': 'Same target, same day. The public diagnostic says <em>“this is an injection surface.”</em> Pro takes the missing step and says <em>“this <strong>confirms</strong> it”</em> — with a safe payload and an inert marker, <strong>without exploiting</strong>, without extracting a single piece of data, without persisting anything. The distance between <em>maybe</em> and <em>confirmed</em> is the distance between sleeping and not sleeping.',
     'proProject.feat1': "Confirms <strong>SQLi, XSS</strong>, and five more injection classes — it doesn't infer, it proves",
-    'proProject.feat2': 'Maps the <strong>entire application</strong>, page by page — not just the URL you typed',
+    'proProject.feat2': 'Maps the <strong>navigable surface</strong> — dozens of same-origin pages, SPA routes read from the bundle, and endpoints, not just the URL you typed',
     'proProject.feat3': 'Confirms <strong>live</strong> whether an API endpoint actually requires authentication',
     'proProject.feat4': 'Read-only, only under <strong>written authorization</strong> — the red line is code, not a promise',
 
     'suiteSub.desc': 'Sentinela is the only case where Pro means <strong>extra code</strong> (the active engine above). In the other four, the engine is <strong>identical to what you download</strong> — Pro adds <strong>scope and service</strong>: the whole organization instead of one target, the triage that separates real findings from noise, the fix I carry out, and the retest that proves it. Same honesty: nothing leaves the public side, and every addition says why it exists.',
-    'proSuite1.desc': '<strong>You run:</strong> the secrets search on the repository you point at. <strong>Pro adds:</strong> the <strong>entire organization</strong> and <strong>full Git history</strong> (not just HEAD), the triage that adjudicates each finding as real or false positive, and the <strong>per-provider rotation plan with a retest</strong> proving the credential is out of circulation — plus the LGPD evidence report.',
-    'proSuite2.desc': '<strong>You run:</strong> the audit of a single JWT token, 100% offline. <strong>Pro adds:</strong> an audit of your <strong>entire system’s issuer and verifier</strong>, analysis of the JWKS you hand me, <strong>FAPI / Open Finance Brasil compliance</strong> framing, and a dated report — from someone who’s written issuers and verifiers in regulated finance.',
+    'proSuite1.desc': '<strong>You run:</strong> the secrets search on the repository — and its full Git history — you point at. <strong>Pro adds:</strong> the <strong>entire organization</strong> (every repo at once), the triage that adjudicates each finding as real or false positive, and the <strong>per-provider rotation plan with a retest</strong> proving the credential is out of circulation — plus the LGPD evidence report.',
+    'proSuite2.desc': '<strong>You run:</strong> the audit of a single JWT token, 100% offline. <strong>Pro adds:</strong> an audit of your <strong>entire system’s issuer and verifier</strong>, analysis of the JWKS you hand me, <strong>FAPI / Open Finance Brasil compliance</strong> framing (the Chaveiro Pro’s profile), and a dated report.',
     'proSuite3.desc': '<strong>You run:</strong> the audit of your GitHub Actions workflows. <strong>Pro adds:</strong> scanning the <strong>entire organization</strong> in one pass, <strong>verified remediation</strong> (I fix the workflow and the retest proves the hole closed), an OIDC trust-policy audit, and the executive report your regulator files away.',
     'proSuite4.desc': '<strong>You run:</strong> the open lab — 8 vulnerabilities, vulnerable→fixed, with tests. <strong>Pro adds:</strong> a <strong>live workshop</strong> with your team, mapping each lab flaw to the <strong>client’s real code</strong>, and a method transfer — the team understands the <em>why</em> behind each fix, not just the patch.',
 
-    'cred.lead': 'I come from <strong>building systems where a security mistake isn’t an option</strong> — the reference implementations of Pix, Open Finance, and DICT. I bring that same bar to your diagnosis, and the fixes I recommend fit inside your team’s sprint.',
-    'credNote.p1': 'Want to check the engineering rigor yourself? My <strong>public suite of reference implementations</strong> for the regulated financial market (Spring Boot, hexagonal architecture, observability, CI) is all on GitHub.',
+    'cred.lead': 'I come from <strong>building tools where a false positive is the enemy</strong> — low-noise, adjudicated in the field. I bring that same bar to your diagnosis, and the fixes I recommend fit inside your team’s sprint.',
+    'credNote.p1': 'Want to check the engineering rigor yourself? My <strong>public AppSec tool suite</strong> (Python; plus an OWASP lab in Spring Boot with hexagonal architecture and CI) is all on GitHub.',
 
     'pacotes.lead': 'Always a <strong>fixed-scope package</strong>, defined scope, and <strong>retest included</strong>. No mandatory retainer and no sales call just to learn the price: you get a fixed-price proposal in the very first conversation. If it doesn’t fit your moment, I’ll tell you right away.',
     'work1.desc': 'The prioritized map of what’s exposed on your surface — with evidence. It’s the step that swaps “I think we’re secure” for <strong>dated evidence</strong>.',

@@ -1,0 +1,152 @@
+/* Shell do SOC + componentes-base REUTILIZÁVEIS pelos módulos (.painel, .chip, .btn...).
+   Cada módulo estiliza só o próprio interior, com o próprio prefixo de classe. */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;color-scheme:dark}
+body{
+  background-color:var(--void-0);color:var(--ink-hi);font-family:var(--sans);font-size:16px;line-height:1.55;
+  background-image:linear-gradient(var(--void-1) 1px,transparent 1px),linear-gradient(90deg,var(--void-1) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+html.pausado *,html.pausado *::before,html.pausado *::after{animation-play-state:paused!important}
+
+a{color:var(--holo)}
+:focus-visible{outline:2px solid var(--holo);outline-offset:3px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.mono{font-family:var(--mono)}
+.container{max-width:1560px;margin:0 auto;padding:0 clamp(18px,4vw,56px)}
+
+/* ---------- barra de controles do protótipo (não é parte do design final) ---------- */
+.proto-bar{position:sticky;top:0;z-index:50;display:flex;gap:10px;align-items:center;justify-content:flex-end;
+  padding:8px clamp(16px,4vw,40px);background:rgba(5,6,10,.92);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink-lo)}
+.proto-bar .rotulo{margin-right:auto;letter-spacing:.08em;text-transform:uppercase}
+.proto-bar button{font:inherit;color:var(--ink-mid);background:var(--void-2);border:1px solid var(--line-strong);border-radius:var(--raio);padding:6px 11px;min-height:32px;cursor:pointer}
+.proto-bar button[aria-pressed="true"]{color:var(--void-0);background:var(--holo);border-color:var(--holo)}
+
+/* ---------- componentes-base ---------- */
+.painel{position:relative;background:linear-gradient(180deg,var(--void-2),var(--void-1));border:1px solid var(--line-strong);
+  clip-path:polygon(0 0,calc(100% - var(--chanfro)) 0,100% var(--chanfro),100% 100%,var(--chanfro) 100%,0 calc(100% - var(--chanfro)))}
+.painel-h{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)}
+.painel-t{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--ink-hi);margin:0;display:flex;align-items:center;gap:9px}
+.painel-id{font-family:var(--mono);font-size:11px;color:var(--ink-lo);letter-spacing:.04em}
+.painel-c{padding:16px 18px}
+
+.ao-vivo{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--sev-ok);text-transform:uppercase}
+.ao-vivo::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sev-ok);box-shadow:0 0 8px var(--sev-ok);animation:respira var(--dur-resp) var(--ease-io) infinite}
+@keyframes respira{0%,100%{opacity:1}50%{opacity:.45}}
+/* fora do frescor (ctx.frescor.fresco === false): neutro, sem pulso — o dado é real, mas não é 'agora' */
+.ao-vivo.neutro{color:var(--ink-mid)}
+.ao-vivo.neutro::before{background:transparent;border:1px solid var(--ink-mid);box-shadow:none;animation:none}
+
+/* chip de severidade: cor + GLIFO + rótulo (nunca só cor — WCAG 1.4.1) */
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid currentColor;background:color-mix(in srgb,currentColor 12%,transparent);white-space:nowrap}
+.chip::before{font-size:9px;line-height:1}
+.sev-crit{color:var(--sev-crit)} .sev-crit.chip::before{content:"◆"}
+.sev-high{color:var(--sev-high)} .sev-high.chip::before{content:"▲"}
+.sev-med{color:var(--sev-med)}   .sev-med.chip::before{content:"●"}
+.sev-low{color:var(--sev-low)}   .sev-low.chip::before{content:"▼"}
+.sev-info{color:var(--sev-info)} .sev-info.chip::before{content:"◇"}
+.sev-ok{color:var(--sev-ok)}     .sev-ok.chip::before{content:"✓"}
+.sev-holo{color:var(--holo)}     .sev-holo.chip::before{content:"◉"}
+
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-size:14px;font-weight:600;border-radius:var(--raio);
+  padding:11px 16px;min-height:44px;cursor:pointer;text-decoration:none;border:1px solid var(--line-strong);background:var(--void-2);color:var(--ink-hi);
+  transition:border-color var(--dur-micro) var(--ease),box-shadow var(--dur-micro) var(--ease),transform var(--dur-micro) var(--ease)}
+.btn:hover{border-color:var(--holo)}
+.btn-holo{background:var(--holo);border-color:var(--holo);color:var(--void-0);box-shadow:0 0 22px var(--holo-24)}
+.btn-holo:hover{box-shadow:0 0 30px rgba(79,243,255,.45)}
+.btn:focus-visible{outline:none;box-shadow:var(--anel-foco)}
+
+.rotulo-demo{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--synapse-lift);border:1px dashed var(--synapse-lift);padding:2px 7px;border-radius:2px}
+.voz{font-family:var(--voz);font-style:italic;font-weight:500;color:var(--holo)}
+
+/* ---------- seção SOC ---------- */
+.soc{padding-block:56px 92px}
+.soc-head{display:flex;flex-wrap:wrap;gap:18px 30px;align-items:flex-end;justify-content:space-between;margin:44px 0 38px}
+.soc-eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--holo);margin:0 0 8px}
+.soc-titulo{font-family:var(--disp);font-weight:400;font-synthesis:none;font-size:clamp(46px,5.8vw,78px);line-height:.96;letter-spacing:.01em;text-transform:uppercase;margin:0}
+.soc-lead{max-width:40em;color:var(--ink-mid);font-size:17px;line-height:1.6;margin:16px 0 0}
+#soc-status{display:flex;flex-wrap:wrap;gap:10px}
+#soc-kpis{margin-bottom:38px}
+.soc-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:30px;align-items:stretch}
+@media (max-width:980px){.soc-grid{grid-template-columns:minmax(0,1fr)}}
+#soc-conexao{margin-top:30px}
+/* reserva = altura montada medida (1440/980/760/375). Só vale vazio: some quando o módulo monta. */
+#soc-ticker:empty{min-height:40px} #soc-status:empty{min-height:35px} #soc-kpis:empty{min-height:214px}
+#soc-feed:empty,#soc-mapa:empty{min-height:1000px} #soc-conexao:empty{min-height:500px}
+@media (max-width:980px){#soc-kpis:empty{min-height:310px} #soc-feed:empty,#soc-mapa:empty{min-height:950px} #soc-conexao:empty{min-height:580px}}
+@media (max-width:760px){#soc-conexao:empty{min-height:860px}}
+@media (max-width:560px){#soc-ticker:empty{min-height:56px} #soc-status:empty{min-height:130px} #soc-kpis:empty{min-height:500px}
+  #soc-feed:empty{min-height:1300px} #soc-mapa:empty{min-height:1250px} #soc-conexao:empty{min-height:1020px}}
+
+/* ---------- exposição da suíte ---------- */
+.expo{padding-block:56px 120px}
+.expo-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:36px 0 28px}
+.expo-tab{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--ink-mid);
+  background:var(--void-1);border:1px solid var(--line-strong);border-radius:var(--raio);padding:10px 14px;min-height:44px;cursor:pointer;
+  transition:color var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease),background var(--dur-micro) var(--ease)}
+.expo-tab .frente{font-size:11px;color:var(--ink-lo);text-transform:uppercase;letter-spacing:.1em}
+.expo-tab:hover{color:var(--ink-hi);border-color:var(--holo)}
+.expo-tab[aria-selected="true"]{color:var(--void-0);background:var(--holo);border-color:var(--holo)}
+.expo-tab[aria-selected="true"] .frente{color:var(--void-1)}
+.expo-tab:focus-visible{outline:none;box-shadow:var(--anel-foco)}
+.expo-painel{min-height:540px}
+.expo-painel[hidden]{display:none}
+.modulo-falhou{padding:24px;font-family:var(--mono);font-size:13px;color:var(--sev-med);border:1px dashed var(--sev-med)}
+
+/* ---------- CABEÇALHO ÚNICO de módulo da exposição (QA #24: eram duas gramáticas) ----------
+   [eyebrow: NOME · FRENTE ............ proveniência]   esquerda: tese (a voz) + lead
+   [tese em Cormorant, a voz da entidade]              direita: KPIs com fonte/data + ações
+   Todo módulo usa ESTE markup; o CSS do módulo não redefine estas classes. */
+.mod-cab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);gap:22px 40px;align-items:end;margin:4px 0 22px}
+@media (max-width:900px){.mod-cab{grid-template-columns:minmax(0,1fr)}}
+.mod-eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--holo);margin:0 0 12px}
+.mod-tese{font-family:var(--voz);font-style:italic;font-weight:500;font-size:clamp(28px,3.1vw,40px);line-height:1.08;color:var(--holo);margin:0;text-wrap:balance}
+.mod-lead{max-width:44em;color:var(--ink-mid);font-size:16px;margin:12px 0 0}
+.mod-lead strong{color:var(--ink-hi)}
+.mod-lado{display:grid;gap:12px;min-width:min(100%,400px)}
+.mod-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));border:1px solid var(--line-strong);background:var(--void-1)}
+.mod-kpi{padding:14px 16px;border-left:1px solid var(--line)}
+.mod-kpi:first-child{border-left:0}
+.mod-kpi-v{display:block;font-family:var(--disp);font-weight:400;font-synthesis:none;font-size:44px;line-height:1;letter-spacing:.01em;color:var(--holo)}
+.mod-kpi-r{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid);margin-top:8px}
+.mod-kpi-f{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-lo);margin-top:4px}
+.mod-acoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end}
+@media (max-width:900px){.mod-acoes{justify-content:flex-start}}
+
+/* ---------- FAIXA PRO ÚNICA (mesmo formato nos 6 módulos) ---------- */
+.pro-faixa{display:grid;grid-template-columns:minmax(200px,300px) minmax(0,1fr);gap:18px 36px;padding:22px 24px;margin-top:22px;
+  border:1px solid color-mix(in srgb,var(--synapse) 60%,transparent);background:linear-gradient(135deg,var(--synapse-16),transparent 62%),var(--void-1);
+  clip-path:polygon(0 0,calc(100% - var(--chanfro)) 0,100% var(--chanfro),100% 100%,var(--chanfro) 100%,0 calc(100% - var(--chanfro)))}
+@media (max-width:760px){.pro-faixa{grid-template-columns:minmax(0,1fr)}}
+.pro-nome{font-family:var(--disp);font-weight:400;font-synthesis:none;font-size:34px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:var(--ink-hi);margin:0}
+.pro-def{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--synapse-lift);margin:8px 0 12px}
+.pro-voce{font-size:15px;color:var(--ink-mid);margin:0}
+.pro-voce strong,.pro-lista strong{color:var(--ink-hi)}
+.pro-t{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--synapse-lift);margin:0 0 10px}
+.pro-lista{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px 28px}
+.pro-lista li{position:relative;padding-left:18px;font-size:15px;line-height:1.5;color:var(--ink-hi)}
+.pro-lista li::before{content:"+";position:absolute;left:0;top:0;font-family:var(--mono);color:var(--synapse-lift)}
+
+/* ---------- barra de produção do SOC (substitui a .proto-bar do lab) ---------- */
+.soc-topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap;
+  padding:12px clamp(16px,4vw,40px);background:color-mix(in srgb,var(--void-0) 90%,transparent);
+  border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+.soc-brand{display:inline-flex;align-items:center;gap:10px;margin-right:auto;font-family:var(--disp);font-weight:400;
+  font-synthesis:none;font-size:21px;letter-spacing:.04em;color:var(--ink-hi);text-decoration:none;white-space:nowrap}
+.soc-brand::before{content:"";width:12px;height:12px;border:2px solid var(--holo);border-radius:50%;box-shadow:0 0 12px var(--holo);flex:none}
+.soc-brand:hover{color:var(--holo)}
+.soc-topnav{display:flex;gap:18px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em}
+.soc-topnav a{color:var(--ink-mid);text-decoration:none}
+.soc-topnav a:hover{color:var(--holo)}
+.soc-topctl{display:flex;align-items:center;gap:10px}
+.soc-topbar .lang-switch{display:inline-flex;gap:4px}
+.soc-topbar button{font-family:var(--mono);font-size:12px;color:var(--ink-mid);background:var(--void-2);
+  border:1px solid var(--line-strong);border-radius:var(--raio);padding:0 13px;min-height:44px;cursor:pointer;
+  transition:color var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease),background var(--dur-micro) var(--ease)}
+.soc-topbar button:hover{color:var(--ink-hi);border-color:var(--holo)}
+.soc-topbar button[aria-pressed="true"]{color:var(--void-0);background:var(--holo);border-color:var(--holo)}
+.soc-topbar button:focus-visible{outline:none;box-shadow:var(--anel-foco)}
